@@ -85,26 +85,28 @@ This stack allows fast development, real-time updates, and a responsive user int
 
 #### Planned (subject to change)
 
+```bash
 src/
-├── components/
-│   ├── Card/
-│   ├── Collection/
-│   ├── Deck/
-│   ├── Auth/
-│   ├── Layout/
-│   └── Shared/
-├── pages/
-│   ├── Home.jsx
-│   ├── Login.jsx
-│   ├── Register.jsx
-│   ├── Dashboard.jsx
-│   └── NotFound.jsx
-├── context/
-├── hooks/
-├── services/
-├── utils/
-├── App.jsx
-└── main.jsx
+├── components/        # Reusable UI components (Card, Deck, Layout, etc.)
+│   ├── Card/          # Card-related components (display, upload, modal)
+│   ├── Collection/    # Collection browsing and filtering UIs
+│   ├── Deck/          # Deck builder and viewer components
+│   ├── Auth/          # Login, Register, Logout components
+│   ├── Layout/        # Shared layout elements (Navbar, Sidebar)
+│   └── Shared/        # Misc shared components (Buttons, Tags, Modals)
+├── pages/             # Top-level route views rendered by React Router
+│   ├── Home.jsx       # Landing page for non-authenticated users
+│   ├── Login.jsx      # Login page
+│   ├── Register.jsx   # Registration page
+│   ├── Dashboard.jsx  # Main user dashboard with binder view
+│   └── NotFound.jsx   # 404 page for invalid routes
+├── context/           # React Context providers (Auth, Cards)
+├── hooks/             # Custom React hooks
+├── services/          # Firebase and external API integration
+├── utils/             # Utility functions (e.g., metadata parsing)
+├── App.jsx            # Main application shell and router container
+└── main.jsx           # Entry point that renders <App /> to the DOM
+```"""
 
 ---
 
