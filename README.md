@@ -106,7 +106,23 @@ src/
 ├── utils/             # Utility functions (e.g., metadata parsing)
 ├── App.jsx            # Main application shell and router container
 └── main.jsx           # Entry point that renders <App /> to the DOM
-```"""
+```
+│   └── Shared/
+├── pages/
+│   ├── Home.jsx
+│   ├── Login.jsx
+│   ├── Register.jsx
+│   ├── Dashboard.jsx
+│   └── NotFound.jsx
+├── context/
+├── hooks/
+├── services/
+├── utils/
+├── App.jsx
+└── main.jsx
+```
+├── main.jsx           # Entry point
+```
 
 ---
 
