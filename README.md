@@ -1,79 +1,120 @@
-# AllCards 🎴
+# AllCards
 
-AllCards is a web application that lets users build a personalized digital binder for their real-world trading card collections. Whether you're a collector of Pokémon, Yu-Gi-Oh, One Piece, or Magic: The Gathering cards, AllCards helps you upload, organize, browse, and search your collection with ease.
-
----
-
-## 🚀 Features
-
-### ✅ MVP Features
-- Upload card images with metadata (name, series, rarity, etc.)
-- View cards by collection, deck, or trademark
-- Organize cards with custom tags and folders
-- Simple login and authentication via Firebase
-
-### 🌱 Planned Stretch Features
-- Advanced filtering (by rarity, series, tags)
-- Public collection sharing and social features
-- Showcase mode for presenting a binder visually
-- API integration for auto-tagging or verification
+AllCards is a web application that brings trading card collecting into the digital era. It lets users create a searchable, personal digital binder where they can store, browse, and organize cards from various franchises such as Pokémon, Yu-Gi-Oh, Magic: The Gathering, and more.
 
 ---
 
-## 🧠 Project Vision
+## Project Vision
 
-> To create the most intuitive and personalized digital binder experience for fans of Trading Card Games. We aim to make it easier to discover, favorite, and manage cards across franchises with a fun and beautiful UI.
-
----
-
-## 🎯 Target Audience
-
-- Casual and hardcore TCG collectors  
-- Competitive players who build decks regularly  
-- Collectors of specific or multiple franchises  
-- Anyone tired of physical binders or inconsistent tracking tools
+To create the most intuitive and personalized digital binder experience for collectors and fans of trading card games — a place to truly own, explore, and organize their card collections the way they want.
 
 ---
 
-## 🛠 Tech Stack
+## The Problem
 
-| Area        | Tech                       |
-|-------------|----------------------------|
-| Frontend    | React, TailwindCSS         |
-| Backend     | Firebase (Auth + Firestore)|
-| Deployment  | Vercel (planned)           |
-| Languages   | JavaScript, HTML, CSS      |
-| APIs        | Pokémon TCG API (more TBD) |
+- Physical binders are limited and not easily shareable
+- Online databases often lack personalization
+- Users often spread their collections across multiple platforms
+- No tool combines visual collection browsing with tagging, searching, and favorites
+
+AllCards solves this by offering a central, personalized, visually rich digital binder that works across all franchises.
 
 ---
 
-## 📁 Project Structure
+## Target Audience
 
-```
+- Casual and hardcore TCG collectors
+- Competitive players building and managing decks
+- Newcomers to trading card games
+- Collectors of specific or multiple franchises
+
+Whether you collect Pokémon, One Piece, Yu-Gi-Oh, or Magic, AllCards gives you one place to manage it all.
+
+---
+
+## Tech Stack
+
+| Layer         | Technology                  |
+|---------------|------------------------------|
+| Frontend      | React, TailwindCSS           |
+| Backend       | Firebase (Authentication, Firestore) |
+| APIs          | Pokémon TCG API (more to come) |
+| Languages     | HTML, CSS, JavaScript        |
+
+This stack allows fast development, real-time updates, and a responsive user interface.
+
+---
+
+## MVP Features
+
+- Upload card images with name, set, and metadata
+- View cards by collection/set or as part of a custom-built deck
+- Organize using tags, trademarks, and folders
+- Simple login system for storing user-specific data
+
+---
+
+## Stretch Goals
+
+- Advanced filtering by rarity, franchise, and custom tags
+- Social features like public collections and sharing
+- Showcase Mode (e.g., a slideshow view)
+- API integrations for auto-tagging and verification
+
+---
+
+## 📆 Development Timeline (9 Weeks)
+
+| Week | Focus                                      |
+|------|--------------------------------------------|
+| 1    | Project Setup & Planning                   |
+| 2    | UI Mockups & Firebase Initialization       |
+| 3    | Authentication & Card Upload               |
+| 4    | Collection Viewing Features                |
+| 5    | Tagging, Sorting, Deletion                 |
+| 6    | MVP Polishing & Bug Fixing                 |
+| 7    | Advanced Search & Filtering                |
+| 8    | Showcase Mode & Sharing Options            |
+| 9    | Final Polish, Presentation, Deployment     |
+
+---
+
+
+
+## Project Structure
+
+#### Planned (subject to change)
+
 src/
-├── components/        # Reusable UI components
-├── pages/             # Route-based views (Home, Dashboard, Login, etc.)
-├── context/           # Global state (Auth, Cards)
-├── services/          # Firebase and API logic
-├── utils/             # Helper functions
-├── App.jsx            # Main App structure and routing
-├── main.jsx           # App entry point
-```
+├── components/
+│   ├── Card/
+│   ├── Collection/
+│   ├── Deck/
+│   ├── Auth/
+│   ├── Layout/
+│   └── Shared/
+├── pages/
+│   ├── Home.jsx
+│   ├── Login.jsx
+│   ├── Register.jsx
+│   ├── Dashboard.jsx
+│   └── NotFound.jsx
+├── context/
+├── hooks/
+├── services/
+├── utils/
+├── App.jsx
+└── main.jsx
 
 ---
 
-## 📆 Timeline Highlights
+## UI Preview
 
-- **Week 1–2:** Planning, wireframes, setup, UI mockups  
-- **Week 3–5:** Login, card uploads, and collection viewing  
-- **Week 6–7:** Tagging, filters, sorting, polishing UI  
-- **Week 8–9:** Showcase mode, sharing options, final styling and presentation  
+Here is a mockup of what the AllCards interface might look like. Users will be able to visually browse their collection, organized by franchises like Pokémon, Magic, and Yu-Gi-Oh:
 
----
+![AllCards UI Preview](AllCards.png)
 
-## 📸 UI Preview
-
-> _Coming Soon: Mockups and screenshots of the collection viewer, card editor, and deck builder._
+_Note: This is a mock UI preview. The final interface is currently in development and will be shared soon._
 
 ---
 
@@ -92,8 +133,8 @@ This project is for academic purposes (Capstone CSCI 499). Licensing and permiss
 
 ---
 
-## 🙌 Contributing
+## Contributions
 
-If you're a fellow developer or TCG enthusiast and want to contribute, feel free to fork the repository and create a pull request!
+Currently limited to team members. Forks and pull requests may be opened after initial release.
 
 ---
