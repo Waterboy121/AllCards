@@ -8,10 +8,11 @@ interface ButtonProps {
 const Button = ({ name, onClicked }: ButtonProps) => {
   return (
     <>
-      <div className="btn btn-light p-4 w-25 d-flex justify-content-center align-items-center mx-auto rounded m-5">
+      <div>
         <button
           type="button"
-          className="pixelify-sans btn text-black "
+          className="pixelify-sans btn text-black btn btn-light p-4 w-25 d-flex mx-auto m-5 justify-content-center fs-1"
+          style={{}}
           onClick={onClicked}
         >
           <div>{name}</div>
