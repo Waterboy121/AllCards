@@ -1,25 +1,12 @@
 import "./assets/css/App.css";
-import Button from "./components/Button";
+import Heading from "./components/Heading";
 import MainBody from "./components/MainBody";
-import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <div>
-      <NavBar />
+      <Heading name="All Cards" size={100} />
       <MainBody />
-      <Button
-        name="Log In"
-        onClicked={() => {
-          console.log("Clicked Log In!");
-        }}
-      />
-      <Button
-        name="Sign Up"
-        onClicked={() => {
-          console.log("Clicked Sign In!");
-        }}
-      />
     </div>
   );
 }
