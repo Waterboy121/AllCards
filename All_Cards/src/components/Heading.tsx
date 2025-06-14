@@ -13,7 +13,7 @@ function Heading({ name, size }: HeadingProp) {
         <img src={logo} className="me-2" width="80" height="80" />
         {name}
       </h1>
-      <div className={"mx-auto bg-white my-3"} style={{ height: "2px" }}></div>
+      <div className={"mx-auto bg-white"} style={{ height: "10px" }}></div>
     </>
   );
 }

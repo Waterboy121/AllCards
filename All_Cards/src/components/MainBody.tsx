@@ -12,7 +12,7 @@ function MainBody() {
         style={{ width: "50%", height: "2px" }}
       ></div>
       <h3 className="pixelify-sans text-center mt-4 ">
-        START YOUR COLLECTION NOW!!!
+        BUILD YOUR COLLECTION NOW!!!
       </h3>
     </>
   );
