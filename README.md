@@ -82,26 +82,70 @@ This stack allows fast development, real-time updates, and a responsive user int
 ## 📂 Project Structure (Planned)
 
 ```bash
-src/
-├── components/        # Reusable UI components (Card, Deck, Layout, etc.)
-│   ├── Card/          # Card-related components (display, upload, modal)
-│   ├── Collection/    # Collection browsing and filtering UIs
-│   ├── Deck/          # Deck builder and viewer components
-│   ├── Auth/          # Login, Register, Logout components
-│   ├── Layout/        # Shared layout elements (Navbar, Sidebar)
-│   └── Shared/        # Misc shared components (Buttons, Tags, Modals)
-├── pages/             # Top-level route views rendered by React Router
-│   ├── Home.jsx       # Landing page for non-authenticated users
-│   ├── Login.jsx      # Login page
-│   ├── Register.jsx   # Registration page
-│   ├── Dashboard.jsx  # Main user dashboard with binder view
-│   └── NotFound.jsx   # 404 page for invalid routes
-├── context/           # React Context providers (Auth, Cards)
-├── hooks/             # Custom React hooks
-├── services/          # Firebase and external API integration
-├── utils/             # Utility functions (e.g., metadata parsing)
-├── App.jsx            # Main application shell and router container
-└── main.jsx           # Entry point that renders <App /> to the DOM
+All_Cards/                              # Main frontend project folder (Vite + React + TS)
+├── public/                             # Publicly served assets (no bundling)
+│   └── vite.svg
+
+├── src/                                # Application source code
+│   ├── assets/                         # Static assets used in the UI
+│   │   ├── css/                        # Stylesheets for component styling
+│   │   │   ├── App.css                # Styles for App.tsx container and layout
+│   │   │   ├── font.css               # Font-face declarations and global typography
+│   │   │   ├── login.css              # Styles for login page
+│   │   │   ├── MainBody.css           # Layout and formatting for MainBody.tsx
+│   │   │   └── NavBar.css             # Navigation bar styling
+│   │   ├── logo.png
+│   │   └── react.svg
+│   │
+│   ├── components/                    # Reusable UI components
+│   │   ├── Button.tsx                 # Reusable styled button component
+│   │   ├── Heading.tsx                # Heading component for UI sections
+│   │   ├── login.tsx                  # Login form with input fields and handlers
+│   │   ├── MainBody.tsx               # Primary UI content container
+│   │   ├── NavBar.tsx                 # Top navigation bar component
+│   │   └── SignUp.tsx                 # Form for new user account creation
+│   │
+│   ├── App.tsx                        # Root-level component that assembles UI
+│   ├── main.tsx                       # App entry point rendering App.tsx
+│   └── vite-env.d.ts
+
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+
+├── images/                                 # Visual assets (logos, favicons, mockups)
+│   ├── icons/                              # .ico-format icons for franchise branding
+│   │   ├── digimon.ico
+│   │   ├── magic.ico
+│   │   ├── one-piece.ico
+│   │   ├── pokemon.ico
+│   │   └── yu-gi-oh.ico
+
+│   ├── logos/                              # Full-color and minimalist logo PNGs
+│   │   ├── digimon-color-logo.png
+│   │   ├── digimon-logo.png
+│   │   ├── magic-color-logo.png
+│   │   ├── magic-logo.png
+│   │   ├── one-piece-color-logo.png
+│   │   ├── one-piece-logo.png
+│   │   ├── pokemon-color-logo.png
+│   │   ├── pokemon-logo.png
+│   │   ├── yu-gi-oh-color-logo.png
+│   │   └── yu-gi-oh-logo.png
+
+│   └── Example-AllCards.png
+
+├── presentation/                           # Presentation slide deck and script
+│   ├── ALLCARDS Presentation Script.pdf
+│   └── Gaming Design Portfolio.pdf
+
 ```
 
 ---
@@ -110,7 +154,7 @@ src/
 
 Here is a mockup of what the AllCards interface might look like. Users will be able to visually browse their collection, organized by franchises like Pokémon, Magic, and Yu-Gi-Oh:
 
-![AllCards UI Preview](Example-AllCards.png)
+![AllCards UI Preview](/images/Example-AllCards.png)
 
 _Note: This is a mock UI preview. The final interface is currently in development and will be shared soon._
 
