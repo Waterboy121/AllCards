@@ -82,43 +82,44 @@ This stack allows fast development, real-time updates, and a responsive user int
 ## 📂 Project Structure (Planned)
 
 ```bash
-All_Cards/                              # Main frontend project folder (Vite + React + TS)
-├── public/                             # Publicly served assets (no bundling)
-│   └── vite.svg
-
-├── src/                                # Application source code
-│   ├── assets/                         # Static assets used in the UI
-│   │   ├── css/                        # Stylesheets for component styling
-│   │   │   ├── App.css                # Styles for App.tsx container and layout
-│   │   │   ├── font.css               # Font-face declarations and global typography
-│   │   │   ├── login.css              # Styles for login page
-│   │   │   ├── MainBody.css           # Layout and formatting for MainBody.tsx
-│   │   │   └── NavBar.css             # Navigation bar styling
-│   │   ├── logo.png
-│   │   └── react.svg
-│   │
-│   ├── components/                    # Reusable UI components
-│   │   ├── Button.tsx                 # Reusable styled button component
-│   │   ├── Heading.tsx                # Heading component for UI sections
-│   │   ├── login.tsx                  # Login form with input fields and handlers
-│   │   ├── MainBody.tsx               # Primary UI content container
-│   │   ├── NavBar.tsx                 # Top navigation bar component
-│   │   └── SignUp.tsx                 # Form for new user account creation
-│   │
-│   ├── App.tsx                        # Root-level component that assembles UI
-│   ├── main.tsx                       # App entry point rendering App.tsx
-│   └── vite-env.d.ts
-
-├── .gitignore
-├── eslint.config.js
-├── index.html
-├── package-lock.json
-├── package.json
-├── README.md
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts
+src/                                        # root directory of AllCards
+├── All_Cards/                              # Main frontend project folder (Vite + React + TS)
+│   ├── public/                             # Publicly served assets (no bundling)
+│   │   └── vite.svg
+│   
+│   ├── src/                                # Application source code
+│   │   ├── assets/                         # Static assets used in the UI
+│   │   │   ├── css/                        # Stylesheets for component styling
+│   │   │   │   ├── App.css                 # Styles for App.tsx container and layout
+│   │   │   │   ├── font.css                # Font-face declarations and global typography
+│   │   │   │   ├── login.css               # Styles for login page
+│   │   │   │   ├── MainBody.css            # Layout and formatting for MainBody.tsx
+│   │   │   │   └── NavBar.css              # Navigation bar styling
+│   │   │   ├── logo.png
+│   │   │   └── react.svg
+│   │   │
+│   │   ├── components/                     # Reusable UI components
+│   │   │   ├── Button.tsx                  # Reusable styled button component
+│   │   │   ├── Heading.tsx                 # Heading component for UI sections
+│   │   │   ├── login.tsx                   # Login form with input fields and handlers
+│   │   │   ├── MainBody.tsx                # Primary UI content container
+│   │   │   ├── NavBar.tsx                  # Top navigation bar component
+│   │   │   └── SignUp.tsx                  # Form for new user account creation
+│   │   │
+│   │   ├── App.tsx                         # Root-level component that assembles UI
+│   │   ├── main.tsx                        # App entry point rendering App.tsx
+│   │   └── vite-env.d.ts
+│   
+│   ├── .gitignore
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── README.md
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   └── vite.config.ts
 
 ├── images/                                 # Visual assets (logos, favicons, mockups)
 │   ├── icons/                              # .ico-format icons for franchise branding
