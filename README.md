@@ -173,7 +173,7 @@ src/                                            # root directory of AllCards
 │   │   ├── AllCards Pitch Script.pdf
 │   │   └── AllCards Pitch Slides.pdf
 │   │
-│   ├── Mid/                                    # The mid-project checkpoint progress updates, demos, or revised UI designs.
+│   ├── Mid/                                    # The mid-project checkpoint progression
 │   │   └── TBD
 │   │
 │   ├── Final/                                  # The final presentation slides, scripts, and visuals
