@@ -96,34 +96,35 @@ This stack allows fast development, real-time updates, and a responsive user int
 ## 📂 Project Structure (Planned)
 
 ```bash
-src/                                        # root directory of AllCards
-├── All_Cards/                              # Main frontend project folder (Vite + React + TS)
-│   ├── public/                             # Publicly served assets (no bundling)
+src/                                            # root directory of AllCards
+├── All_Cards/                                  # Main frontend project folder (Vite + React + TS)
+│   ├── public/                                 # Publicly served assets (no bundling)
 │   │   └── vite.svg
-│   
-│   ├── src/                                # Application source code
-│   │   ├── assets/                         # Static assets used in the UI
-│   │   │   ├── css/                        # Stylesheets for component styling
-│   │   │   │   ├── App.css                 # Styles for App.tsx container and layout
-│   │   │   │   ├── font.css                # Font-face declarations and global typography
-│   │   │   │   ├── login.css               # Styles for login page
-│   │   │   │   ├── MainBody.css            # Layout and formatting for MainBody.tsx
-│   │   │   │   └── NavBar.css              # Navigation bar styling
+│   │
+│   ├── src/                                    # Application source code
+│   │   ├── assets/                             # Static assets used in the UI
+│   │   │   ├── css/                            # Stylesheets for component styling
+│   │   │   │   ├── App.css                     # Styles for App.tsx container and layout
+│   │   │   │   ├── font.css                    # Font-face declarations and global typography
+│   │   │   │   ├── login.css                   # Styles for login page
+│   │   │   │   ├── MainBody.css                # Layout and formatting for MainBody.tsx
+│   │   │   │   └── NavBar.css                  # Navigation bar styling
+│   │   │   │
 │   │   │   ├── logo.png
 │   │   │   └── react.svg
 │   │   │
-│   │   ├── components/                     # Reusable UI components
-│   │   │   ├── Button.tsx                  # Reusable styled button component
-│   │   │   ├── Heading.tsx                 # Heading component for UI sections
-│   │   │   ├── login.tsx                   # Login form with input fields and handlers
-│   │   │   ├── MainBody.tsx                # Primary UI content container
-│   │   │   ├── NavBar.tsx                  # Top navigation bar component
-│   │   │   └── SignUp.tsx                  # Form for new user account creation
+│   │   ├── components/                         # Reusable UI components
+│   │   │   ├── Button.tsx                      # Reusable styled button component
+│   │   │   ├── Heading.tsx                     # Heading component for UI sections
+│   │   │   ├── login.tsx                       # Login form with input fields and handlers
+│   │   │   ├── MainBody.tsx                    # Primary UI content container
+│   │   │   ├── NavBar.tsx                      # Top navigation bar component
+│   │   │   └── SignUp.tsx                      # Form for new user account creation
 │   │   │
-│   │   ├── App.tsx                         # Root-level component that assembles UI
-│   │   ├── main.tsx                        # App entry point rendering App.tsx
+│   │   ├── App.tsx                             # Root-level component that assembles UI
+│   │   ├── main.tsx                            # App entry point rendering App.tsx
 │   │   └── vite-env.d.ts
-│   
+│   │
 │   ├── .gitignore
 │   ├── eslint.config.js
 │   ├── index.html
@@ -134,32 +135,54 @@ src/                                        # root directory of AllCards
 │   ├── tsconfig.json
 │   ├── tsconfig.node.json
 │   └── vite.config.ts
-
-├── images/                                 # Visual assets (logos, favicons, mockups)
-│   ├── icons/                              # .ico-format icons for franchise branding
+│
+├── images/                                     # Visual assets (logos, favicons, mockups)
+│   ├── icons/                                  # .ico-format icons for franchise branding
 │   │   ├── digimon.ico
+│   │   ├── disney-lorcana.ico
 │   │   ├── magic.ico
+│   │   ├── marvel.ico
 │   │   ├── one-piece.ico
 │   │   ├── pokemon.ico
+│   │   ├── star-wars.ico
 │   │   └── yu-gi-oh.ico
-
-│   ├── logos/                              # Full-color and minimalist logo PNGs
+│   │   
+│   ├── logos/                                  # Full-color and minimalist logo PNGs
 │   │   ├── digimon-color-logo.png
 │   │   ├── digimon-logo.png
+│   │   ├── disney-lorcana-color-logo.png
+│   │   ├── disney-lorcana-logo.png
 │   │   ├── magic-color-logo.png
 │   │   ├── magic-logo.png
+│   │   ├── marvel-color-logo.png
+│   │   ├── marvel-logo.png
 │   │   ├── one-piece-color-logo.png
 │   │   ├── one-piece-logo.png
 │   │   ├── pokemon-color-logo.png
 │   │   ├── pokemon-logo.png
+│   │   ├── star-wars-color-logo.png
+│   │   ├── star-wars-logo.png
 │   │   ├── yu-gi-oh-color-logo.png
 │   │   └── yu-gi-oh-logo.png
-
-│   └── Example-AllCards.png
-
-├── presentation/                           # Presentation slide deck and script
-│   ├── ALLCARDS Presentation Script.pdf
-│   └── Gaming Design Portfolio.pdf
+│   │
+│   ├── Example-AllCards.png
+│   └── README.md
+│
+├── presentation/                               # Presentation slide deck and script
+│   ├── Initial/                                # The initial pitch design and early mockups
+│   │   ├── AllCards Pitch Script.pdf
+│   │   └── AllCards Pitch Slides.pdf
+│   │
+│   ├── Mid/                                    # The mid-project checkpoint progress updates, demos, or revised UI designs.
+│   │   └── TBD
+│   │
+│   ├── Final/                                  # The final presentation slides, scripts, and visuals
+│   │   └── TBD
+│   │
+│   └── README.md
+│
+├── package-lock.json
+└── README.md
 
 ```
 
