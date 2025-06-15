@@ -1,10 +1,10 @@
-# 📁 `images/` Directory
+# `images/` Directory
 
 This directory contains visual assets used throughout the AllCards project, including application mockups, branding icons, and franchise logos.
 
 ---
 
-## 📂 `icons/`
+## `icons/`
 
 This subdirectory contains `.ico` format files used as favicons or card set identifiers in the UI. Each file represents a specific trading card franchise:
 
@@ -16,7 +16,7 @@ This subdirectory contains `.ico` format files used as favicons or card set iden
 
 ---
 
-## 📂 `logos/`
+## `logos/`
 
 This subdirectory includes both minimalist and full-color logo images for card game franchises. These are used in the application UI and presentation materials.
 
@@ -33,6 +33,6 @@ Franchises covered:
 
 ---
 
-## 🖼 `Example-AllCards.png`
+## `Example-AllCards.png`
 
 A UI mockup showcasing an early concept of the AllCards app layout. Used in presentation and documentation to convey the app’s look and feel.
