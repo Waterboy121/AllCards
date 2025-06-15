@@ -9,8 +9,8 @@ This directory contains the slides and scripts for the AllCards project presenta
 This folder includes the initial pitch design and early mockups.
 
 Contents:
-- `ALLCARDS Presentation Script.pdf`
-- `Gaming Design Portfolio.pdf`
+- `AllCards Pitch Script.pdf`
+- `AllCards Pitch Slides.pdf`
 
 ---
 
