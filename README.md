@@ -110,7 +110,7 @@ src/
 
 Here is a mockup of what the AllCards interface might look like. Users will be able to visually browse their collection, organized by franchises like Pokémon, Magic, and Yu-Gi-Oh:
 
-![AllCards UI Preview](AllCards.png)
+![AllCards UI Preview](Example-AllCards.png)
 
 _Note: This is a mock UI preview. The final interface is currently in development and will be shared soon._
 
