@@ -18,8 +18,14 @@ Contents:
 
 This folder is reserved for materials used in the mid-project checkpoint, including progress updates, feature demos, or revised UI designs.
 
+Contents:
+- `TBD`
+
 ---
 
 ## `Final/`
 
 This folder will contain final presentation slides, scripts, and any visual or functional demos submitted at the project's conclusion.
+
+Contents:
+- `TBD`
