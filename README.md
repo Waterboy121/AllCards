@@ -8,6 +8,20 @@ AllCards is a web application that brings trading card collecting into the digit
 
 To create the most intuitive and personalized digital binder experience for collectors and fans of trading card games — a place to truly own, explore, and organize their card collections the way they want.
 
+#### Trading Card Franchises
+
+###### The Big Three:
+- `Magic: The Gathering`
+- `Pokémon Trading Card Game`
+- `Yu-Gi-Oh! Trading Card Game`
+
+###### The Newcomers:
+- `Digimon Trading Card Game`
+- `Disney Lorcana`
+- `Marvel Champions: The Card Game`
+- `One Piece Trading Card Game`
+- `Star Wars Unlimited`
+
 ---
 
 ## The Problem
