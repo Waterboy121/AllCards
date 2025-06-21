@@ -2,29 +2,27 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-import App from "./App.tsx"; 
-import Login from "./components/login.tsx";
-import SignUp from "./components/SignUp.tsx";
-import SideNav from "./components/SideNav.tsx";
+import WelcomePage from "./pages/WelcomePage.tsx";
+import SignUpPage from "./pages/SignUpPage.tsx";
+import Homepage from "./pages/Homepage.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <WelcomePage />,
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <WelcomePage />,
   },
   {
     path: "/signup",
-    element: <SignUp />,
+    element: <SignUpPage />,
   },
-{
-  path: "/SideNav",
-  element: <SideNav />,
-},
-
+  {
+    path: "/homepage",
+    element: <Homepage />,
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(
