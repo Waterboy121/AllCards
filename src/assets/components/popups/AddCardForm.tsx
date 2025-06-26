@@ -34,20 +34,30 @@ function AddCardForm({ franchise, onConfirm, onCancel }: AddCardFormProps) {
         }
     };
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleSearch();
+    };
+
     return (
         <div className="add-card-form">
             <h2>Add a Card</h2>
-            <div className="form-row">
-                <label htmlFor="card-name">Card Name:</label>
-                <input
-                    id="card-name"
-                    type="text"
-                    value={cardName}
-                    onChange={(e) => setCardName(e.target.value)}
-                    placeholder="Enter exact card name"
-                />
-                <button onClick={handleSearch}>Search</button>
-            </div>
+
+            <form onSubmit={handleSubmit}>
+                <div className="form-row">
+                    <label htmlFor="card-name">Card Name:</label>
+                    <input
+                        id="card-name"
+                        type="text"
+                        value={cardName}
+                        onChange={(e) => setCardName(e.target.value)}
+                        placeholder="Enter exact card name"
+                    />
+                    <button type="submit" className="confirm-btn">
+                        Search
+                    </button>
+                </div>
+            </form>
 
             {franchise.toLowerCase() === "magic" && (
                 <p className="magic-hint">
