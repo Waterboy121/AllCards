@@ -1,0 +1,61 @@
+/* src/assets/css/Card.css */
+
+.card-tile {
+	background-color: #1c1c1c;
+	border-radius: 0.75rem;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	color: #e0e0e0;
+	width: 13.125rem;
+	cursor: pointer;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-tile:hover {
+	transform: scale(1.03);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.card-image-wrapper {
+	width: 100%;
+	height: 18.75rem;
+	background-color: transparent;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.card-image {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+	border-radius: .75rem;
+	display: block;
+}
+
+
+.card-info {
+	background-color: transparent;
+	padding: 0.6rem 0.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+.card-name {
+	font-weight: 600;
+	font-size: 1.1rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.card-set {
+	font-size: 0.85rem;
+	color: #aaa;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

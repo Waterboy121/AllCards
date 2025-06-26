@@ -1,0 +1,103 @@
+.sidebar {
+  width: 33rem;
+  background-color: #111;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.5rem;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid #222;
+  font-size: 1.3rem;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem;
+  color: rgb(200, 200, 200);
+  font-size: 1.25em;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  transition: background-color 0.2s ease;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.6;
+}
+
+.sidebar-item:hover:not(.active) {
+  background-color: #2a2a2a;
+}
+
+.sidebar-item.active {
+  background-color: #4a2a2a;
+}
+
+.sidebar-item.active:hover {
+  background-color: #391e1e;
+}
+
+.sidebar-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.sidebar-right {
+  display: none;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  min-width: 4.5rem;
+}
+
+.sidebar-item:hover .sidebar-right,
+.sidebar-item.active .sidebar-right {
+  display: flex;
+}
+
+.sidebar-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-name {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  word-break: break-word;
+}
+
+.sidebar-icon {
+  height: 2.8rem;
+  width: auto;
+  flex-shrink: 0;
+  filter: brightness(0) saturate(100%) invert(78%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(95%);
+}
+
+.sidebar-icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  position: relative;
+  top: -1px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgb(175, 175, 175);
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
+  font-family: Arial, sans-serif; /* Overrides pixel font for clarity */
+}
+
+.sidebar-dots {
+  font-size: 1.8rem;
+  line-height: 1;
+}
