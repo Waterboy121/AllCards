@@ -1,5 +1,44 @@
-body {
-    background-color: #323232;
+/* src/assets/css/Homepage.css */
+
+.homepage-container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	background-color: #111;
+	color: #fff;
 }
 
+.homepage-layout {
+	display: flex;
+	flex: 1;
+	overflow: hidden;
+}
 
+/* MainView placeholder styling */
+.mock-mainview {
+	flex: 1;
+	padding: 2rem;
+	overflow-y: auto;
+	background-color: #1a1a1a;
+	display: flex;
+	flex-direction: column;
+}
+
+.mock-mainview h2 {
+	font-size: 1.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.mock-mainview p {
+	font-size: 1rem;
+	color: #ccc;
+	margin-bottom: 1rem;
+}
+
+/* New: card grid layout */
+.mock-card-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2rem;
+	margin-top: 2rem;
+}
