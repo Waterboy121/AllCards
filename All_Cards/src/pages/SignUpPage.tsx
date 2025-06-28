@@ -1,7 +1,7 @@
 import Heading from "../components/Heading";
 import SignUp from "../components/SignUp";
 
-export default function SignUpPage() {
+function SignUpPage() {
   return (
     <>
       <Heading name="All Cards" size={100} />
@@ -9,3 +9,5 @@ export default function SignUpPage() {
     </>
   );
 }
+
+export default SignUpPage;
