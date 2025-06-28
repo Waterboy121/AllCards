@@ -1,36 +1,30 @@
 import "../assets/css/NavBar.css";
-import "../assets/css/font.css";
-import logo from "../assets/logo.png";
+import logo from "../assets/images/logos/logo2.png";
+import searchIcon from "../assets/images/icons/search.svg";
 
 function NavBar() {
   return (
-    <>
-      <div className="d-flex justify-content-between align-items-center px-4 py-3 bg-dark text-white">
-        <a href="#" className="nav-link">
-          <h1 className="pixelify-sans">
-            <img src={logo} className="me-2" width="64" height="64" />
-            All Cards
-          </h1>
-        </a>
-        <nav className="nav nav-tabs">
-          <a className="nav-link pixelify-sans fs-4" key="home" href="#">
-            Home
-          </a>
-          <a className="nav-link pixelify-sans fs-4" key="aboutus" href="#">
-            About Us
-          </a>
-          <a className="nav-link pixelify-sans fs-4" key="login" href="#">
-            Login
-          </a>
-          <a className="nav-link pixelify-sans fs-4" key="signup" href="#">
-            Sign up
-          </a>
-          <a className="nav-link pixelify-sans fs-4" key="faqs" href="#">
-            FAQs
-          </a>
-        </nav>
+    <nav className="navbar navbar-dark bg-dark px-3 py-2 py-md-3 d-flex align-items-center">
+      <div className="allcards-logo flex-shrink-0 me-4 d-flex align-items-center">
+        <span className="me-2">AllCards</span>
+        <img src={logo} alt="AllCards logo" className="logo-image" />
       </div>
-    </>
+
+      <div className="search-container">
+        <div className="search-wrapper">
+          <img src={searchIcon} alt="Search" className="search-svg-icon" />
+          <input
+            type="text"
+            className="form-control search-input"
+            placeholder="Search through your virtual binder here..."
+          />
+        </div>
+      </div>
+
+      <button className="hamburger-btn flex-shrink-0 ms-4">
+        <span className="hamburger-icon">&#9776;</span>
+      </button>
+    </nav>
   );
 }
 

@@ -9,6 +9,7 @@ function AddCard() {
     <>
       <button
         className="btn btn-outline-secondary rounded-circle"
+        type="button"
         onClick={() => {
           setWindowState(!showWindow);
         }}

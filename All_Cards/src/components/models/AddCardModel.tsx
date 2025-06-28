@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { db } from "../../firebase/index.ts";
-import { collection, addDoc } from "firebase/firestore";
+import type { StoredCard } from "../../assets/types/card.ts";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { getCardDetailsByName } from "../../assets/apis/yu-gi-oh.ts";
+import { addCard } from "../../firebase/database.ts";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../../assets/css/AddCardModel.css";
 
@@ -12,16 +14,23 @@ interface AddCardProp {
 function AddCardModel({ show, onClick }: AddCardProp) {
   const [shouldRender, setShouldRender] = useState(show);
   const [fadeClass, setFadeClass] = useState("");
-  const [cardName, setCardName] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const [TCG, setTCG] = useState("Pokémon");
+  const [showCardSets, setShowCardSets] = useState(false);
+  const [showAddButton, setShowAddButton] = useState(false);
+  const [showCardSetsButton, setShowCardSetsButton] = useState(true);
+  const [cardSets, setCardSets] = useState<string[]>([]);
+  const [errorName, setErrorName] = useState(false);
 
-  const ref = collection(db, "users"); //to do change 'users' into user account name
-
-  /*Testing Values
-  useEffect(() => {
-    console.log(TCG);
-  }, [TCG]);*/
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { isSubmitting },
+  } = useForm<StoredCard>({
+    defaultValues: {
+      amount: 1,
+    },
+  });
 
   useEffect(() => {
     if (show) {
@@ -36,19 +45,40 @@ function AddCardModel({ show, onClick }: AddCardProp) {
 
   if (!shouldRender) return null;
 
-  const handlerSubmitCard = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(cardName + " | " + quantity + " | " + TCG);
-    let data = {
-      card_name: cardName,
-      amount: quantity,
-      trading_card: TCG,
+  const handlerSubmitCard: SubmitHandler<StoredCard> = async (data) => {
+    const cardInfo = getCardDetailsByName(data.name);
+    let card: StoredCard = {
+      id: "",
+      name: data.name,
+      imageUrl: "",
+      set: data.set,
+      amount: data.amount,
+      tcg: data.tcg,
     };
-    try {
-      addDoc(ref, data);
-    } catch (e) {
-      console.log(e);
+    cardInfo.then((value) => {
+      card.id = String(value.id);
+      card.imageUrl = `https://images.ygoprodeck.com/images/cards/${value.id}.jpg`;
+      console.log(card);
+      addCard(card);
+    });
+  };
+
+  const handlerCardSets = () => {
+    if (getValues("name") === "") {
+      setErrorName(true);
+      return;
     }
+    setErrorName(false);
+    setShowCardSets(true);
+    setShowCardSetsButton(false);
+    setShowAddButton(true);
+    const cardInfo = getCardDetailsByName(getValues("name"));
+    cardInfo.then((data) => {
+      const names = data.card_sets?.map((set) => set.set_name) || [];
+      const unique = [...new Set(names)];
+      setCardSets(unique);
+      setValue("set", unique[0]);
+    });
   };
 
   return (
@@ -69,7 +99,7 @@ function AddCardModel({ show, onClick }: AddCardProp) {
                 onClick={onClick}
               ></button>
             </div>
-            <form onSubmit={handlerSubmitCard}>
+            <form onSubmit={handleSubmit(handlerSubmitCard)}>
               <div className="modal-body">
                 {/*Put the form in here*/}
                 {/*Card start*/}
@@ -78,13 +108,19 @@ function AddCardModel({ show, onClick }: AddCardProp) {
                     Card Name
                   </span>
                   <input
+                    {...register("name", {
+                      required: "You need to input a name",
+                    })}
                     type="text"
                     className="form-control anta-regular text-dark fs-5"
                     placeholder="Card Name"
                     aria-label="CardName"
-                    onChange={(e) => setCardName(e.target.value)}
-                    required
                   />
+                  {errorName && (
+                    <div className="invalid-feedback d-block anta-regular">
+                      You need to input a name
+                    </div>
+                  )}
                 </div>
                 {/*Card end*/}
                 {/*Amount start*/}
@@ -93,19 +129,17 @@ function AddCardModel({ show, onClick }: AddCardProp) {
                     Amount
                   </span>
                   <input
+                    {...register("amount")}
                     type="number"
                     className="form-control anta-regular text-dark fs-5"
-                    value={quantity}
                     aria-label="Amount"
-                    onChange={(e) => {
-                      setQuantity(parseInt(e.target.value));
-                    }}
                   />
                   <button
                     className="btn btn-outline-secondary"
                     type="button"
                     onClick={() => {
-                      setQuantity(quantity + 1);
+                      let currentValue = getValues("amount") ?? 0; //never should be 0 because default value is 1 but otherwise it thinks its undefine
+                      setValue("amount", currentValue + 1);
                     }}
                   >
                     <i className="bi bi-plus"></i>
@@ -114,7 +148,10 @@ function AddCardModel({ show, onClick }: AddCardProp) {
                     className="btn btn-outline-secondary"
                     type="button"
                     onClick={() => {
-                      setQuantity(quantity - 1);
+                      let currentValue = getValues("amount") ?? 0;
+                      if (currentValue !== 1) {
+                        setValue("amount", currentValue - 1);
+                      }
                     }}
                   >
                     <i className="bi bi-dash"></i>
@@ -127,23 +164,18 @@ function AddCardModel({ show, onClick }: AddCardProp) {
                     TCG
                   </span>
                   <select
+                    {...register("tcg")}
                     className="form-select anta-regular text-dark fs-5"
                     aria-label="TCG Picker"
-                    value={TCG}
-                    onChange={(e) => {
-                      setTCG(e.target.value);
-                    }}
                   >
-                    <option defaultValue="Pokémon">Pokémon</option>
-                    <option value="Yu-Gi-Oh">Yu-Gi-Oh</option>
-                    <option value="One Piece">One Piece</option>
-                    <option value="Magic The Gathering">
-                      Magic The Gathering
-                    </option>
+                    <option key={1}>Pokémon</option>
+                    <option key={2}>Yu-Gi-Oh</option>
+                    <option key={3}>Magic The Gathering</option>
+                    <option key={4}>One Piece</option>
                   </select>
                 </div>
                 {/*TCG Picker end*/}
-                {/*Upload Picture start*/}
+                {/*Upload Picture start
                 <div className="input-group mb-3">
                   <input
                     type="file"
@@ -151,19 +183,44 @@ function AddCardModel({ show, onClick }: AddCardProp) {
                   />
                 </div>
                 {/*Upload Picture end*/}
+                {showCardSets && (
+                  <div className="input-group mb-3">
+                    <span className="input-group-text anta-regular text-dark fs-5">
+                      Card Sets
+                    </span>
+                    <select
+                      {...register("set")}
+                      className="form-select anta-regular text-dark fs-5"
+                      aria-label="Card Sets"
+                    >
+                      {cardSets.map((item, i) => (
+                        <option className="anta-regular text-dark" key={i}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
 
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={onClick}
-                >
-                  Close
+                <button type="button" className="btn btn-secondary">
+                  Reset
                 </button>
-                <button type="submit" className="btn btn-primary">
-                  Add Card
-                </button>
+                {showAddButton && (
+                  <button type="submit" className="btn btn-primary">
+                    {isSubmitting ? "Loading..." : "Add Card"}
+                  </button>
+                )}
+                {showCardSetsButton && (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handlerCardSets}
+                  >
+                    Show Card Sets
+                  </button>
+                )}
               </div>
             </form>
           </div>
