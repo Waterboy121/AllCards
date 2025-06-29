@@ -37,16 +37,12 @@ function Login() {
   const onLoginSubmit: SubmitHandler<LoginFormFields> = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      LoginWithEP(data.email, data.password)
-        .then(() => {
-          console.log("Logged in Successful! Welcome " + getUser() + "!");
-          navigate("/homepage");
-        })
-        .catch(() => {
-          setError("root", { message: "Invalid Email or Password" });
-        });
-    } catch (errors) {
-      setError("root", { message: "Unable to Login" }); //improve later maybe
+      await LoginWithEP(data.email, data.password);
+      console.log("Logged in Successful! Welcome " + getUser() + "!");
+      navigate("/homepage");
+      throw new Error();
+    } catch (errors: any) {
+      setError("password", { message: "Invalid Email or Password" });
     }
   };
 

@@ -65,18 +65,12 @@ function SignUp() {
   const onSignUpSubmit: SubmitHandler<SignUpFormFields> = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log(data); //get rid of later
-      MakeUser(data.email, data.password, data.display_name)
-        .then(() => {
-          console.log("Sign up Successful! Welcome " + getUser() + "!");
-          navigate("/homepage");
-        })
-        .catch(() => {
-          setError("root", { message: "Email already taken!" });
-        });
+      await MakeUser(data.email, data.password, data.display_name);
+      console.log("Sign up Successful! Welcome " + getUser() + "!");
+      navigate("/homepage");
       throw new Error();
-    } catch (error) {
-      setError("root", { message: "Email already taken" }); //make better error message
+    } catch (error: any) {
+      setError("repassword", { message: "Email is already in use" });
     }
   };
 
