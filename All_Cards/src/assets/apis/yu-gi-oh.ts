@@ -34,7 +34,6 @@ export async function searchCardsByName(name: string): Promise<StoredCard[]> {
     name: card.name,
     imageUrl: card.card_images[0]?.image_url || "",
     set: card.card_sets?.[0]?.set_name || "-",
-    tcg: "Yu-Gi-Oh",
   }));
 }
 

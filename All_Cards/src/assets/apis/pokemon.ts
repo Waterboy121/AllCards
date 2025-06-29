@@ -37,7 +37,6 @@ export async function searchCardsByName(name: string): Promise<StoredCard[]> {
       name: card.name,
       imageUrl: card.images.large || card.images.small,
       set: card.set.name || "-",
-      tcg: "Pokémon",
     }));
 }
 
