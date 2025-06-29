@@ -9,52 +9,39 @@ import {
 } from "firebase/auth";
 
 export async function LoginWithEP(email: string, password: string) {
-  await signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      //console.log(userCredential.user.email);
-    })
-    .catch((error) => {
-      throw new Error(
-        "ErrorCode: " + error.code + "\nError Message: " + error.message
-      );
-    });
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    //console.log(userCredential.user.email);
+  } catch (error: any) {
+    throw new Error(
+      "ErrorCode: " + error.code + "\nError Message: " + error.message
+    );
+  }
 }
 
 export async function MakeUser(
   email: string,
   password: string,
   display_name: string
-) {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      //console.log(user);
-      sendEmailVerification(userCredential.user).then(() => {
-        console.log("Email sent to " + userCredential.user.email);
-      });
-      updateProfile(user, {
-        displayName: display_name,
-      })
-        .then(() => {
-          console.log("Updated display name! " + user.displayName);
-        })
-        .catch((error) => {
-          throw new Error(
-            "Display Name: ErrorCode: " +
-              error.code +
-              "\nError Message: " +
-              error.message
-          );
-        });
-    })
-    .catch((error) => {
-      throw new Error(
-        "Make User: ErrorCode: " +
-          error.code +
-          "\nError Message: " +
-          error.message
-      );
+): Promise<void> {
+  try {
+    const madeUser = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    await sendEmailVerification(madeUser.user);
+    console.log("Email sent to " + madeUser.user.email);
+
+    await updateProfile(madeUser.user, {
+      displayName: display_name,
     });
+
+    console.log("Updated display name! " + madeUser.user.displayName);
+  } catch (error: any) {
+    throw new Error(`${error.code}`);
+  }
 }
 
 export function SignOut() {
