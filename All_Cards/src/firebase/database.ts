@@ -2,14 +2,14 @@ import { db, auth } from "../firebase/index.ts";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import type { StoredCard } from "../assets/types/card.ts";
 
-export async function addCard(card: StoredCard) {
-  const user = auth.currentUser?.uid ?? "Guest";
+export async function addCard(card: StoredCard, tcg: string) {
+  const user = auth.currentUser?.displayName ?? "Guest";
   console.log(user);
   if (user === "Guest") {
     return;
   }
 
-  const cardRef = collection(db, "users", user, card.tcg);
+  const cardRef = collection(db, "users", user, tcg);
   const q = query(
     cardRef,
     where("name", "==", card.name),
@@ -23,7 +23,7 @@ export async function addCard(card: StoredCard) {
   }
 
   //todo add a check to see if the doc is already there
-  const docRef = await addDoc(collection(db, "users", user, card.tcg), {
+  const docRef = await addDoc(collection(db, "users", user, tcg), {
     id: card.id,
     name: card.name,
     image_url: card.imageUrl,
