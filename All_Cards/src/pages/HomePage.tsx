@@ -15,6 +15,7 @@ import Card from "../components/Card";
 import { useState } from "react";
 import type { StoredCard } from "../assets/types/card.ts";
 import { getUser } from "../firebase/auth.ts";
+import AddCard from "../components/AddCard";
 
 function HomePage() {
   const [currentTab, setCurrentTab] = useState<string>("Home");
@@ -69,7 +70,7 @@ function HomePage() {
           onAddCard={handleAddCard}
         />
         <div className="mock-mainview">
-          <h2>Welcome to {getUser()}</h2>
+          <h2>Welcome {getUser()}!</h2>
 
           <div className="mock-card-grid">
             {mockCards.map((card) => (
@@ -78,6 +79,7 @@ function HomePage() {
           </div>
         </div>
       </div>
+      <AddCard />
 
       {showAddPopup && (
         <Popup onClose={() => setShowAddPopup(false)}>
