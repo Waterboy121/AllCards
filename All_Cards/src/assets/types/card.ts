@@ -4,5 +4,4 @@ export type StoredCard = {
   imageUrl: string;
   set: string;
   amount?: number;
-  tcg: string;
 };
