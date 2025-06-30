@@ -86,17 +86,29 @@ function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (loading || addedCard) {
-      console.log("No Refeshing!");
+    if (loading) {
+      console.log("Loading!");
       return;
     } else {
       getData(franchiseTabs).then((data) => {
         setMockCards(data);
       });
-      setAddedCard(false);
-      console.log("Yes Refeshing!");
+      console.log("Loaded!");
     }
-  }, [addedCard, loading]);
+  }, [loading]);
+
+  useEffect(() => {
+    if (addedCard) {
+      //it waits half a second for the document to be added to the database
+      setTimeout(() => {
+        getData(franchiseTabs).then((data) => {
+          setMockCards(data);
+        });
+        setAddedCard(false);
+        console.log("Added!");
+      }, 500);
+    }
+  }, [addedCard]);
 
   if (loading) {
     return (
