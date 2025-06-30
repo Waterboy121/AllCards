@@ -18,16 +18,21 @@ import type { StoredCard } from "../assets/types/card.ts";
 import { getUser } from "../firebase/auth.ts";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/index.ts";
+import { addCard, getData } from "../firebase/database.ts";
+import type { Franchise } from "../assets/types/franchise.ts";
 
 function HomePage() {
   const [loading, setLoading] = useState(true);
   const [currentTab, setCurrentTab] = useState<string>("Home");
 
-  const [franchiseTabs, setFranchiseTabs] = useState([
+  const [franchiseTabs, setFranchiseTabs] = useState<Franchise[]>([
     { name: "Pokemon", logoKey: "pokemon" },
     { name: "Yu-Gi-Oh", logoKey: "yu-gi-oh" },
     { name: "Magic", logoKey: "magic" },
   ]);
+
+  //const mockCards: StoredCard[] = [];
+  const [mockCards, setMockCards] = useState<StoredCard[]>([]);
 
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [showAddCardPopup, setShowAddCardPopup] = useState(false);
@@ -51,12 +56,25 @@ function HomePage() {
   };
 
   const handleCardConfirm = (card: StoredCard) => {
+    const updatedCard: StoredCard = {
+      id: card.id,
+      name: card.name,
+      imageUrl: card.imageUrl,
+      set: card.set,
+      amount: 1, //add a place to the form to add a amount for the card, when added delete this and just use card instead.
+    };
     console.log("Card selected:", card);
     setShowAddCardPopup(false);
+    if (selectedFranchise === null) {
+      console.log("Franchise is null"); //if for some reason this is null, don't use it
+      return;
+    }
+    const franchise = selectedFranchise ?? ""; //this should never be "", but I need a string only so i am using this workaround
+    addCard(updatedCard, franchise);
     setSelectedFranchise(null);
-    // Later: store in Firestore / collection state
   };
 
+  //this will happen once per start of the homepage
   useEffect(() => {
     onAuthStateChanged(auth, () => {
       setTimeout(() => {
@@ -64,6 +82,16 @@ function HomePage() {
       }, 500);
     });
   }, []);
+
+  useEffect(() => {
+    if (loading) {
+      console.log("no");
+      return;
+    } else console.log("yes");
+    getData(franchiseTabs).then((data) => {
+      setMockCards(data);
+    });
+  }, [mockCards, loading]);
 
   if (loading) {
     return (
@@ -80,8 +108,6 @@ function HomePage() {
       </div>
     );
   }
-
-  const mockCards: StoredCard[] = [];
 
   return (
     <div className="homepage-container">
