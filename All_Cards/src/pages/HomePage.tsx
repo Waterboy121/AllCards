@@ -23,6 +23,7 @@ import type { Franchise } from "../assets/types/franchise.ts";
 
 function HomePage() {
   const [loading, setLoading] = useState(true);
+  const [addedCard, setAddedCard] = useState(false);
   const [currentTab, setCurrentTab] = useState<string>("Home");
 
   const [franchiseTabs, setFranchiseTabs] = useState<Franchise[]>([
@@ -71,6 +72,7 @@ function HomePage() {
     }
     const franchise = selectedFranchise ?? ""; //this should never be "", but I need a string only so i am using this workaround
     addCard(updatedCard, franchise);
+    setAddedCard(true);
     setSelectedFranchise(null);
   };
 
@@ -84,14 +86,17 @@ function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (loading) {
-      console.log("no");
+    if (loading || addedCard) {
+      console.log("No Refeshing!");
       return;
-    } else console.log("yes");
-    getData(franchiseTabs).then((data) => {
-      setMockCards(data);
-    });
-  }, [mockCards, loading]);
+    } else {
+      getData(franchiseTabs).then((data) => {
+        setMockCards(data);
+      });
+      setAddedCard(false);
+      console.log("Yes Refeshing!");
+    }
+  }, [addedCard, loading]);
 
   if (loading) {
     return (
@@ -124,8 +129,8 @@ function HomePage() {
           <h2>Welcome {getUser()}!</h2>
 
           <div className="mock-card-grid">
-            {mockCards.map((card) => (
-              <Card key={card.id} {...card} />
+            {mockCards.map((card, index) => (
+              <Card key={index} {...card} />
             ))}
           </div>
         </div>
