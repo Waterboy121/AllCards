@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getUser, LoginWithEP, SignOut } from "../firebase/auth.ts";
+import { getUser, LoginWithEP } from "../firebase/auth.ts";
 import "../assets/css/font.css";
 
 const schema = z.object({
@@ -171,13 +171,6 @@ function Login() {
                 </button>
               </Link>
             </div>
-            <button
-              type="button"
-              className="btn btn-dark pixelify-sans w-100 mt-4"
-              onClick={SignOut}
-            >
-              Sign Out
-            </button>
           </div>
         </div>
       </div>
