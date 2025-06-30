@@ -1,6 +1,8 @@
 import { db, auth } from "../firebase/index.ts";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import type { StoredCard } from "../assets/types/card.ts";
+import type { Franchise } from "../assets/types/franchise.ts";
+import { getUser } from "./auth.ts";
 
 export async function addCard(card: StoredCard, tcg: string) {
   const user = auth.currentUser?.displayName ?? "Guest";
@@ -22,7 +24,6 @@ export async function addCard(card: StoredCard, tcg: string) {
     return;
   }
 
-  //todo add a check to see if the doc is already there
   const docRef = await addDoc(collection(db, "users", user, tcg), {
     id: card.id,
     name: card.name,
@@ -34,6 +35,7 @@ export async function addCard(card: StoredCard, tcg: string) {
   console.log(docRef.id);
 }
 
+//get rid of later, if not needed. Most likely not needed
 export async function addEmptyTCG() {
   const user = auth.currentUser?.uid ?? "Guest";
   console.log(user);
@@ -46,4 +48,33 @@ export async function addEmptyTCG() {
   console.log(docRef1.id); //get rid of later
   console.log(docRef2.id); //get rid of later
   console.log(docRef3.id); //get rid of later
+}
+
+export async function getData(franchise: Franchise[]): Promise<StoredCard[]> {
+  const user = getUser() ?? "";
+  if (user === "") {
+    console.log("Error getting displayName"); //if user is not logged in or not found, it can't get Data
+  }
+
+  let allCards: StoredCard[] = [];
+
+  for (const fran of franchise) {
+    const querySnapshot = await getDocs(
+      collection(db, "users", user, fran.name) //first gets the collection
+    );
+
+    querySnapshot.forEach((doc) => {
+      //adds each collection data into a card format and then adds it to allCards
+      let card: StoredCard = {
+        id: doc.data().id,
+        name: doc.data().name,
+        imageUrl: doc.data().image_url,
+        set: doc.data().sets,
+        amount: doc.data().amount,
+      };
+      console.log(doc.id, " => ", card);
+      allCards.push(card);
+    });
+  }
+  return allCards;
 }
