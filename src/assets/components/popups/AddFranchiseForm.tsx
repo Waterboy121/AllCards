@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import "../../css/popups/AddFranchiseForm.css";
 
 // Logo imports (same as Sidebar)
-import pokemon from "../../images/tcg-logos/pokemon-logo.png";
-import yugioh from "../../images/tcg-logos/yu-gi-oh-logo.png";
-import magic from "../../images/tcg-logos/magic-logo.png";
-import digimon from "../../images/tcg-logos/digimon-logo.png";
-import disney from "../../images/tcg-logos/disney-lorcana-logo.png";
-import marvel from "../../images/tcg-logos/marvel-logo.png";
-import onepiece from "../../images/tcg-logos/one-piece-logo.png";
-import starwars from "../../images/tcg-logos/star-wars-logo.png";
+import PokemonLogo from "../../images/icons/pokemon.svg?react";
+import YuGiOhLogo from "../../images/icons/yu-gi-oh.svg?react";
+import MagicLogo from "../../images/icons/magic.svg?react";
+import DigimonLogo from "../../images/icons/digimon.svg?react";
+import DisneyLogo from "../../images/icons/disney-lorcana.svg?react";
+import MarvelLogo from "../../images/icons/marvel.svg?react";
+import OnePieceLogo from "../../images/icons/one-piece.svg?react";
+import StarWarsLogo from "../../images/icons/star-wars.svg?react";
 
 type AddFranchiseFormProps = {
     onSubmit: (name: string, franchiseKey: string) => void;
@@ -18,14 +18,14 @@ type AddFranchiseFormProps = {
 };
 
 const franchiseOptions = [
-    { label: "Pokemon", key: "pokemon", logo: pokemon },
-    { label: "Yu-Gi-Oh", key: "yu-gi-oh", logo: yugioh },
-    { label: "Magic the Gathering", key: "magic", logo: magic },
-    { label: "Digimon", key: "digimon", logo: digimon },
-    { label: "Disney Lorcana", key: "disney-lorcana", logo: disney },
-    { label: "Marvel Champions", key: "marvel", logo: marvel },
-    { label: "One Piece", key: "one-piece", logo: onepiece },
-    { label: "Star Wars", key: "star-wars", logo: starwars },
+    { label: "Pokémon", key: "pokemon", Logo: PokemonLogo },
+    { label: "Yu-Gi-Oh!", key: "yu-gi-oh", Logo: YuGiOhLogo },
+    { label: "Magic the Gathering", key: "magic", Logo: MagicLogo },
+    { label: "Digimon", key: "digimon", Logo: DigimonLogo },
+    { label: "Disney Lorcana", key: "disney-lorcana", Logo: DisneyLogo },
+    { label: "Marvel Champions", key: "marvel", Logo: MarvelLogo },
+    { label: "One Piece", key: "one-piece", Logo: OnePieceLogo },
+    { label: "Star Wars", key: "star-wars", Logo: StarWarsLogo },
 ];
 
 function AddFranchiseForm({ onSubmit, onCancel }: AddFranchiseFormProps) {
@@ -56,17 +56,17 @@ function AddFranchiseForm({ onSubmit, onCancel }: AddFranchiseFormProps) {
 
             <div className="franchise-select-label">Select Franchise:</div>
             <div className="franchise-grid">
-                {franchiseOptions.map((f) => (
+                {franchiseOptions.map(({ key, label, Logo }) => (
                     <button
                         type="button"
-                        key={f.key}
+                        key={key}
                         className={`franchise-tile ${
-                            franchiseKey === f.key ? "selected" : ""
+                            franchiseKey === key ? "selected" : ""
                         }`}
-                        onClick={() => setFranchiseKey(f.key)}
+                        onClick={() => setFranchiseKey(key)}
                     >
-                        <img src={f.logo} alt={f.label} />
-                        <span>{f.label}</span>
+                        <Logo className="franchise-logo" />
+                        <span>{label}</span>
                     </button>
                 ))}
             </div>

@@ -60,12 +60,25 @@
   display: flex;
 }
 
+/* SVG icon container */
 .sidebar-icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Updated icon class to support SVG components */
+.sidebar-icon {
+  height: 2.8rem;
+  width: auto;
+  flex-shrink: 0;
+  display: block;
+  fill: rgb(200, 200, 200);
+  color: rgb(200, 200, 200); /* needed if fill is currentColor */
+  stroke: currentColor; /* fallback for stroked SVGs */
+}
+
+/* Tab label */
 .sidebar-name {
   flex-grow: 1;
   display: flex;
@@ -73,18 +86,11 @@
   word-break: break-word;
 }
 
-.sidebar-icon {
-  height: 2.8rem;
-  width: auto;
-  flex-shrink: 0;
-  filter: brightness(0) saturate(100%) invert(78%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(95%);
-}
-
+/* "+" and ⋮ buttons */
 .sidebar-icon-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
   position: relative;
   top: -1px;
   background: none;
@@ -93,8 +99,8 @@
   color: rgb(175, 175, 175);
   cursor: pointer;
   font-size: 2rem;
-  line-height: 1;
   font-family: Arial, sans-serif; /* Overrides pixel font for clarity */
+  line-height: 1;
 }
 
 .sidebar-dots {

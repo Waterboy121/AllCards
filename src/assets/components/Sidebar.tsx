@@ -1,26 +1,31 @@
-import "../css/Sidebar.css";
-import homeIcon from "../images/icons/home.svg";
+// src/assets/components/Sidebar.tsx
 
-// Import franchise logos
-import digimon from "../images/tcg-logos/digimon-logo.png";
-import disney from "../images/tcg-logos/disney-lorcana-logo.png";
-import magic from "../images/tcg-logos/magic-logo.png";
-import marvel from "../images/tcg-logos/marvel-logo.png";
-import onepiece from "../images/tcg-logos/one-piece-logo.png";
-import pokemon from "../images/tcg-logos/pokemon-logo.png";
-import starwars from "../images/tcg-logos/star-wars-logo.png";
-import yugioh from "../images/tcg-logos/yu-gi-oh-logo.png";
+import "../css/Sidebar.css";
+import HomeIcon from "../images/icons/home.svg?react";
+
+// Import franchise icons as React components
+import DigimonLogo from "../images/icons/digimon.svg?react";
+import DisneyLogo from "../images/icons/disney-lorcana.svg?react";
+import MagicLogo from "../images/icons/magic.svg?react";
+import MarvelLogo from "../images/icons/marvel.svg?react";
+import OnePieceLogo from "../images/icons/one-piece.svg?react";
+import PokemonLogo from "../images/icons/pokemon.svg?react";
+import StarWarsLogo from "../images/icons/star-wars.svg?react";
+import YuGiOhLogo from "../images/icons/yu-gi-oh.svg?react";
 
 // Franchise key-to-logo map
-const franchiseLogos: Record<string, string> = {
-    digimon,
-    "disney-lorcana": disney,
-    magic,
-    marvel,
-    "one-piece": onepiece,
-    pokemon,
-    "star-wars": starwars,
-    "yu-gi-oh": yugioh,
+const franchiseLogos: Record<
+    string,
+    React.FC<React.SVGProps<SVGSVGElement>>
+> = {
+    digimon: DigimonLogo,
+    "disney-lorcana": DisneyLogo,
+    magic: MagicLogo,
+    marvel: MarvelLogo,
+    "one-piece": OnePieceLogo,
+    pokemon: PokemonLogo,
+    "star-wars": StarWarsLogo,
+    "yu-gi-oh": YuGiOhLogo,
 };
 
 type Franchise = {
@@ -54,11 +59,7 @@ function Sidebar({
             >
                 <div className="sidebar-left">
                     <div className="sidebar-icon-wrapper">
-                        <img
-                            src={homeIcon}
-                            alt="Home"
-                            className="sidebar-icon"
-                        />
+                        <HomeIcon className="sidebar-icon" />
                     </div>
                     <div className="sidebar-name">Home</div>
                 </div>
@@ -83,44 +84,50 @@ function Sidebar({
             </div>
 
             {/* Franchise tabs */}
-            {franchises.map((f) => (
-                <div
-                    key={f.name}
-                    className={`sidebar-item ${
-                        currentTab === f.name ? "active" : ""
-                    }`}
-                    onClick={() => onTabClick(f.name)}
-                >
-                    <div className="sidebar-left">
-                        <div className="sidebar-icon-wrapper">
-                            <img
-                                src={franchiseLogos[f.logoKey]}
-                                alt={f.name}
-                                className="sidebar-icon"
-                            />
-                        </div>
-                        <div className="sidebar-name">{f.name}</div>
-                    </div>
+            {franchises.map((f) => {
+                const LogoComponent = franchiseLogos[f.logoKey];
 
-                    <div className="sidebar-right">
-                        <button
-                            className="sidebar-icon-button"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onAddCard(f.name);
-                            }}
-                        >
-                            +
-                        </button>
-                        <button
-                            className="sidebar-icon-button"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <span className="sidebar-dots">⋮</span>
-                        </button>
+                return (
+                    <div
+                        key={f.name}
+                        className={`sidebar-item ${
+                            currentTab === f.name ? "active" : ""
+                        }`}
+                        onClick={() => onTabClick(f.name)}
+                    >
+                        <div className="sidebar-left">
+                            <div className="sidebar-icon-wrapper">
+                                {LogoComponent ? (
+                                    <LogoComponent className="sidebar-icon" />
+                                ) : (
+                                    <div className="sidebar-icon sidebar-icon-missing">
+                                        ?
+                                    </div>
+                                )}
+                            </div>
+                            <div className="sidebar-name">{f.name}</div>
+                        </div>
+
+                        <div className="sidebar-right">
+                            <button
+                                className="sidebar-icon-button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onAddCard(f.name);
+                                }}
+                            >
+                                +
+                            </button>
+                            <button
+                                className="sidebar-icon-button"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <span className="sidebar-dots">⋮</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
         </aside>
     );
 }

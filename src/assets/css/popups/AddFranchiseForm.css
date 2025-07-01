@@ -51,7 +51,7 @@
 /* Grid grows horizontally with content */
 .franchise-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
 	gap: 1rem;
 	justify-content: center;
 }
@@ -59,7 +59,7 @@
 /* Reduce to 2 tiles per row below ~44rem */
 @media (max-width: 44rem) {
 	.franchise-grid {
-		grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
 	}
 }
 
@@ -72,7 +72,7 @@
 }
 
 .franchise-tile {
-	width: 12rem;
+	width: 10rem;
 	height: 10rem;
 	display: flex;
 	flex-direction: column;
@@ -88,13 +88,18 @@
 	font-size: 1.2rem;
 }
 
-.franchise-tile img {
-  width: auto;
-  height: 4.5rem;
-  margin-bottom: 0.5rem;
-  filter: brightness(0) saturate(100%) invert(78%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(95%);
+/* NEW: SVG-specific styles for React components */
+.franchise-tile svg {
+	height: 4.5rem;
+	width: auto;
+	margin-bottom: 0.5rem;
+	fill: #c3c3d1;
+	transition: filter 0.2s ease, fill 0.2s ease;
 }
 
+.franchise-tile:hover svg {
+	fill: #ffffff;
+}
 
 .franchise-tile:hover {
 	background-color: #444;

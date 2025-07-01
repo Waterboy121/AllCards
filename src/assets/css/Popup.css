@@ -20,7 +20,7 @@
 	box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.4);
 	
 	width: 90vw;	       		/* 90% of the window's width */
-	max-width: 100rem;
+	max-width: 90rem;
 	max-height: 90vh;      		/* 90% of the window's height */
 	
 	margin: 0 auto;             /* Horizontally center the popup */
