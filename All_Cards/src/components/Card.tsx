@@ -6,9 +6,10 @@ type CardProps = {
   name: string;
   imageUrl: string;
   set: string;
+  amount?: number; 
 };
 
-function Card({ id, name, imageUrl, set }: CardProps) {
+function Card({ id, name, imageUrl, set, amount }: CardProps) {
   return (
     <div className="card-tile" key={id}>
       <div className="card-image-wrapper">
@@ -17,6 +18,9 @@ function Card({ id, name, imageUrl, set }: CardProps) {
       <div className="card-info">
         <div className="card-name">{name}</div>
         <div className="card-set">{set}</div>
+        {amount !== undefined && (
+          <div className="card-amount">Qty: {amount}</div>
+        )}
       </div>
     </div>
   );

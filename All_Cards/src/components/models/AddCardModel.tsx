@@ -53,13 +53,12 @@ function AddCardModel({ show, onClick }: AddCardProp) {
       imageUrl: "",
       set: data.set,
       amount: data.amount,
-      tcg: data.tcg,
     };
     cardInfo.then((value) => {
       card.id = String(value.id);
       card.imageUrl = `https://images.ygoprodeck.com/images/cards/${value.id}.jpg`;
       console.log(card);
-      addCard(card);
+      addCard(card, "Yu-Gi-Oh");
     });
   };
 
@@ -158,23 +157,6 @@ function AddCardModel({ show, onClick }: AddCardProp) {
                   </button>
                 </div>
                 {/*Amount end*/}
-                {/*TCG Picker start*/}
-                <div className="input-group mb-3">
-                  <span className="input-group-text anta-regular text-dark fs-5">
-                    TCG
-                  </span>
-                  <select
-                    {...register("tcg")}
-                    className="form-select anta-regular text-dark fs-5"
-                    aria-label="TCG Picker"
-                  >
-                    <option key={1}>Pokémon</option>
-                    <option key={2}>Yu-Gi-Oh</option>
-                    <option key={3}>Magic The Gathering</option>
-                    <option key={4}>One Piece</option>
-                  </select>
-                </div>
-                {/*TCG Picker end*/}
                 {/*Upload Picture start
                 <div className="input-group mb-3">
                   <input

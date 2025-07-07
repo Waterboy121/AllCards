@@ -1,5 +1,5 @@
 import { db, auth } from "../firebase/index.ts";
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import type { StoredCard } from "../assets/types/card.ts";
 import type { Franchise } from "../assets/types/franchise.ts";
 import { getUser } from "./auth.ts";
@@ -15,25 +15,38 @@ export async function addCard(card: StoredCard, tcg: string) {
   const q = query(
     cardRef,
     where("name", "==", card.name),
-    where("sets", "==", card.set)
+    where("set", "==", card.set)
   );
   const querySnapshot = await getDocs(q);
 
   if (!querySnapshot.empty) {
-    console.log("card already exists");
-    return;
+    const docToUpdate = querySnapshot.docs[0];
+    const existingAmount = docToUpdate.data().amount ?? 1;
+    await updateDoc(docToUpdate.ref, {
+      amount: existingAmount + card.amount,
+    });
+    console.log("Card quantity updated.");
+  } else {
+    await addDoc(cardRef, {
+      id: card.id,
+      name: card.name,
+      image_url: card.imageUrl,
+      set: card.set,
+      amount: card.amount,
+    });
+    console.log("New card added.");
   }
 
-  const docRef = await addDoc(collection(db, "users", user, tcg), {
-    id: card.id,
-    name: card.name,
-    image_url: card.imageUrl,
-    sets: card.set, //make sure that only one set is here
-    amount: card.amount,
-  }); //maybe make a catch here to show that there is an error that occurs when uploading to the database
-  console.log(card); //get rid of later
-  console.log(docRef.id);
-}
+//   const docRef = await addDoc(collection(db, "users", user, tcg), {
+//     id: card.id,
+//     name: card.name,
+//     image_url: card.imageUrl,
+//     sets: card.set, //make sure that only one set is here
+//     amount: card.amount,
+//   }); //maybe make a catch here to show that there is an error that occurs when uploading to the database
+//   console.log(card); //get rid of later
+//   console.log(docRef.id);
+  }
 
 //get rid of later, if not needed. Most likely not needed
 export async function addEmptyTCG() {
@@ -69,7 +82,7 @@ export async function getData(franchise: Franchise[]): Promise<StoredCard[]> {
         id: doc.data().id,
         name: doc.data().name,
         imageUrl: doc.data().image_url,
-        set: doc.data().sets,
+        set: doc.data().set,
         amount: doc.data().amount,
       };
       console.log(doc.id, " => ", card);
