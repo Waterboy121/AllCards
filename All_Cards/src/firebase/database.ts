@@ -1,11 +1,19 @@
 import { db, auth } from "../firebase/index.ts";
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import type { StoredCard } from "../assets/types/card.ts";
 import type { Franchise } from "../assets/types/franchise.ts";
 import { getUser } from "./auth.ts";
 
 export async function addCard(card: StoredCard, tcg: string) {
-  const user = auth.currentUser?.displayName ?? "Guest";
+  const user = auth.currentUser?.displayName ?? "Guest"; //change this later
   console.log(user);
   if (user === "Guest") {
     return;
@@ -30,24 +38,36 @@ export async function addCard(card: StoredCard, tcg: string) {
     image_url: card.imageUrl,
     sets: card.set, //make sure that only one set is here
     amount: card.amount,
+    addedAt: serverTimestamp(),
+    lastViewedAt: serverTimestamp(),
   }); //maybe make a catch here to show that there is an error that occurs when uploading to the database
   console.log(card); //get rid of later
   console.log(docRef.id);
 }
 
-//get rid of later, if not needed. Most likely not needed
-export async function addEmptyTCG() {
-  const user = auth.currentUser?.uid ?? "Guest";
+export async function updateCard(card: StoredCard, tcg: string) {
+  const user = auth.currentUser?.displayName ?? "Guest";
   console.log(user);
   if (user === "Guest") {
     return;
   }
-  const docRef1 = await addDoc(collection(db, "users", user, "Pokémon"), {});
-  const docRef2 = await addDoc(collection(db, "users", user, "Yu-Gi-Oh"), {});
-  const docRef3 = await addDoc(collection(db, "users", user, "Magic"), {});
-  console.log(docRef1.id); //get rid of later
-  console.log(docRef2.id); //get rid of later
-  console.log(docRef3.id); //get rid of later
+
+  const cardRef = collection(db, "users", user, tcg);
+  const q = query(
+    cardRef,
+    where("name", "==", card.name),
+    where("set", "==", card.set)
+  );
+  const querySnapshot = await getDocs(q);
+
+  if (!querySnapshot.empty) {
+    const docToUpdate = querySnapshot.docs[0];
+    const existingAmount = docToUpdate.data().amount;
+    await updateDoc(docToUpdate.ref, {
+      amount: existingAmount + card.amount,
+    });
+    console.log("Card quantity updated.");
+  } else console.log("Card doesn't exist");
 }
 
 export async function getData(franchise: Franchise[]): Promise<StoredCard[]> {
@@ -71,6 +91,8 @@ export async function getData(franchise: Franchise[]): Promise<StoredCard[]> {
         imageUrl: doc.data().image_url,
         set: doc.data().sets,
         amount: doc.data().amount,
+        addedAt: "", //change theses both later
+        lastViewedAt: "",
       };
       console.log(doc.id, " => ", card);
       allCards.push(card);
