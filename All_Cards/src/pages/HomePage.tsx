@@ -32,14 +32,19 @@ function HomePage() {
     { name: "Magic", logoKey: "magic" },
   ]);
 
-  //const mockCards: StoredCard[] = [];
-  const [mockCards, setMockCards] = useState<StoredCard[]>([]);
+  const [amount, setAmount] = useState(1);
+
+  const [homeCards, setHomeCards] = useState<StoredCard[]>([]);
 
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [showAddCardPopup, setShowAddCardPopup] = useState(false);
   const [selectedFranchise, setSelectedFranchise] = useState<string | null>(
     null
   );
+
+  const changeAmount = (quantity: number) => {
+    setAmount(quantity);
+  };
 
   const handleAddFranchise = () => {
     setShowAddPopup(true);
@@ -57,23 +62,21 @@ function HomePage() {
   };
 
   const handleCardConfirm = (card: StoredCard) => {
-    const updatedCard: StoredCard = {
-      id: card.id,
-      name: card.name,
-      imageUrl: card.imageUrl,
-      set: card.set,
-      amount: 1, //add a place to the form to add a amount for the card, when added delete this and just use card instead.
-    };
+    card.amount = amount;
     console.log("Card selected:", card);
-    setShowAddCardPopup(false);
     if (selectedFranchise === null) {
       console.log("Franchise is null"); //if for some reason this is null, don't use it
       return;
     }
+    if (amount <= 0) {
+      return;
+    }
     const franchise = selectedFranchise ?? ""; //this should never be "", but I need a string only so i am using this workaround
-    addCard(updatedCard, franchise);
+    addCard(card, franchise);
+    setShowAddCardPopup(false);
     setAddedCard(true);
     setSelectedFranchise(null);
+    setAmount(1);
   };
 
   //this will happen once per start of the homepage
@@ -91,7 +94,7 @@ function HomePage() {
       return;
     } else {
       getData(franchiseTabs).then((data) => {
-        setMockCards(data);
+        setHomeCards(data); //to do organize the cards into its proper franchise and collection
       });
       console.log("Loaded!");
     }
@@ -102,7 +105,7 @@ function HomePage() {
       //it waits half a second for the document to be added to the database
       setTimeout(() => {
         getData(franchiseTabs).then((data) => {
-          setMockCards(data);
+          setHomeCards(data); //to do organize the cards into its proper franchise and collection
         });
         setAddedCard(false);
         console.log("Added!");
@@ -127,46 +130,50 @@ function HomePage() {
   }
 
   return (
-    <div className="homepage-container">
-      <NavBar />
-      <div className="homepage-layout">
-        <Sidebar
-          franchises={franchiseTabs}
-          currentTab={currentTab}
-          onTabClick={setCurrentTab}
-          onAddFranchise={handleAddFranchise}
-          onAddCard={handleAddCard}
-        />
-        <div className="mock-mainview">
-          <h2>Welcome {getUser()}!</h2>
+    <>
+      <div className="homepage-container">
+        <NavBar />
+        <div className="homepage-layout">
+          <Sidebar
+            franchises={franchiseTabs}
+            currentTab={currentTab}
+            onTabClick={setCurrentTab}
+            onAddFranchise={handleAddFranchise}
+            onAddCard={handleAddCard}
+          />
+          <div className="mock-mainview">
+            <h2>Welcome {getUser()}!</h2>
 
-          <div className="mock-card-grid">
-            {mockCards.map((card, index) => (
-              <Card key={index} {...card} />
-            ))}
+            <div className="mock-card-grid">
+              {homeCards.map((card, index) => (
+                <Card key={index} {...card} />
+              ))}
+            </div>
           </div>
         </div>
+
+        {showAddPopup && (
+          <Popup onClose={() => setShowAddPopup(false)}>
+            <AddFranchiseForm
+              onSubmit={handleCreateFranchise}
+              onCancel={() => setShowAddPopup(false)}
+            />
+          </Popup>
+        )}
+
+        {showAddCardPopup && selectedFranchise && (
+          <Popup onClose={() => setShowAddCardPopup(false)}>
+            <AddCardForm
+              amount={amount}
+              changeAmount={changeAmount}
+              franchise={selectedFranchise}
+              onConfirm={handleCardConfirm}
+              onCancel={() => setShowAddCardPopup(false)}
+            />
+          </Popup>
+        )}
       </div>
-
-      {showAddPopup && (
-        <Popup onClose={() => setShowAddPopup(false)}>
-          <AddFranchiseForm
-            onSubmit={handleCreateFranchise}
-            onCancel={() => setShowAddPopup(false)}
-          />
-        </Popup>
-      )}
-
-      {showAddCardPopup && selectedFranchise && (
-        <Popup onClose={() => setShowAddCardPopup(false)}>
-          <AddCardForm
-            franchise={selectedFranchise}
-            onConfirm={handleCardConfirm}
-            onCancel={() => setShowAddCardPopup(false)}
-          />
-        </Popup>
-      )}
-    </div>
+    </>
   );
 }
 
