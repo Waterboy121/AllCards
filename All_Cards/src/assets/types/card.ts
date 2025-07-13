@@ -3,5 +3,7 @@ export type StoredCard = {
   name: string;
   imageUrl: string;
   set: string;
-  amount?: number;
+  amount: number;
+  addedAt: string;
+  lastViewedAt: string;
 };
