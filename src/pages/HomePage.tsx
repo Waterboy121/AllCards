@@ -26,11 +26,7 @@ function HomePage() {
   const [addedCard, setAddedCard] = useState(false);
   const [currentTab, setCurrentTab] = useState<string>("Home");
 
-  const [franchiseTabs, setFranchiseTabs] = useState<Franchise[]>([
-    { name: "Pokemon", logoKey: "pokemon" },
-    { name: "Yu-Gi-Oh", logoKey: "yu-gi-oh" },
-    { name: "Magic", logoKey: "magic" },
-  ]);
+  const [franchiseTabs, setFranchiseTabs] = useState<Franchise[]>([]);
 
   const [amount, setAmount] = useState(1);
 
@@ -98,7 +94,7 @@ function HomePage() {
       });
       console.log("Loaded!");
     }
-  }, [loading]);
+  }, [loading, franchiseTabs]);
 
   useEffect(() => {
     if (addedCard) {
@@ -111,7 +107,7 @@ function HomePage() {
         console.log("Added!");
       }, 500);
     }
-  }, [addedCard]);
+  }, [addedCard, franchiseTabs]);
 
   if (loading) {
     return (
