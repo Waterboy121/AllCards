@@ -1,0 +1,50 @@
+/* ==========================
+  Search Bar Styling
+========================== */
+
+.search-container {
+  width: 100%;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* The input field itself */
+.search-input {
+  width: 100%;
+  background-color: #333;                 /* Field background */
+  color: rgb(200, 200, 200);              /* Text color */
+  border: 1px solid #555;                 /* Border color */
+  border-radius: 9999px;
+  font-size: 1.5rem;
+  padding: 0.5rem 1.5rem 0.5rem 3rem;     /* top/right/bottom/left — leaves room for the icon on the left */
+}
+
+.search-input::placeholder {
+  color: #888;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0.25rem #d8953d;
+  border-color: #d8953d;
+}
+
+
+/* ==========================
+  Hamburger Button Styling
+========================== */
+
+.hamburger-btn {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: rgb(175, 175, 175);
+  font-size: 2.35rem;
+  cursor: pointer;
+}

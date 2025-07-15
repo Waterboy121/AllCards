@@ -1,0 +1,60 @@
+/* ==========================
+  Google Fonts Imports
+========================== */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Tiny5&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
+/* ==========================
+  Local Variable Font: Handjet
+========================== */
+@font-face {
+  font-family: "Handjet";
+  src: url("../fonts/Handjet-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+/* ==========================
+  Utility Classes for Fonts
+========================== */
+
+/* Pixelify Sans: Google Font */
+.pixelify-sans {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  color: aliceblue;
+}
+
+/* Anta: Google Font */
+.anta-regular {
+  font-family: "Anta", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ==========================
+  Handjet Usage
+========================== */
+
+/* Logo-specific styling */
+.handjet-logo {
+  font-family: "Handjet", sans-serif;
+  font-weight: 800;
+  color: aliceblue;
+  letter-spacing: 0.1em;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Sidebar or body text */
+.handjet-sidebar {
+  font-family: "Handjet", sans-serif;
+  font-weight: 400;
+  color: aliceblue;
+  letter-spacing: 0.1em;
+  display: inline-flex;
+  align-items: center;
+  font-size: 1rem;
+}
