@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import type { StoredCard } from "../../assets/types/card.ts";
+import type { StoredCard } from "../assets/types/card.ts";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { getCardDetailsByName } from "../../assets/apis/yu-gi-oh.ts";
-import { addCard } from "../../firebase/database.ts";
+import { getCardDetailsByName } from "../assets/apis/yu-gi-oh.ts";
+import { addCard } from "../firebase/database.ts";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../../assets/css/AddCardModel.css";
 

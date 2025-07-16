@@ -12,7 +12,7 @@ import Popup from "../components/Popup";
 import AddFranchiseForm from "../components/popups/AddFranchiseForm";
 import AddCardForm from "../components/popups/AddCardForm";
 import Card from "../components/Card";
-
+import CardDetailsModal from "../components/popups/CardDetailsModel";
 import { useEffect, useState } from "react";
 import type { StoredCard } from "../assets/types/card.ts";
 import { getUser } from "../firebase/auth.ts";
@@ -25,7 +25,7 @@ function HomePage() {
   const [loading, setLoading] = useState(true);
   const [addedCard, setAddedCard] = useState(false);
   const [currentTab, setCurrentTab] = useState<string>("Home");
-
+  const [selectedCard, setSelectedCard] = useState<StoredCard | null>(null);
   const [franchiseTabs, setFranchiseTabs] = useState<Franchise[]>([
     { name: "Pokemon", logoKey: "pokemon" },
     { name: "Yu-Gi-Oh", logoKey: "yu-gi-oh" },
@@ -35,7 +35,6 @@ function HomePage() {
   const [amount, setAmount] = useState(1);
 
   const [homeCards, setHomeCards] = useState<StoredCard[]>([]);
-
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [showAddCardPopup, setShowAddCardPopup] = useState(false);
   const [selectedFranchise, setSelectedFranchise] = useState<string | null>(
@@ -146,12 +145,26 @@ function HomePage() {
 
             <div className="mock-card-grid">
               {homeCards.map((card, index) => (
-                <Card key={index} {...card} />
+                <Card
+  key={index}
+  {...card}
+  onClick={() =>{
+      console.log("Clicked card:", card.name);
+      setSelectedCard(card);}}
+/>
               ))}
             </div>
           </div>
         </div>
 
+        {selectedCard && (
+          <Popup onClose={() => setSelectedCard(null)}>
+            <CardDetailsModal
+              card={selectedCard}
+              onClose={() => setSelectedCard(null)}
+            />
+          </Popup>
+)}
         {showAddPopup && (
           <Popup onClose={() => setShowAddPopup(false)}>
             <AddFranchiseForm
@@ -172,6 +185,7 @@ function HomePage() {
             />
           </Popup>
         )}
+        
       </div>
     </>
   );
