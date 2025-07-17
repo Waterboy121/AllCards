@@ -18,7 +18,12 @@ import type { StoredCard } from "../assets/types/card.ts";
 import { getUser } from "../firebase/auth.ts";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/index.ts";
-import { addCard, getData } from "../firebase/database.ts";
+import {
+  addCard,
+  addFranchise,
+  getData,
+  getFranchise,
+} from "../firebase/database.ts";
 import type { Franchise } from "../assets/types/franchise.ts";
 
 function HomePage() {
@@ -27,14 +32,15 @@ function HomePage() {
   const [currentTab, setCurrentTab] = useState<string>("Home");
 
   const [franchiseTabs, setFranchiseTabs] = useState<Franchise[]>([
-    { name: "Pokemon", logoKey: "pokemon" },
-    { name: "Yu-Gi-Oh", logoKey: "yu-gi-oh" },
-    { name: "Magic", logoKey: "magic" },
+    // { name: "Pokemon", logoKey: "pokemon" },
+    // { name: "Yu-Gi-Oh", logoKey: "yu-gi-oh" },
+    // { name: "Magic", logoKey: "magic" },
   ]);
 
   const [amount, setAmount] = useState(1);
 
   const [homeCards, setHomeCards] = useState<StoredCard[]>([]);
+  const [otherCards, setOtherCards] = useState<StoredCard[]>([]);
 
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [showAddCardPopup, setShowAddCardPopup] = useState(false);
@@ -52,12 +58,14 @@ function HomePage() {
 
   const handleCreateFranchise = (name: string, logoKey: string) => {
     setFranchiseTabs((prev) => [...prev, { name, logoKey }]);
+    addFranchise(name, logoKey);
     setCurrentTab(name);
     setShowAddPopup(false);
   };
 
   const handleAddCard = (franchiseName: string) => {
     setSelectedFranchise(franchiseName);
+    setCurrentTab(franchiseName);
     setShowAddCardPopup(true);
   };
 
@@ -93,12 +101,32 @@ function HomePage() {
       console.log("Loading!");
       return;
     } else {
-      getData(franchiseTabs).then((data) => {
-        setHomeCards(data); //to do organize the cards into its proper franchise and collection
+      getFranchise().then((data) => {
+        let newFranchises: Franchise[] = data;
+        getData(data).then((cards) => {
+          setHomeCards(cards);
+          newFranchises.forEach((fran) => {
+            fran.cards = [];
+            cards.forEach((card) => {
+              if (fran.name === card.collection) {
+                fran.cards?.push(card);
+              }
+            });
+          });
+        });
+        setFranchiseTabs(newFranchises);
       });
+
+      //console.log(franchiseTabs);
       console.log("Loaded!");
     }
   }, [loading]);
+
+  useEffect(() => {
+    if (currentTab !== "Home") {
+      getCurrentCards();
+    }
+  }, [currentTab]);
 
   useEffect(() => {
     if (addedCard) {
@@ -112,6 +140,16 @@ function HomePage() {
       }, 500);
     }
   }, [addedCard]);
+
+  function getCurrentCards() {
+    franchiseTabs.forEach((fran) => {
+      if (fran.name === currentTab) {
+        //console.log(fran.name + " " + currentTab);
+        console.log(fran.cards);
+        setOtherCards(fran.cards ?? []);
+      }
+    });
+  }
 
   if (loading) {
     return (
@@ -145,9 +183,10 @@ function HomePage() {
             <h2>Welcome {getUser()}!</h2>
 
             <div className="mock-card-grid">
-              {homeCards.map((card, index) => (
-                <Card key={index} {...card} />
-              ))}
+              {currentTab === "Home" &&
+                homeCards.map((card, index) => <Card key={index} {...card} />)}
+              {currentTab !== "Home" &&
+                otherCards.map((card, index) => <Card key={index} {...card} />)}
             </div>
           </div>
         </div>
