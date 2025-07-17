@@ -7,6 +7,8 @@ interface YuGiOhCardImage {
 }
 
 interface YuGiOhCardSet {
+  set_rarity: string;
+  set_code: string;
   set_name: string;
 }
 
@@ -14,7 +16,7 @@ export interface YuGiOhCard {
   id: number;
   name: string;
   card_images: YuGiOhCardImage[];
-  card_sets?: YuGiOhCardSet[];
+  card_sets: YuGiOhCardSet[];
 }
 
 interface YuGiOhApiResponse {
@@ -28,12 +30,20 @@ export async function searchCardsByName(name: string): Promise<StoredCard[]> {
 
   const response = await fetch(url);
   const json: YuGiOhApiResponse = await response.json();
+  const id = String(json.data[0].id);
+  const card_name = json.data[0].name;
+  const card_image_length = json.data[0].card_images.length;
+  const sets = json.data[0].card_sets;
+  const unique = [...new Set(sets)];
 
-  return json.data.map((card) => ({
-    id: String(card.id),
-    name: card.name,
-    imageUrl: card.card_images[0]?.image_url || "",
-    set: card.card_sets?.[0]?.set_name || "-",
+  return unique.map((card) => ({
+    id: id + "_" + card.set_code + "_" + card.set_rarity,
+    name: card_name,
+    imageUrl:
+      json.data[0].card_images[getRandomInt(0, card_image_length - 1)]
+        .image_url,
+    set: card.set_name + " [" + card.set_code + "/" + card.set_rarity + "]",
+    amount: -1,
   }));
 }
 
@@ -53,4 +63,8 @@ export async function getCardDetailsByName(name: string): Promise<YuGiOhCard> {
   );
   const json: YuGiOhApiResponse = await response.json();
   return json.data[0];
+}
+
+function getRandomInt(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
