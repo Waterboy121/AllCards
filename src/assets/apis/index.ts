@@ -27,7 +27,7 @@ import type { StoredCard } from "../types/card";
 		- If not, returns: { requiresSetSelection: false, card: Partial<StoredCard> }
 	
 	AddCardForm must check for `requiresSetSelection` key to branch behavior.
- */
+*/
 export async function searchCards(
 	franchise: string,
 	name: string

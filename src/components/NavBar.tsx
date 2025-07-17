@@ -5,9 +5,9 @@ import { SearchIcon } from "./logos";
 
 function NavBar() {
   return (
-    <nav className="navbar navbar-dark bg-dark px-3 py-2 py-md-3 d-flex align-items-center">
+    <nav className="navbar navbar-dark bg-dark px-4 py-3 d-flex align-items-center justify-content-between">
       {/* Logo section */}
-      <div className="d-flex align-items-center flex-shrink-0 me-4">
+      <div className="d-flex align-items-center">
         <span className="handjet-logo me-2">AllCards</span>
         <img src={logo} alt="AllCards logo" className="logo-image" />
       </div>

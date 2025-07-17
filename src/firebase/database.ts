@@ -20,6 +20,17 @@ import { getUser } from "./auth.ts";
   - Prevents duplicates by checking for an exact name/set match.
   - Stores relevant info and timestamps if card is new.
 */
+
+
+
+// ===============================
+// Add Card to Firestore
+// ===============================
+/**
+  Adds a card to the user's collection for a given TCG.
+  - Prevents duplicates by checking for an exact name/set match.
+  - Stores relevant info and timestamps if card is new.
+*/
 export async function addCard(card: StoredCard, tcg: string) {
   const user = auth.currentUser?.displayName ?? "Guest"; //change this later
   console.log(user);

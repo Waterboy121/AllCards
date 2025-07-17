@@ -1,4 +1,5 @@
 export type Franchise = {
-  name: string;
+  franchiseName: string;
+  collectionName: string;
   logoKey: string;
 };

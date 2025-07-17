@@ -25,7 +25,7 @@
 .logo-home {
   width: 1.75rem;
   height: 1.75rem;
-  margin-right: 0.75rem;
+  margin-right: 0.75rem; 
   display: inline-block;
   vertical-align: middle;
   object-fit: contain;
@@ -43,11 +43,14 @@
 ========================== */
 
 .logo-search {
-  width: 1.5rem;
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
   height: 1.5rem;
-  filter: brightness(1.5) contrast(1.1);
-  pointer-events: none;  /* Prevents interaction from blocking input typing */
-  transition: filter 0.25s ease;
+  width: 1.5rem;
+  pointer-events: none;
+  filter: brightness(1.5) contrast (1.1);
 }
 
 .logo-search:hover {

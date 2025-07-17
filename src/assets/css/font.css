@@ -3,16 +3,7 @@
 ========================== */
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Tiny5&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
-
-/* ==========================
-  Local Variable Font: Handjet
-========================== */
-@font-face {
-  font-family: "Handjet";
-  src: url("../fonts/Handjet-Variable.woff2") format("woff2-variations");
-  font-weight: 100 900;
-  font-style: normal;
-}
+@import url('https://fonts.googleapis.com/css2?family=Handjet:wght@100..900&display=swap');
 
 /* ==========================
   Utility Classes for Fonts
@@ -34,27 +25,25 @@
   font-style: normal;
 }
 
-/* ==========================
-  Handjet Usage
-========================== */
-
-/* Logo-specific styling */
+/* =====================================================
+  HANDJET USAGE
+  <weight>: Use a value from 100 to 900
+  <uniquifier>: Use a unique and descriptive class name
+===================================================== */
 .handjet-logo {
   font-family: "Handjet", sans-serif;
-  font-weight: 800;
-  color: aliceblue;
-  letter-spacing: 0.1em;
-  display: inline-flex;
-  align-items: center;
-}
+  font-weight: 900;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-size: 4rem;
 
-/* Sidebar or body text */
-.handjet-sidebar {
-  font-family: "Handjet", sans-serif;
-  font-weight: 400;
-  color: aliceblue;
-  letter-spacing: 0.1em;
+  font-variation-settings:
+    "wght" 350,  /* (100-900) controls the size of the element */
+    "ELSH" 4.86,   /* (0.0-16.0) controls the shape of the element */
+    "ELGR" 1;  /* (1.0-2.0) controls how many elements are used per one grid unit */
+
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  font-size: 1rem;
-}
+  }

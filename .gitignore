@@ -24,6 +24,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Ignore these directories
+# Ignore these files
 .prettierrc
 PRETTIER_CONFIG.md
+push_both.bat
+.env
