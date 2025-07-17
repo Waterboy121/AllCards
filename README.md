@@ -138,11 +138,11 @@ All_Cards/           # Vite + React project root
 
 The mockup of what the AllCards interface might look like:
 
-![AllCards UI Mockup](/images/Example-AllCards.png)
+![AllCards UI Mockup](./src/assets/images/Example-AllCards.png)
 
 A preview of the digital binder interface:
 
-![AllCards UI Preview](/images/AllCardsUI.png)
+![AllCards UI Preview](./src/assets/images/AllCardsUI.png)
 
 _Note: Final interface in active development._
 
