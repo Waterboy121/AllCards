@@ -1,26 +1,30 @@
 # AllCards
 
-AllCards is a web application that brings trading card collecting into the digital era. It lets users create a searchable, personal digital binder where they can store, browse, and organize cards from various franchises such as Pokémon, Yu-Gi-Oh, Magic: The Gathering, and more.
+AllCards is a web application designed to modernize the trading card collecting experience. It provides users with a searchable, customizable digital binder where they can store, browse, and organize cards from multiple franchises. Supported games include Pokémon, Yu-Gi-Oh!, Magic: The Gathering, and more, all presented in one visually unified platform.
 
 ---
 
 ## Project Vision
 
-To create the most intuitive and personalized digital binder experience for collectors and fans of trading card games — a place to truly own, explore, and organize their card collections the way they want.
+To build the most intuitive, flexible, and franchise-spanning digital binder for trading card collectors. This is a space where users can truly own, explore, and manage their collections with powerful tools and a personalized experience at the core.
 
-#### Trading Card Franchises
+---
 
-###### The Big Three:
-- `Magic: The Gathering`
-- `Pokémon Trading Card Game`
-- `Yu-Gi-Oh! Trading Card Game`
+## Supported Franchises
 
-###### The Newcomers:
-- `Digimon Trading Card Game`
-- `Disney Lorcana`
-- `Marvel Champions: The Card Game`
-- `One Piece Trading Card Game`
-- `Star Wars Unlimited`
+### The Big Three
+
+- Magic: The Gathering
+- Pokémon Trading Card Game
+- Yu-Gi-Oh! Trading Card Game
+
+### The Newcomers
+
+- Digimon Trading Card Game
+- Disney Lorcana
+- Marvel Champions: The Card Game
+- One Piece Trading Card Game
+- Star Wars Unlimited
 
 ---
 
@@ -29,9 +33,9 @@ To create the most intuitive and personalized digital binder experience for coll
 - Physical binders are limited and not easily shareable
 - Online databases often lack personalization
 - Users often spread their collections across multiple platforms
-- No tool combines visual collection browsing with tagging, searching, and favorites
+- No existing tool combines visual collection browsing with tagging, searching, and franchise flexibility
 
-AllCards solves this by offering a central, personalized, visually rich digital binder that works across all franchises.
+**AllCards** solves this by offering a central, personalized, visually rich digital binder that supports multiple franchises with consistent UX and powerful features.
 
 ---
 
@@ -40,7 +44,7 @@ AllCards solves this by offering a central, personalized, visually rich digital 
 - Casual and hardcore TCG collectors
 - Competitive players building and managing decks
 - Newcomers to trading card games
-- Collectors of specific or multiple franchises
+- Fans of specific or multiple franchises
 
 Whether you collect Pokémon, One Piece, Yu-Gi-Oh, or Magic, AllCards gives you one place to manage it all.
 
@@ -48,141 +52,83 @@ Whether you collect Pokémon, One Piece, Yu-Gi-Oh, or Magic, AllCards gives you 
 
 ## Tech Stack
 
-| Layer         | Technology                  |
-|---------------|------------------------------|
-| Frontend      | React, TailwindCSS           |
-| Backend       | Firebase (Authentication, Firestore) |
-| APIs          | Pokémon TCG API (more to come) |
-| Languages     | HTML, CSS, JavaScript        |
+| Layer    | Technology                           |
+| -------- | ------------------------------------ |
+| Frontend | React (TypeScript), Bootstrap CSS    |
+| Backend  | Firebase (Authentication, Firestore) |
+| APIs     | Custom integrations per franchise    |
+| Language | HTML, CSS, JavaScript / TypeScript   |
 
-This stack allows fast development, real-time updates, and a responsive user interface.
+---
+
+## APIs
+
+| Franchise           | API Endpoint                               |
+| ------------------- | ------------------------------------------ |
+| Magic the Gathering | https://scryfall.com/docs/api/cards/search |
+| Pokémon             | https://docs.pokemontcg.io/                |
+| Yu-Gi-Oh!           | https://ygoprodeck.com/api-guide/          |
+
+more to come...
 
 ---
 
 ## MVP Features
 
-- Upload card images with name, set, and metadata
-- View cards by collection/set or as part of a custom-built deck
-- Organize using tags, trademarks, and folders
-- Simple login system for storing user-specific data
+- Add cards by searching via API (name, set, etc.)
+- Store metadata like name, image, set, rarity, and franchise
+- Display card images in visually uniform layouts
+- Organize by franchise tab with custom names
+- View collections and recently added or viewed cards
+- Firebase authentication and per-user storage in Firestore
 
 ---
 
 ## Stretch Goals
 
 - Advanced filtering by rarity, franchise, and custom tags
-- Social features like public collections and sharing
-- Showcase Mode (e.g., a slideshow view)
-- API integrations for auto-tagging and verification
+- Slideshow/Showcase Mode for binder viewing
+- Public profile mode for sharing collections
+- Auto-tagging via API metadata and card features
+- Add support for double-faced and alternate layout cards
 
 ---
 
-## 📆 Development Timeline (9 Weeks)
+## Development Timeline
 
-| Week | Focus                                      |
-|------|--------------------------------------------|
-| 1    | Project Setup & Planning                   |
-| 2    | UI Mockups & Firebase Initialization       |
-| 3    | Authentication & Card Upload               |
-| 4    | Collection Viewing Features                |
-| 5    | Tagging, Sorting, Deletion                 |
-| 6    | MVP Polishing & Bug Fixing                 |
-| 7    | Advanced Search & Filtering                |
-| 8    | Showcase Mode & Sharing Options            |
-| 9    | Final Polish, Presentation, Deployment     |
+| Week | Focus                                    |
+| ---- | ---------------------------------------- |
+| 1    | Project Setup & Planning                 |
+| 2    | UI Mockups & Firebase Initialization     |
+| 3    | Authentication & Add Card Popup          |
+| 4    | Franchise Tabs & Firestore Integration   |
+| 5    | Tagging, Sorting, Deletion Features      |
+| 6    | MVP Polishing & Bug Fixes                |
+| 7    | Advanced Filtering & Search Improvements |
+| 8    | Sharing & Showcase Mode                  |
+| 9    | Final Polish, Presentation, Deployment   |
 
 ---
 
-## 📂 Project Structure (Planned)
+## Project Structure (Planned)
 
 ```bash
-src/                                            # root directory of AllCards
-├── All_Cards/                                  # Main frontend project folder (Vite + React + TS)
-│   ├── public/                                 # Publicly served assets (no bundling)
-│   │   └── vite.svg
-│   │
-│   ├── src/                                    # Application source code
-│   │   ├── assets/                             # Static assets used in the UI
-│   │   │   ├── css/                            # Stylesheets for component styling
-│   │   │   │   ├── App.css                     # Styles for App.tsx container and layout
-│   │   │   │   ├── font.css                    # Font-face declarations and global typography
-│   │   │   │   ├── login.css                   # Styles for login page
-│   │   │   │   ├── MainBody.css                # Layout and formatting for MainBody.tsx
-│   │   │   │   └── NavBar.css                  # Navigation bar styling
-│   │   │   │
-│   │   │   ├── logo.png
-│   │   │   └── react.svg
-│   │   │
-│   │   ├── components/                         # Reusable UI components
-│   │   │   ├── Button.tsx                      # Reusable styled button component
-│   │   │   ├── Heading.tsx                     # Heading component for UI sections
-│   │   │   ├── login.tsx                       # Login form with input fields and handlers
-│   │   │   ├── MainBody.tsx                    # Primary UI content container
-│   │   │   ├── NavBar.tsx                      # Top navigation bar component
-│   │   │   └── SignUp.tsx                      # Form for new user account creation
-│   │   │
-│   │   ├── App.tsx                             # Root-level component that assembles UI
-│   │   ├── main.tsx                            # App entry point rendering App.tsx
-│   │   └── vite-env.d.ts
-│   │
-│   ├── .gitignore
-│   ├── eslint.config.js
-│   ├── index.html
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── README.md
-│   ├── tsconfig.app.json
-│   ├── tsconfig.json
-│   ├── tsconfig.node.json
-│   └── vite.config.ts
-│
-├── images/                                     # Visual assets (logos, favicons, mockups)
-│   ├── icons/                                  # .ico-format icons for franchise branding
-│   │   ├── digimon.ico
-│   │   ├── disney-lorcana.ico
-│   │   ├── magic.ico
-│   │   ├── marvel.ico
-│   │   ├── one-piece.ico
-│   │   ├── pokemon.ico
-│   │   ├── star-wars.ico
-│   │   └── yu-gi-oh.ico
-│   │   
-│   ├── logos/                                  # Full-color and minimalist logo PNGs
-│   │   ├── digimon-color-logo.png
-│   │   ├── digimon-logo.png
-│   │   ├── disney-lorcana-color-logo.png
-│   │   ├── disney-lorcana-logo.png
-│   │   ├── magic-color-logo.png
-│   │   ├── magic-logo.png
-│   │   ├── marvel-color-logo.png
-│   │   ├── marvel-logo.png
-│   │   ├── one-piece-color-logo.png
-│   │   ├── one-piece-logo.png
-│   │   ├── pokemon-color-logo.png
-│   │   ├── pokemon-logo.png
-│   │   ├── star-wars-color-logo.png
-│   │   ├── star-wars-logo.png
-│   │   ├── yu-gi-oh-color-logo.png
-│   │   └── yu-gi-oh-logo.png
-│   │
-│   ├── Example-AllCards.png
-│   └── README.md
-│
-├── presentation/                               # Presentation slide deck and script
-│   ├── Initial/                                # The initial pitch design and early mockups
-│   │   ├── AllCards Pitch Script.pdf
-│   │   └── AllCards Pitch Slides.pdf
-│   │
-│   ├── Mid/                                    # The mid-project checkpoint progression
-│   │   └── TBD
-│   │
-│   ├── Final/                                  # The final presentation slides, scripts, and visuals
-│   │   └── TBD
-│   │
-│   └── README.md
-│
-├── package-lock.json
-└── README.md
+
+All_Cards/           # Vite + React project root
+├── public/          # Public assets
+├── src/             # App source code
+│   ├── assets/
+│   │   ├── apis/    # Franchise-specific API integration utilities
+│   │   ├── css/     # CSS files per component or page
+│   │   ├── images/  # Placeholder and UI images
+│   │   ├── types/   # TypeScript type definitions and interfaces
+│   ├── components/  # Reusable components (NavBar, Sidebar, etc.)
+│   ├── firebase/    # Firebase setup and utilities
+│   ├── pages/       # Top-level view/page components rendered by routes
+│   ├── App.tsx      # Main app wrapper
+│   └── main.tsx     # Entry point
+├── README.md
+└── ...
 
 ```
 
@@ -190,31 +136,35 @@ src/                                            # root directory of AllCards
 
 ## UI Preview
 
-Here is a mockup of what the AllCards interface might look like. Users will be able to visually browse their collection, organized by franchises like Pokémon, Magic, and Yu-Gi-Oh:
+The mockup of what the AllCards interface might look like:
 
-![AllCards UI Preview](/images/Example-AllCards.png)
+![AllCards UI Mockup](/images/Example-AllCards.png)
 
-_Note: This is a mock UI preview. The final interface is currently in development and will be shared soon._
+A preview of the digital binder interface:
+
+![AllCards UI Preview](/images/AllCardsUI.png)
+
+_Note: Final interface in active development._
 
 ---
 
 ## 👥 Team Members
 
-- Anisur Rahman  
-- Blaise Pierre  
-- Richard Vilcinsh  
-- Ryan O'Connor  
+- Anisur Rahman
+- Blaise Pierre
+- Richard Vilcinsh
+- Ryan O'Connor
 
 ---
 
 ## 📄 License
 
-This project is for academic purposes (Capstone CSCI 499). Licensing and permissions will be considered for public release after project completion.
+This project is for academic purposes as part of Capstone CSCI 499. No public or commercial use is permitted at this stage.
 
 ---
 
 ## Contributions
 
-Currently limited to team members. Forks and pull requests may be opened after initial release.
+Currently restricted to internal development. Public contributions may be opened post-release.
 
 ---
