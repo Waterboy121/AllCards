@@ -81,6 +81,7 @@ export async function searchCardsByName(name: string): Promise<StoredCard[]> {
         name: displayName,
         imageUrl,
         set: card.set_name || "-",
+        amount: -1,
       };
     })
     .filter((card): card is StoredCard => card !== null);
