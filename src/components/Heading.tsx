@@ -1,4 +1,4 @@
-import logo from "../assets/images/icons/logo-alt2.png";
+import logo from "../assets/images/icons/logo.png";
 
 interface HeadingProp {
   name: string;
@@ -8,8 +8,11 @@ interface HeadingProp {
 function Heading({ name, size }: HeadingProp) {
   return (
     <>
-      <h1 className="handjet-logo text-center" style={{ fontSize: size }}>
-        <img src={logo} className="me-2" width="120" height="90" alt="logo" />
+      <h1
+        className="tilt-prism-logo d-flex align-items-center justify-content-center"
+        style={{ fontSize: size }}
+      >
+        <img src={logo} className="me-3" width="150" height="100" alt="logo" />
         {name}
       </h1>
       <div className={"mx-auto bg-white"} style={{ height: "10px" }}></div>

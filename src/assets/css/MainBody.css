@@ -95,7 +95,7 @@
 
 /* For the bottom reflective call-to-action */
 .legacy-subheader {
-  color: #dddddd;
+  color: aliceblue;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
   font-style: italic;
   font-size: clamp(1rem, 1.5vw + 0.5rem, 1.7rem);
@@ -104,6 +104,7 @@
 }
 
 .legacy-subheader:hover {
+  color: rgb(250, 238, 184);
   opacity: 1;
   transform: translateY(-2px);
 }

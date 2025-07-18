@@ -1,9 +1,11 @@
 /* ==========================
   Google Fonts Imports
 ========================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Tiny5&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Handjet:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
 
 /* ==========================
   Utility Classes for Fonts
@@ -25,25 +27,50 @@
   font-style: normal;
 }
 
+
+
 /* =====================================================
-  HANDJET USAGE
-  <weight>: Use a value from 100 to 900
-  <uniquifier>: Use a unique and descriptive class name
+  CINZEL USAGE
 ===================================================== */
-.handjet-logo {
-  font-family: "Handjet", sans-serif;
-  font-weight: 900;
-  font-style: normal;
+.cinzel-body {
+  font-family: "Cinzel", serif;
   font-optical-sizing: auto;
-  font-size: 4rem;
+  font-style: normal;
+  font-weight: 600;
+  color: #1e1e1e;
 
-  font-variation-settings:
-    "wght" 350,  /* (100-900) controls the size of the element */
-    "ELSH" 4.86,   /* (0.0-16.0) controls the shape of the element */
-    "ELGR" 1;  /* (1.0-2.0) controls how many elements are used per one grid unit */
+  transform: scaleX(1);
+  transition: transform 0.4s ease, color 0.4s ease, font-weight 0.4s ease, font-style 0.4s ease;
+  transform-style: preserve-3d;
+}
 
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  }
+.cinzel-body:hover {
+  font-weight: 800;
+  font-style: italic;
+  color: #5f3dc4;
+
+  transform: scaleX(1.05);
+}
+
+/* =====================================================
+  TILT PRISM USAGE
+===================================================== */
+
+.tilt-prism-logo {
+  font-family: "Tilt Prism", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 800;
+  color: aliceblue;
+  
+  transform: rotateX(0deg) rotateY(0deg);
+  transition: transform 0.4s ease, color 0.4s ease, font-weight 0.4s ease;
+  transform-style: preserve-3d;
+}
+
+.tilt-prism-logo:hover {
+  font-weight: 900;
+  color: #7f54e4;
+  
+  transform: rotateX(-10deg) rotateY(10deg);
+}
