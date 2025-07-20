@@ -4,7 +4,7 @@
  preserveAspectRatio="xMidYMid meet">
 
 <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)"
-stroke="none">
+stroke="currentcolor" fill="currentColor">
 <path d="M229 2257 c-39 -26 -69 -79 -69 -122 0 -28 -4 -32 -43 -42 -58 -16
 -94 -47 -108 -93 -22 -73 11 -148 77 -176 45 -19 81 -17 131 6 l43 19 73 -67
 c40 -37 101 -93 137 -124 l65 -58 -102 0 c-92 0 -104 -2 -129 -23 -35 -31 -37

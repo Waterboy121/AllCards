@@ -13,6 +13,8 @@ import {
   YuGiOhLogo,
 } from "./logos";
 
+import type { UserCollection } from "../assets/types/collection";
+
 // Franchise key-to-logo map
 const franchiseLogos: Record<
   string,
@@ -28,24 +30,19 @@ const franchiseLogos: Record<
   "yu-gi-oh": YuGiOhLogo,
 };
 
-type Franchise = {
-  name: string; // User-defined tab name
-  logoKey: string; // Matches one of the keys above
-};
-
 type SidebarProps = {
-  franchises: Franchise[];
+  collections: UserCollection[];
   currentTab: string;
-  onTabClick: (tabName: string) => void;
-  onAddFranchise: () => void;
-  onAddCard: (franchiseName: string) => void;
+  onTabClick: (name: string) => void;
+  onAddCollection: () => void;
+  onAddCard: (collectionName: string) => void;
 };
 
 function Sidebar({
-  franchises,
+  collections,
   currentTab,
   onTabClick,
-  onAddFranchise,
+  onAddCollection,
   onAddCard,
 }: SidebarProps) {
   return (
@@ -69,7 +66,7 @@ function Sidebar({
             className="sidebar-icon-button"
             onClick={(e) => {
               e.stopPropagation();
-              onAddFranchise();
+              onAddCollection();
             }}
           >
             +
@@ -84,25 +81,27 @@ function Sidebar({
       </div>
 
       {/* Franchise tabs */}
-      {franchises.map((f) => {
-        const LogoComponent = franchiseLogos[f.logoKey];
-        const franchiseClass = `logo-${f.logoKey.replace("-", "")}`;
+      {collections.map((col) => {
+        const LogoComponent = franchiseLogos[col.franchiseKey];
+        const logoClass = `logo-${col.franchiseKey.replace("-", "")}`;
 
         return (
           <div
-            key={f.name}
-            className={`sidebar-item ${currentTab === f.name ? "active" : ""}`}
-            onClick={() => onTabClick(f.name)}
+            key={col.name}
+            className={`sidebar-item ${
+              currentTab === col.name ? "active" : ""
+            }`}
+            onClick={() => onTabClick(col.name)}
           >
             <div className="sidebar-left">
               <div className="sidebar-icon-wrapper">
                 {LogoComponent ? (
-                  <LogoComponent className={`sidebar-icon ${franchiseClass}`} />
+                  <LogoComponent className={`sidebar-icon ${logoClass}`} />
                 ) : (
                   <div className="sidebar-icon logo-missing">?</div>
                 )}
               </div>
-              <div className="sidebar-name handjet-sidebar">{f.name}</div>
+              <div className="sidebar-name handjet-sidebar">{col.name}</div>
             </div>
 
             <div className="sidebar-right">
@@ -110,7 +109,7 @@ function Sidebar({
                 className="sidebar-icon-button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onAddCard(f.name);
+                  onAddCard(col.name);
                 }}
               >
                 +

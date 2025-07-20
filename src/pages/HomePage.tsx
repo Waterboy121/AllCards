@@ -1,15 +1,14 @@
 // src/assets/pages/HomePage.tsx
-import "../assets/css/Homepage.css";
 
+import "../assets/css/Homepage.css";
 import "../assets/css/NavBar.css";
 import "../assets/css/Sidebar.css";
-// import "../css/MainView.css";
 import pikachuGif from "../assets/images/gifs/pikachu.webp";
 
 import NavBar from "../components/NavBar";
 import Sidebar from "../components/Sidebar";
 import Popup from "../components/Popup";
-import AddFranchiseForm from "../components/popups/AddFranchiseForm";
+import AddCollectionForm from "../components/popups/AddCollectionForm.tsx";
 import AddCardForm from "../components/popups/AddCardForm";
 import Card from "../components/Card";
 
@@ -18,15 +17,20 @@ import type { StoredCard } from "../assets/types/card.ts";
 import { getUser } from "../firebase/auth.ts";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/index.ts";
-import { addCard, getData } from "../firebase/database.ts";
-import type { Franchise } from "../assets/types/franchise.ts";
+import {
+  addCardToCollection,
+  getAllCardsFromCollections,
+  addCollectionTab,
+  getCollectionTabs,
+} from "../firebase/database.ts";
+import type { UserCollection } from "../assets/types/collection.ts";
 
 function HomePage() {
   const [loading, setLoading] = useState(true);
   const [addedCard, setAddedCard] = useState(false);
   const [currentTab, setCurrentTab] = useState<string>("Home");
 
-  const [franchiseTabs, setFranchiseTabs] = useState<Franchise[]>([]);
+  const [collectionTabs, setCollectionTabs] = useState<UserCollection[]>([]);
 
   const [amount, setAmount] = useState(1);
 
@@ -34,7 +38,7 @@ function HomePage() {
 
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [showAddCardPopup, setShowAddCardPopup] = useState(false);
-  const [selectedFranchise, setSelectedFranchise] = useState<string | null>(
+  const [selectedCollection, setSelectedCollection] = useState<string | null>(
     null
   );
 
@@ -42,72 +46,74 @@ function HomePage() {
     setAmount(quantity);
   };
 
-  const handleAddFranchise = () => {
+  const handleAddCollection = () => {
     setShowAddPopup(true);
   };
 
-  const handleCreateFranchise = (name: string, logoKey: string) => {
-    setFranchiseTabs((prev) => [...prev, { name, logoKey }]);
+  const handleCreateCollection = (name: string, franchiseKey: string) => {
+    const order = collectionTabs.length;
+
+    const newCollection: UserCollection = {
+      name,
+      franchiseKey,
+      createdAt: undefined,
+      order: order,
+    };
+    addCollectionTab(newCollection, order);
+    setCollectionTabs((prev) => [...prev, newCollection]);
     setCurrentTab(name);
     setShowAddPopup(false);
   };
 
-  const handleAddCard = (franchiseName: string) => {
-    setSelectedFranchise(franchiseName);
+  const handleAddCard = (collectionName: string) => {
+    setSelectedCollection(collectionName);
     setShowAddCardPopup(true);
   };
 
   const handleCardConfirm = (card: StoredCard) => {
     card.amount = amount;
-    console.log("Card selected:", card);
-    if (selectedFranchise === null) {
-      console.log("Franchise is null"); //if for some reason this is null, don't use it
-      return;
-    }
-    if (amount <= 0) {
-      return;
-    }
-    const franchise = selectedFranchise ?? ""; //this should never be "", but I need a string only so i am using this workaround
-    addCard(card, franchise);
+
+    if (selectedCollection === null) return;
+    if (amount <= 0) return;
+
+    addCardToCollection(card, selectedCollection);
     setShowAddCardPopup(false);
     setAddedCard(true);
-    setSelectedFranchise(null);
+    setSelectedCollection(null);
     setAmount(1);
   };
 
-  //this will happen once per start of the homepage
+  // Fetch collection tabs on load
   useEffect(() => {
-    onAuthStateChanged(auth, () => {
+    onAuthStateChanged(auth, async () => {
+      const tabs = await getCollectionTabs();
+      setCollectionTabs(tabs);
       setTimeout(() => {
         setLoading(false);
       }, 500);
     });
   }, []);
 
+  // Fetch cards after loading or tab update
   useEffect(() => {
-    if (loading) {
-      console.log("Loading!");
-      return;
-    } else {
-      getData(franchiseTabs).then((data) => {
-        setHomeCards(data); //to do organize the cards into its proper franchise and collection
-      });
-      console.log("Loaded!");
-    }
-  }, [loading, franchiseTabs]);
+    if (loading) return;
 
+    getAllCardsFromCollections(collectionTabs).then((data) => {
+      setHomeCards(data);
+    });
+  }, [loading, collectionTabs]);
+
+  // Fetch cards again after a card is added
   useEffect(() => {
-    if (addedCard) {
-      //it waits half a second for the document to be added to the database
-      setTimeout(() => {
-        getData(franchiseTabs).then((data) => {
-          setHomeCards(data); //to do organize the cards into its proper franchise and collection
-        });
-        setAddedCard(false);
-        console.log("Added!");
-      }, 500);
-    }
-  }, [addedCard, franchiseTabs]);
+    if (!addedCard) return;
+
+    setTimeout(() => {
+      getAllCardsFromCollections(collectionTabs).then((data) => {
+        setHomeCards(data);
+      });
+      setAddedCard(false);
+    }, 500);
+  }, [addedCard, collectionTabs]);
 
   if (loading) {
     return (
@@ -131,12 +137,13 @@ function HomePage() {
         <NavBar />
         <div className="homepage-layout">
           <Sidebar
-            franchises={franchiseTabs}
+            collections={collectionTabs}
             currentTab={currentTab}
             onTabClick={setCurrentTab}
-            onAddFranchise={handleAddFranchise}
+            onAddCollection={handleAddCollection}
             onAddCard={handleAddCard}
           />
+
           <div className="mock-mainview">
             <h2>Welcome {getUser()}!</h2>
 
@@ -150,19 +157,22 @@ function HomePage() {
 
         {showAddPopup && (
           <Popup onClose={() => setShowAddPopup(false)}>
-            <AddFranchiseForm
-              onSubmit={handleCreateFranchise}
+            <AddCollectionForm
+              onSubmit={handleCreateCollection}
               onCancel={() => setShowAddPopup(false)}
             />
           </Popup>
         )}
 
-        {showAddCardPopup && selectedFranchise && (
+        {showAddCardPopup && selectedCollection && (
           <Popup onClose={() => setShowAddCardPopup(false)}>
             <AddCardForm
               amount={amount}
               changeAmount={changeAmount}
-              franchise={selectedFranchise}
+              franchise={
+                collectionTabs.find((tab) => tab.name === selectedCollection)
+                  ?.franchiseKey ?? ""
+              }
               onConfirm={handleCardConfirm}
               onCancel={() => setShowAddCardPopup(false)}
             />

@@ -1,6 +1,6 @@
-// src/assets/components/popups/AddFranchiseForm.tsx
+// src/assets/components/popups/AddCollectionForm.tsx
 import React, { useState } from "react";
-import "../../assets/css/popups/AddFranchiseForm.css";
+import "../../assets/css/popups/AddCollectionForm.css";
 
 // Import all logos from centralized file
 import {
@@ -14,7 +14,7 @@ import {
   YuGiOhLogo,
 } from "../logos";
 
-type AddFranchiseFormProps = {
+type AddCollectionFormProps = {
   onSubmit: (name: string, franchiseKey: string) => void;
   onCancel: () => void;
 };
@@ -30,7 +30,7 @@ const franchiseOptions = [
   { label: "Star Wars", key: "star-wars", Logo: StarWarsLogo },
 ];
 
-function AddFranchiseForm({ onSubmit, onCancel }: AddFranchiseFormProps) {
+function AddCollectionForm({ onSubmit, onCancel }: AddCollectionFormProps) {
   const [name, setName] = useState("");
   const [franchiseKey, setFranchiseKey] = useState(franchiseOptions[0].key);
 
@@ -85,4 +85,4 @@ function AddFranchiseForm({ onSubmit, onCancel }: AddFranchiseFormProps) {
   );
 }
 
-export default AddFranchiseForm;
+export default AddCollectionForm;

@@ -8,8 +8,11 @@ import { useEffect, useState, type ChangeEvent } from "react";
 import { Timestamp } from "firebase/firestore";
 import "../../assets/css/popups/AddCardForm.css";
 
-// Centralized API entry points from index.ts
-import { searchCards, getCardImageOptions } from "../../assets/apis";
+import {
+  searchCards,
+  getCardImageOptions,
+  type SetSelectionEntry,
+} from "../../assets/apis/card-api-router.ts";
 import type { StoredCard } from "../../assets/types/card.ts";
 
 import Card from "../Card";
@@ -41,9 +44,10 @@ function AddCardForm({
   const [results, setResults] = useState<StoredCard[] | null>(null);
   const [error, setError] = useState("");
   const [amountError, setAmountError] = useState(false);
+  const [amountText, setAmountText] = useState("1");
 
   // Yu-Gi-Oh specific state
-  const [setCodes, setSetCodes] = useState<string[]>([]);
+  const [setCodes, setSetCodes] = useState<SetSelectionEntry[]>([]);
   const [selectedSetCode, setSelectedSetCode] = useState("");
   const [cardNameFromAPI, setCardNameFromAPI] = useState("");
 
@@ -53,12 +57,14 @@ function AddCardForm({
 
   // Handles amount input field
   const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    if (value <= 0) {
-      setAmountError(true);
-    } else {
+    const rawValue = e.target.value;
+    setAmountText(rawValue); // ← keep what's typed
+
+    const parsed = parseInt(rawValue, 10);
+
+    if (!isNaN(parsed) && parsed > 0) {
+      changeAmount(parsed);
       setAmountError(false);
-      changeAmount(value);
     }
   };
 
@@ -68,33 +74,39 @@ function AddCardForm({
     setResults(null);
     setSetCodes([]);
     setSelectedSetCode("");
+    console.log("🔍 handleSearch triggered with:", {
+      franchise,
+      cardName,
+      amount,
+    });
 
     try {
       const response = await searchCards(franchise, cardName.trim());
 
+      console.log("📦 API response from searchCards:", response);
+
       // Yu-Gi-Oh: set selection phase
       if ("requiresSetSelection" in response) {
         if (response.requiresSetSelection) {
-          // Show dropdown
           setSetCodes(response.setCodes);
           setCardNameFromAPI(cardName.trim());
         } else {
-          // Single image result (no sets)
           const fullCard: StoredCard = {
             ...response.card,
             amount,
-            addedAt: Timestamp.now(),
-            lastViewedAt: Timestamp.fromDate(new Date("2000-01-01T00:00:00Z")),
+            addedAt: Timestamp.now(), // placeholder --> replaced on form submit
+            lastViewedAt: Timestamp.fromDate(new Date("2000-01-01T00:00:00Z")), // placeholder --> replaced on form submit
+            viewCount: 0, // placeholder --> replaced on form submit
           };
           setResults([fullCard]);
         }
       } else {
-        // All other franchises (Magic, Pokemon, etc.)
         const fullResults = response.map((card) => ({
           ...card,
           amount,
-          addedAt: Timestamp.now(),
-          lastViewedAt: Timestamp.fromDate(new Date("2000-01-01T00:00:00Z")),
+          addedAt: Timestamp.now(), // placeholder --> replaced on form submit
+          lastViewedAt: Timestamp.fromDate(new Date("2000-01-01T00:00:00Z")), // placeholder --> replaced on form submit
+          viewCount: 0, // placeholder --> replaced on form submit
         }));
         setResults(fullResults);
       }
@@ -134,8 +146,9 @@ function AddCardForm({
         const fullCards = imageResults.map((card) => ({
           ...card,
           amount,
-          addedAt: Timestamp.now(),
-          lastViewedAt: Timestamp.fromDate(new Date("2000-01-01T00:00:00Z")),
+          addedAt: Timestamp.now(), // placeholder --> replaced on form submit
+          lastViewedAt: Timestamp.fromDate(new Date("2000-01-01T00:00:00Z")), // placeholder --> replaced on form submit
+          viewCount: 0, // placeholder --> replaced on form submit
         }));
         setResults(fullCards);
       } catch {
@@ -151,8 +164,10 @@ function AddCardForm({
   // Reset state when popup opens
   useEffect(() => {
     setAmountError(false);
-    changeAmount(1);
-  }, [changeAmount]);
+    // Only set to 1 if it was previously invalid or zero
+    if (amount <= 0) changeAmount(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="add-card-form">
@@ -169,20 +184,16 @@ function AddCardForm({
             onChange={(e) => setCardName(e.target.value)}
             placeholder="Enter exact card name"
           />
-          <button type="submit" className="confirm-btn">
-            Search
-          </button>
         </div>
 
         {/* ----- Amount Input ----- */}
-        <div className="input-group mb-3">
-          <label className="input-group-text anta-regular text-dark fs-5">
-            Amount:
-          </label>
+        <div className="form-row">
+          <label htmlFor="amount">Amount:</label>
           <input
+            id="amount"
             type="number"
-            className="form-control anta-regular text-dark fs-5"
-            value={amount}
+            className="form-control"
+            value={amountText}
             onChange={handleAmountChange}
           />
           {amountError && (
@@ -216,14 +227,24 @@ function AddCardForm({
               onChange={(e) => setSelectedSetCode(e.target.value)}
             >
               <option value="">-- Select --</option>
-              {setCodes.map((code) => (
-                <option key={code} value={code}>
-                  {code}
+              {setCodes.map((entry) => (
+                <option
+                  key={`${entry.setCode}_${entry.setName}`}
+                  value={entry.setCode}
+                >
+                  {entry.setCode} "{entry.setName}"
                 </option>
               ))}
             </select>
           </div>
         )}
+
+        {/* 🔻 Submit is moved down here to cover entire form 🔻 */}
+        <div className="form-row">
+          <button type="submit" className="confirm-btn">
+            Search
+          </button>
+        </div>
       </form>
 
       {/* ----- Magic Hint ----- */}
@@ -238,19 +259,27 @@ function AddCardForm({
       {error && <div className="error-message">{error}</div>}
 
       {/* ----- Card Grid Results ----- */}
-      {results && (
-        <div className="card-results-grid">
-          {results.map((card) => (
-            <div
-              key={card.id}
-              className="card-search-wrapper"
-              onClick={() => onConfirm(card)}
-            >
-              <Card {...card} />
-            </div>
-          ))}
-        </div>
-      )}
+      {results && results.length > 0 ? (
+        <>
+          {console.log("Rendering card results:", results)}
+          <div className="card-results-grid">
+            {results.map((card) => (
+              <div
+                key={card.id}
+                className="card-search-wrapper"
+                onClick={() => onConfirm(card)}
+              >
+                <Card {...card} />
+              </div>
+            ))}
+          </div>
+        </>
+      ) : results && results.length === 0 ? (
+        <>
+          {console.log("Search returned no matches")}
+          <div className="error-message">No matching cards found.</div>
+        </>
+      ) : null}
 
       {/* ----- Cancel Button ----- */}
       <div className="form-buttons">

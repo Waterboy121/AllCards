@@ -6,7 +6,7 @@
 Created by potrace 1.16, written by Peter Selinger 2001-2019
 </metadata>
 <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)"
-stroke="none">
+stroke="currentColor" fill="currentColor">
 <path d="M1045 2540 c-272 -56 -481 -167 -669 -354 -195 -194 -314 -428 -360
 -705 -41 -243 1 -544 105 -758 215 -442 665 -723 1157 -723 428 0 801 191
 1047 535 35 49 73 108 84 130 111 226 146 368 146 605 0 177 -14 274 -62 420

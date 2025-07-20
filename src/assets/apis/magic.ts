@@ -38,16 +38,16 @@ interface ScryfallResponse {
 // ---------------------------
 // Main API function
 // ---------------------------
-
 /**
   Looks up a Magic: The Gathering card by exact name.
 
   Returns a list of usable images with the official card name and set.
 
-  Only called by index.ts (searchCards) and returns complete StoredCard[].
+  Only called by index.ts (searchCards) and returns complete StoredCard[] minus
+  amount, addedAt, lastViewedAt, and viewCount — which are added later in AddCardForm.
 */
 export async function searchCardsByName(
-	name: string): Promise<Omit<StoredCard, "amount" | "addedAt" | "lastViewedAt">[]> {
+	name: string): Promise<Omit<StoredCard, "amount" | "addedAt" | "lastViewedAt" | "viewCount">[]> {
 	const res = await fetch(`https://api.scryfall.com/cards/search?q=!${encodeURIComponent(name)}`);
 	if (!res.ok) throw new Error("Failed to fetch Magic card data");
 
@@ -86,7 +86,9 @@ export async function searchCardsByName(
 			let imageUrl = "";
 
 			if (isDoubleFaced) {
-				const face = card.card_faces?.[0];
+				const frontName = card.name.split(" // ")[0];
+        const face = card.card_faces?.find(f => f.name === frontName) ?? card.card_faces?.[0];
+
 				imageUrl =
 					face?.image_uris?.large ||
 					face?.image_uris?.normal ||

@@ -42,7 +42,7 @@ interface PokemonApiResponse {
   Only called by index.ts (searchCards) and returns complete StoredCard[].
 */
 export async function searchCardsByName(
-	name: string): Promise<Omit<StoredCard, "amount" | "addedAt" | "lastViewedAt">[]>{
+	name: string): Promise<Omit<StoredCard, "amount" | "addedAt" | "lastViewedAt" | "viewCount">[]>{
 	const res = await fetch(
 		`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(name)}"`
 	);
