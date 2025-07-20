@@ -57,22 +57,22 @@ function Login() {
       <div
         className="container my-5 w-50 h-75 p-4"
         style={{
-          backgroundColor: "#F5F5F5",
+          backgroundColor: "#353839",
           flexShrink: 0,
           borderRadius: "46px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          boxShadow: "0 0 12px #c0c0c0",
         }}
       >
         <div className="row justify-content-center ">
           <div className="col-md-10">
             <h2
               className="anta-regular text-center"
-              style={{ fontSize: "28px", color: "black" }}
+              style={{ fontSize: "36px", color: "#f5f5f5" }}
             >
-              Log in with Email & Password
+              Unlock Thy Archive
             </h2>
             <div
-              className="mx-auto bg-black my-3"
+              className="mx-auto bg-white my-3"
               style={{ height: "2px" }}
             ></div>
             {/*Form Starts Here*/}
@@ -80,7 +80,7 @@ function Login() {
               <div className="mb-1">
                 <label
                   className="form-label anta-regular"
-                  style={{ fontSize: "24px" }}
+                  style={{ fontSize: "24px", color: "#f5f5f5" }}
                 >
                   Email
                 </label>
@@ -103,7 +103,7 @@ function Login() {
               <div className="">
                 <label
                   className="form-label anta-regular"
-                  style={{ fontSize: "24px" }}
+                  style={{ fontSize: "24px", color: "#f5f5f5" }}
                 >
                   Password
                 </label>
@@ -132,7 +132,7 @@ function Login() {
               <Link
                 to={"/forgot-password"}
                 className="anta-regular mb-3"
-                style={{ fontSize: "18px", color: "black" }}
+                style={{ fontSize: "18px", color: "#c0c0c0" }}
               >
                 Forgot Password?
               </Link>
@@ -142,23 +142,23 @@ function Login() {
                 className="btn btn-dark anta-regular w-100 mt-2"
                 style={{
                   fontSize: "20px",
-                  backgroundColor: "#A3A9AA",
-                  color: "Black",
+                  backgroundColor: "#222222ff",
+                  color: "#f5f5f5",
                 }}
               >
                 {isSubmitting ? "Loading..." : "Login"}
               </button>
             </form>
             <div
-              className={"mx-auto bg-black mt-2"}
-              style={{ height: "2px" }}
+              className={"mx-auto bg-white mt-2"}
+              style={{ height: "1.25px" }}
             ></div>
             <div>
               <p
-                className="anta-regular text-center"
-                style={{ fontSize: "18px", color: "black" }}
+                className="anta-regular mb-3"
+                style={{ fontSize: "18px", color: "#f5f5f5" }}
               >
-                <Link to="/signup" style={{ color: "black" }}>
+                <Link to="/signup" style={{ color: "#c0c0c0" }}>
                   Dont have an account?
                 </Link>
               </p>
@@ -168,8 +168,8 @@ function Login() {
                   className="btn btn-dark anta-regular w-100 mb-2"
                   style={{
                     fontSize: "20px",
-                    backgroundColor: "#A3A9AA",
-                    color: "Black",
+                    backgroundColor: "#222222ff",
+                    color: "#f5f5f5",
                   }}
                 >
                   Register

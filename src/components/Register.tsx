@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getUser, MakeUser } from "../firebase/auth.ts";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../assets/css/SignUp.css";
 
 const schema = z
   .object({
@@ -81,45 +80,55 @@ function SignUp() {
   return (
     <>
       <div
-        className="p-4 shadow mx-auto w-50 my-5"
+        className="container my-5 w-50 h-75 p-4"
         style={{
-          backgroundColor: "#F5F5F5",
+          backgroundColor: "#353839",
           flexShrink: 0,
           borderRadius: "46px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          boxShadow: "0 0 12px #c0c0c0",
         }}
       >
         <div className="row justify-content-center">
           <div className="col-md-10">
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="position-relative text-center mb-4">
               <Link to="/">
                 <button
                   type="button"
-                  className="btn btn-outline-secondary"
+                  className="btn btn-outline-secondary position-absolute top-50 start-0 translate-middle-y"
                   aria-label="Back"
                 >
-                  <i className="bi bi-arrow-left"></i>
+                  <i
+                    className="bi bi-arrow-left"
+                    style={{ color: "#f5f5f5" }}
+                  ></i>
                 </button>
               </Link>
-              <h2 className="anta-regular text-dark text-center mx-auto fontsizing">
-                Register with Email & Password
+              <h2
+                className="anta-regular"
+                style={{ fontSize: "36px", color: "#f5f5f5", margin: 0 }}
+              >
+                Forge Thy Ledger
               </h2>
             </div>
+
             <div
-              className={"mx-auto bg-black my-4"}
-              style={{ height: "2px" }}
+              className={"mx-auto bg-white my-3"}
+              style={{ height: "1.75px" }}
             ></div>
             <div className="mb-1">
               {/*FORM STARTS HERE*/}
               <form onSubmit={handleSubmit(onSignUpSubmit)}>
-                <label className="anta-regular text-dark fs-5 form-label my-1">
-                  Display Name
+                <label
+                  className="anta-regular form-label my-1"
+                  style={{ fontSize: "24px", color: "#f5f5f5" }}
+                >
+                  User Name
                 </label>
                 <input
                   {...register("display_name")}
                   type="text"
                   className="form-control"
-                  placeholder="Display Name"
+                  placeholder="ex: TheAllMaster"
                   style={{
                     backgroundColor: "#F8F8FF",
                     borderWidth: "1px",
@@ -131,14 +140,17 @@ function SignUp() {
                     {errors.display_name.message}
                   </div>
                 )}
-                <label className="anta-regular text-dark fs-5 form-label my-1">
+                <label
+                  className="anta-regular form-label my-1"
+                  style={{ fontSize: "24px", color: "#f5f5f5" }}
+                >
                   Email
                 </label>
                 <input
                   {...register("email")}
                   type="text"
                   className="form-control"
-                  placeholder="Email"
+                  placeholder="ex: Lord-of-Allcards@master.com"
                   style={{
                     backgroundColor: "#F8F8FF",
                     borderWidth: "1px",
@@ -150,14 +162,17 @@ function SignUp() {
                     {errors.email.message}
                   </div>
                 )}
-                <label className="anta-regular text-dark fs-5 form-label my-1">
+                <label
+                  className="anta-regular form-label my-1"
+                  style={{ fontSize: "24px", color: "#f5f5f5" }}
+                >
                   Password
                 </label>
                 <input
                   {...register("password")}
                   type="password"
                   className="form-control"
-                  placeholder="Password"
+                  placeholder="ex: theAllMeister*3000"
                   style={{
                     backgroundColor: "#F8F8FF",
                     borderWidth: "1px",
@@ -169,14 +184,17 @@ function SignUp() {
                     {errors.password.message}
                   </div>
                 )}
-                <label className="anta-regular text-dark fs-5 form-label my-1">
+                <label
+                  className="anta-regular form-label my-1"
+                  style={{ fontSize: "24px", color: "#f5f5f5" }}
+                >
                   Re-enter Password
                 </label>
                 <input
                   {...register("repassword")}
                   type="password"
                   className="form-control"
-                  placeholder="Re-enter Password"
+                  placeholder=""
                   style={{
                     backgroundColor: "#F8F8FF",
                     borderWidth: "1px",
@@ -200,8 +218,8 @@ function SignUp() {
                     className="btn btn-dark anta-regular w-100 mt-4"
                     style={{
                       fontSize: "20px",
-                      backgroundColor: "#A3A9AA",
-                      color: "Black",
+                      backgroundColor: "#222222ff",
+                      color: "#f5f5f5",
                     }}
                   >
                     {isSubmitting ? "Loading..." : "Register"}

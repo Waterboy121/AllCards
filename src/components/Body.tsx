@@ -1,4 +1,4 @@
-import "../assets/css/MainBody.css";
+import "../assets/css/Body.css";
 
 function MainBody() {
   return (
@@ -24,7 +24,10 @@ function MainBody() {
       ></div>
 
       <h3 className="cinzel-body text-center mt-4 legacy-subheader animate-in animate-delay-3">
-        Curate with Intention. Cement Your Legacy. Embark on the Journey Today.
+        Curate with Intention. Cement{" "}
+        <span style={{ textDecoration: "underline" }}>Your</span> Legacy. Embark
+        on <span style={{ textDecoration: "underline" }}>Your</span> Journey
+        Today.
       </h3>
     </>
   );

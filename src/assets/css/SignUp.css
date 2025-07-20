@@ -1,9 +1,0 @@
-.fontsizing {
-  font-size: 28px;
-}
-
-@media (max-width: 575.98px) {
-  .fontsizing {
-    font-size: 20px;
-  }
-}

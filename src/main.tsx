@@ -4,22 +4,22 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./assets/css/font.css";
 import "./assets/css/logo.css";
-import WelcomePage from "./pages/WelcomePage.tsx";
-import SignUpPage from "./pages/SignUpPage.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import RegisterPage from "./pages/RegisterPage.tsx";
 import Homepage from "./pages/HomePage.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <WelcomePage />,
+    element: <LoginPage />,
   },
   {
     path: "/login",
-    element: <WelcomePage />,
+    element: <LoginPage />,
   },
   {
     path: "/signup",
-    element: <SignUpPage />,
+    element: <RegisterPage />,
   },
   {
     path: "/homepage",
