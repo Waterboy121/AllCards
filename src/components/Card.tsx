@@ -1,15 +1,23 @@
 // src/assets/components/Card.tsx
 import "../assets/css/Card.css";
+import type { StoredCard } from "../assets/types/card.ts";
 
-type CardProps = {
-  id: string;
-  name: string;
-  imageUrl: string;
-  set: string;
-  amount: number;
+/* ============================================================================
+CardProps Type
+  - Defines the props expected by the <Card> component.
+  - Accepts a single StoredCard object via the 'card' prop.
+============================================================================ */
+export type CardProps = {
+  card: StoredCard;
 };
 
-function Card({ id, name, imageUrl, set, amount }: CardProps) {
+/* ============================================================================
+Card Component
+  - Displays a card's image, name, set, and quantity.
+  - Used in both the Home view and individual Collection views.
+============================================================================ */
+function Card({ card }: CardProps) {
+  const { id, name, imageUrl, set, amount } = card;
   return (
     <div className="card-tile" key={id}>
       <div className="card-image-wrapper">

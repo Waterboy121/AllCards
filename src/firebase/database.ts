@@ -80,7 +80,7 @@ export async function addCardToCollection(card: StoredCard, collectionName: stri
   const q = query(
     cardRef,
     where("name", "==", card.name),
-    where("sets", "==", card.set)
+    where("set", "==", card.set)
   );
 
   const querySnapshot = await getDocs(q);
@@ -156,16 +156,15 @@ export async function markCardAsViewed(cardId: string, collectionName: string) {
 
 /* ==================================================================
 Fetch All Stored Cards Across All Collections
-  - Fetches all cards across all user collections.
-  - Returns a flat array of StoredCard objects.
+  - Returns a map: collection name → array of StoredCards.
 ================================================================= */
 export async function getAllCardsFromCollections(
   collections: UserCollection[]
-): Promise<StoredCard[]> {
+): Promise<Record<string, StoredCard[]>> {
   const user = getUser() ?? "";
-  if (!user) return [];
+  if (!user) return {};
 
-  const allCards: StoredCard[] = [];
+  const result: Record<string, StoredCard[]> = {};
 
   for (const col of collections) {
     const cardsRef = collection(
@@ -178,9 +177,11 @@ export async function getAllCardsFromCollections(
     );
     const querySnapshot = await getDocs(cardsRef);
 
+    const cardList: StoredCard[] = [];
+
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
-      allCards.push({
+      cardList.push({
         id: data.id,
         name: data.name,
         imageUrl: data.imageUrl,
@@ -191,9 +192,11 @@ export async function getAllCardsFromCollections(
         viewCount: data.viewCount ?? 0,
       });
     });
+
+    result[col.name] = cardList;
   }
 
-  return allCards;
+  return result;
 }
 
 /* ==================================================================

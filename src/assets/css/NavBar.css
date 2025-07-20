@@ -64,7 +64,7 @@
 }
 
 /* When the icon is hovered directly (with mouse), it turns reddish */
-.search-icon-button:hover .logo-search {
+.search-container:hover .logo-search {
   color: #4a2a2a;
   transform: scale(1.1);
   filter: brightness(2) contrast(1.3);

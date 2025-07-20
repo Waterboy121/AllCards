@@ -10,11 +10,10 @@ import Sidebar from "../components/Sidebar";
 import Popup from "../components/Popup";
 import AddCollectionForm from "../components/popups/AddCollectionForm.tsx";
 import AddCardForm from "../components/popups/AddCardForm";
-import Card from "../components/Card";
+import MainView from "../components/MainView";
 
 import { useEffect, useState } from "react";
 import type { StoredCard } from "../assets/types/card.ts";
-import { getUser } from "../firebase/auth.ts";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/index.ts";
 import {
@@ -34,7 +33,9 @@ function HomePage() {
 
   const [amount, setAmount] = useState(1);
 
-  const [homeCards, setHomeCards] = useState<StoredCard[]>([]);
+  const [allCollections, setAllCollections] = useState<
+    Record<string, StoredCard[]>
+  >({});
 
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [showAddCardPopup, setShowAddCardPopup] = useState(false);
@@ -99,7 +100,7 @@ function HomePage() {
     if (loading) return;
 
     getAllCardsFromCollections(collectionTabs).then((data) => {
-      setHomeCards(data);
+      setAllCollections(data);
     });
   }, [loading, collectionTabs]);
 
@@ -109,7 +110,7 @@ function HomePage() {
 
     setTimeout(() => {
       getAllCardsFromCollections(collectionTabs).then((data) => {
-        setHomeCards(data);
+        setAllCollections(data);
       });
       setAddedCard(false);
     }, 500);
@@ -144,14 +145,9 @@ function HomePage() {
             onAddCard={handleAddCard}
           />
 
-          <div className="mock-mainview">
-            <h2>Welcome {getUser()}!</h2>
-
-            <div className="mock-card-grid">
-              {homeCards.map((card, index) => (
-                <Card key={index} {...card} />
-              ))}
-            </div>
+          {/* ================ MainView (Home or Collection) ================ */}
+          <div className="main-view">
+            <MainView currentTab={currentTab} allCollections={allCollections} />
           </div>
         </div>
 
