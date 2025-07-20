@@ -1,34 +1,35 @@
-// src/assets/components/popups/CardDetailsModel.tsx
 import { useState } from "react";
-import { updateCardAmount } from "../../firebase/database";
-import { deleteCard } from "../../firebase/database";
-import type { StoredCard } from "../../assets/types/card";
-import "../../assets/css/popups/AddCardForm.css"; // reuse same styles
+import { updateCardAmount, deleteCard } from "../../../firebase/database";
+import type { StoredCard } from "../../../assets/types/card";
+import "../../../assets/css/popups/AddCardForm.css";
 
 type Props = {
   card: StoredCard;
   onClose: (shouldRefresh?: boolean) => void;
 };
 
-export default function CardDetailsModal({ card, onClose}: Props) {
+export default function MTGCardDetails({ card, onClose }: Props) {
   const [amount, setAmount] = useState(card.amount);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
-  const handleUpdate = async () => {
-  setSaving(true);
-  const updatedCard = { ...card, amount }; // apply updated quantity
-  await updateCardAmount(updatedCard);
-  setSaving(false);
-  onClose(true);
-};
+  const handleSave = async () => {
+    setSaving(true);
+    const updatedCard = { ...card, amount };
+    await updateCardAmount(updatedCard);
+    setSaving(false);
+    onClose(true);
+  };
 
   const handleDelete = async () => {
-  setSaving(true);
-  await deleteCard(card);
-  setSaving(false);
-  onClose(true); // refresh homepage
-};
+    const confirm = window.confirm(`Delete "${card.name}" from your collection?`);
+    if (!confirm) return;
 
+    setDeleting(true);
+    await deleteCard(card);
+    setDeleting(false);
+    onClose(true);
+  };
 
   return (
     <div className="popup-backdrop">
@@ -46,7 +47,10 @@ export default function CardDetailsModal({ card, onClose}: Props) {
             alt={card.name}
             style={{ width: "100%", maxHeight: "300px", objectFit: "contain" }}
           />
+
           <p><strong>Set:</strong> {card.set}</p>
+          <p><strong>Rarity:</strong> {card.rarity ?? "Unknown"}</p>
+          <p><strong>Artist:</strong> {card.artist ?? "Unknown"}</p>
 
           <div className="input-group mb-3">
             <label className="input-group-text anta-regular text-dark fs-5">Amount:</label>
@@ -77,15 +81,11 @@ export default function CardDetailsModal({ card, onClose}: Props) {
           <button className="cancel-btn" onClick={() => onClose()}>
             Cancel
           </button>
-          <button
-            className="confirm-btn"
-            onClick={handleUpdate}
-            disabled={saving}
-          >
+          <button className="confirm-btn" disabled={saving} onClick={handleSave}>
             {saving ? "Saving..." : "Save"}
           </button>
-          <button className="btn btn-danger" onClick={handleDelete} disabled={saving} style={{ marginLeft: "10px" }}>
-            Delete
+          <button className="cancel-btn" disabled={deleting} onClick={handleDelete}>
+            {deleting ? "Deleting..." : "Delete"}
           </button>
         </div>
       </div>

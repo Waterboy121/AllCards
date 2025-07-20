@@ -13,6 +13,9 @@ import AddFranchiseForm from "../components/popups/AddFranchiseForm";
 import AddCardForm from "../components/popups/AddCardForm";
 import Card from "../components/Card";
 import CardDetailsModal from "../components/popups/CardDetailsModel";
+import PokemonCardDetails from "../components/popups/tcgdetails/PokemonCardDetails";
+import YuGiOhCardDetails from "../components/popups/tcgdetails/YuGiOhCardDetails";
+import MTGCardDetails from "../components/popups/tcgdetails/MTGCardDetails";
 import { useEffect, useState } from "react";
 import type { StoredCard } from "../assets/types/card.ts";
 import { getUser } from "../firebase/auth.ts";
@@ -26,6 +29,7 @@ function HomePage() {
   const [addedCard, setAddedCard] = useState(false);
   const [currentTab, setCurrentTab] = useState<string>("Home");
   const [selectedCard, setSelectedCard] = useState<StoredCard | null>(null);
+  const [selectedCardFranchise, setSelectedCardFranchise] = useState<string>("");
   const [franchiseTabs, setFranchiseTabs] = useState<Franchise[]>([
     { name: "Pokemon", logoKey: "pokemon" },
     { name: "Yu-Gi-Oh", logoKey: "yu-gi-oh" },
@@ -76,6 +80,11 @@ function HomePage() {
     setAddedCard(true);
     setSelectedFranchise(null);
     setAmount(1);
+  };
+
+  const fetchCards = async () => {
+    const data = await getData(franchiseTabs);
+    setHomeCards(data);
   };
 
   //this will happen once per start of the homepage
@@ -150,20 +159,64 @@ function HomePage() {
   {...card}
   onClick={() =>{
       console.log("Clicked card:", card.name);
-      setSelectedCard(card);}}
+      setSelectedCard(card);
+      }}// set card to be card that is clicked on for info
 />
               ))}
             </div>
           </div>
         </div>
 
-        {selectedCard && (
+
+        {/* {selectedCard && (      // when card is clicked open pop up for the selected card
           <Popup onClose={() => setSelectedCard(null)}>
             <CardDetailsModal
               card={selectedCard}
-              onClose={() => setSelectedCard(null)}
+              onClose={(shouldRefresh = false) => {
+              setSelectedCard(null);
+              if (shouldRefresh) fetchCards(); // refresh after save
+              }}
             />
           </Popup>
+        )} */}
+        {selectedCard && (
+  <Popup onClose={() => setSelectedCard(null)}>
+    {{
+      Pokemon: (
+        <PokemonCardDetails
+          card={selectedCard}
+          onClose={(shouldRefresh?: boolean) => {
+            if (shouldRefresh) {
+              getData(franchiseTabs).then(setHomeCards);
+            }
+            setSelectedCard(null);
+          }}
+        />
+      ),
+      "Yu-Gi-Oh": (
+        <YuGiOhCardDetails
+          card={selectedCard}
+          onClose={(shouldRefresh?: boolean) => {
+            if (shouldRefresh) {
+              getData(franchiseTabs).then(setHomeCards);
+            }
+            setSelectedCard(null);
+          }}
+        />
+      ),
+      Magic: (
+        <MTGCardDetails
+          card={selectedCard}
+          onClose={(shouldRefresh?: boolean) => {
+            if (shouldRefresh) {
+              getData(franchiseTabs).then(setHomeCards);
+            }
+            setSelectedCard(null);
+          }}
+        />
+      ),
+    }[selectedCard.franchise] ?? null}
+  </Popup>
 )}
         {showAddPopup && (
           <Popup onClose={() => setShowAddPopup(false)}>

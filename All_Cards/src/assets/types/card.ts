@@ -6,4 +6,9 @@ export type StoredCard = {
   amount: number;
   addedAt: string;
   lastViewedAt: string;
+  franchise: string;
+  rarity?: string;
+  artist?: string;
+  evolvesFrom?: string;
+  evolvesTo?: string[];
 };

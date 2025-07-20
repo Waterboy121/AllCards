@@ -7,7 +7,7 @@ type CardProps = {
   imageUrl: string;
   set: string;
   amount: number;
-  onClick?: () => void; // ✅ allow optional click handler
+  onClick?: () => void;
 };
 
 function Card({ id, name, imageUrl, set, amount, onClick }: CardProps) {

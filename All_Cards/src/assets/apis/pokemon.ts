@@ -16,6 +16,10 @@ interface PokemonCard {
   name: string;
   images: PokemonImageUris;
   set: PokemonSet;
+  rarity?: string;
+  artist?: string;
+  evolvesFrom?: string;
+  evolvesTo?: string[];
 }
 
 interface PokemonApiResponse {
@@ -37,6 +41,11 @@ export async function searchCardsByName(name: string): Promise<StoredCard[]> {
       name: card.name,
       imageUrl: card.images.large || card.images.small,
       set: card.set.name || "-",
+      franchise: "Pokemon",
+      rarity: card.rarity ?? null,
+      artist: card.artist ?? null,
+      evolvesFrom: card.evolvesFrom ?? null,
+      evolvesTo: card.evolvesTo ?? [],
     }));
 }
 
