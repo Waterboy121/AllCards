@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   updateProfile,
+  sendPasswordResetEmail
 } from "firebase/auth";
 
 export async function LoginWithEP(email: string, password: string) {
@@ -48,6 +49,15 @@ export function SignOut() {
   signOut(auth).then(() => {
     console.log("Signed Out!");
   });
+}
+
+export async function resetPassword(email: string) {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    console.log("Password reset email sent to " + email);
+  } catch (error: any) {
+    throw new Error(`${error.code}`);
+  }
 }
 
 export function getUser() {
