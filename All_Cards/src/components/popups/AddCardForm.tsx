@@ -55,6 +55,11 @@ function AddCardForm({
     const rawValue = e.target.value;
     setAmountText(rawValue); // ← keep what's typed
 
+    if (rawValue === "") {
+      changeAmount(0);
+      return;
+    }
+
     const parsed = parseInt(rawValue, 10);
 
     if (!isNaN(parsed) && parsed > 0) {
