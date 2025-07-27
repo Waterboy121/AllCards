@@ -1,101 +1,189 @@
-/* =====================================================
+/* ============================================================================
   GOOGLE FONT IMPORTS
-===================================================== */
+============================================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Tiny5&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Cinzel:wght@400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Tiny5&display=swap');
 
+/* ============================================================================
+  TILT PRISM — Used for Logo Text (Login/Register/NavBar)
+============================================================================ */
 
-
-/* =====================================================
-  PIXELIFY SANS
-===================================================== */
-.pixelify-sans {
-  font-family: "Pixelify Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-  color: aliceblue;
-}
-
-/* =====================================================
-  ANTA
-===================================================== */
-.anta-regular {
-  font-family: "Anta", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-
-
-/* =====================================================
-  CINZEL (VARIABLE FONT)
-===================================================== */
-
-/* TEXT BODY */
-.cinzel-body {
-  font-family: "Cinzel", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-weight: 600;
-  color: #f5f5f5;
-
-  transform: scaleX(1);
-  transition: transform 0.4s ease, color 0.4s ease, font-weight 0.4s ease, font-style 0.4s ease;
-  transform-style: preserve-3d;
-}
-
-.cinzel-body:hover {
-  font-weight: 800;
-  font-style: italic;
-  color: #5f3dc4;
-
-  transform: scaleX(1.05);
-}
-
-/* =====================================================
-  TILT PRISM (VARIABLE FONT)
-===================================================== */
-
-/* ALLCARDS LOGO - LOGINPAGE & REGISTERPAGE */
-.tilt-prism-logo {
+:is(.tilt-prism-logo-navbar, .tilt-prism-logo-welcome) {
   font-family: "Tilt Prism", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-  
-  font-weight: 800;
   color: #f5f5f5;
-  transform: scaleX(1) scaleY(1);
-  transition: transform 0.4s ease, color 0.4s ease, font-weight 0.4s ease, text-shadow 0.4s ease;
-  transform-style: preserve-3d;
-}
-
-.tilt-prism-logo:hover {
-  font-weight: 900;
-  color: #e0115f;
-  transform: scaleX(1.2) scaleY(1.2);
-  text-shadow: 0 0 0.5rem rgba(255, 79, 129, 0.2), 0 0 1.2rem rgba(255, 79, 129, 0.2), 0 0 2.5rem rgba(255, 79, 129, 0.2);
-}
-
-/* ALLCARDS LOGO - NAVBAR */
-.tilt-prism-nav {
-  font-family: "Tilt Prism", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  
   font-weight: 800;
-  color: #f5f5f5;
-  transform: scaleX(1) scaleY(1);
-  transition: transform 0.4s ease, color 0.4s ease, font-weight 0.4s ease, text-shadow 0.4s ease;
   transform-style: preserve-3d;
+  transition: color 0.4s ease,
+              font-weight 0.4s ease,
+              text-shadow 0.4s ease,
+              transform 0.4s ease;
 }
 
-.tilt-prism-nav:hover {
+.tilt-prism-logo-navbar {
+  font-size: clamp(2.2rem, 4.5vw, 4.5rem);
+}
+
+.tilt-prism-logo-navbar:hover {
   font-weight: 900;
   color: #e0115f;
   transform: scaleX(1.05) scaleY(1.05);
-  text-shadow: 0 0 0.5rem rgba(255, 79, 129, 0.2), 0 0 1.2rem rgba(255, 79, 129, 0.2), 0 0 2.5rem rgba(255, 79, 129, 0.2);
+  text-shadow:  0 0 1.0rem #ff5c8a,
+                0 0 2.2rem #ff5c8a;
+}
+
+.tilt-prism-logo-welcome {
+  font-size: clamp(2.5rem, 6vw, 7rem);
+}
+
+.tilt-prism-logo-welcome:hover {
+  font-weight: 900;
+  color: #9966cc;
+  transform: scaleX(1.35) scaleY(1.15);
+  text-shadow:  0 0 1.2rem #c79aff,
+                0 0 2.5rem #c79aff;
+}
+
+/* ============================================================================
+  CINZEL — Used in Sidebar, MainView, Login/Register Header and Body
+============================================================================ */
+
+:is(.cinzel-body, .cinzel-mainview, .cinzel-sidebar) {
+  font-family: "Cinzel", serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+  font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+	font-weight: 600;
+	color: #f5f5f5;
+  text-shadow: none;
+	transform-style: preserve-3d;
+  transition: font-weight 0.4s ease,
+              font-style 0.4s ease,
+              color 0.4s ease,
+              transform 0.4s ease,
+              text-shadow 0.4s ease;
+}
+
+/* Login/Register Body Text */
+.cinzel-body {
+  text-align: center;
+  font-size: clamp(0.8rem, 1.4vw, 1.4rem);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+.cinzel-body:hover {
+	font-weight: 800;
+	font-style: italic;
+	color: #ffd700;
+	transform: scaleX(1.1);
+}
+
+/* MainView Heading Text */
+.cinzel-mainview {
+	font-size: clamp(1.5rem, 2vw, 2rem);
+	margin-bottom: 2rem;
+	margin-top: 0;
+	width: 100%;
+  display: block;
+	flex-shrink: 0;
+	z-index: 1;
+	position: relative;
+}
+
+/* Sidebar Home/Collection Text */
+.cinzel-sidebar {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  word-break: break-word;
+}
+
+.button-sidebar-tab:hover .cinzel-sidebar {
+	font-weight: 700;
+	color: #d6d6d6;
+	transform: scaleX(1.1);
+  text-shadow:  0 0 0.05rem #0b0b0b,
+                0 0 0.1rem #3d3d3d;
+}
+
+/* ============================================================================
+  ANTA — Used in Card, Login/Register, Popups
+============================================================================ */
+
+:is(.anta-accounts, .anta-card-name, .anta-card-set, .anta-card-amount, .anta-popups) {
+	font-family: "Anta", sans-serif;
+  font-optical-sizing: auto;
+	font-style: normal;
+  font-size: clamp(1.4rem, 2vw, 2rem);
+	font-weight: 400;
+	color: #f5f5f5;
+}
+
+/* Login/Register form font */
+.anta-accounts {
+  text-shadow:  0 0 0.05rem #c0c0c0,
+                0 0 0.1rem #c0c0c0;
+  line-height: 1.4;
+}
+
+/* === Default text display: single line w/ ellipsis === */
+.anta-card-name,
+.anta-card-set {
+  font-weight: 600;
+	font-size: clamp(0.9rem, 1vw, 1.1rem);
+	white-space: nowrap;		/* Prevents line breaks; text stays on a single line */
+	overflow: hidden;			/* Hides anything that overflows the container width */
+	text-overflow: ellipsis;	/* Adds ... at the end of truncated text */
+	word-break: normal;			/* Keeps words intact — breaks only at allowed points (e.g. spaces) */
+  text-shadow:  0 0 0.05rem #0b0b0b;
+}
+
+/* === On hover: let text wrap at natural breaks === */
+.tile-card:hover .anta-card-name,
+.tile-card:hover .anta-card-set {
+	white-space: normal;		/* Allows automatic wrapping to the next line (multi-line text) */
+	overflow: visible;			/* Ensures full text is shown — no cutoff */
+	text-overflow: unset;		/* Removes ellipsis — it's only needed in the non-hover state */
+	word-break: break-word; 	/* Allows wrapping between words but never in the middle of one */
+}
+
+.anta-card-amount {
+  font-size: clamp(0.7rem, 0.8vw, 0.8rem);
+  transition: font-weight 0.4s ease,
+              font-size 0.4s ease,
+              text-shadow 0.4s ease;
+}
+
+.tile-card:hover .anta-card-amount {
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-shadow:  0 0 0.05rem #0b0b0b;
+}
+
+/* Popup forms font */
+.anta-popups {
+  font-weight: 600;
+  line-height: 1.4;
+  text-shadow:  0 0 0.05rem #c0c0c0,
+                0 0 0.1rem #c0c0c0;
+}
+
+
+
+/* ============================================================================
+  PIXELIFY SANS
+============================================================================ */
+
+.pixelify-sans {
+	font-family: "Pixelify Sans", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
+	color: aliceblue;
 }

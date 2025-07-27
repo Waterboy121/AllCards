@@ -1,5 +1,4 @@
 // src/assets/components/Card.tsx
-import "../assets/css/Card.css";
 import type { StoredCard } from "../assets/types/card.ts";
 
 /* ============================================================================
@@ -19,15 +18,15 @@ Card Component
 function Card({ card }: CardProps) {
   const { id, name, imageUrl, set, amount } = card;
   return (
-    <div className="card-tile" key={id}>
-      <div className="card-image-wrapper">
+    <div className="tile-card" key={id}>
+      <div className="wrapper-card-image">
         <img src={imageUrl} alt={name} className="card-image" />
       </div>
       <div className="card-info">
-        <div className="card-name">{name}</div>
-        <div className="card-set">{set}</div>
+        <div className="anta-card-name">{name}</div>
+        <div className="anta-card-set">{set}</div>
         {(amount !== undefined || amount <= 0) && (
-          <div className="card-set">Quantity: {amount}</div>
+          <div className="anta-card-amount">Quantity: {amount}</div>
         )}
       </div>
     </div>

@@ -1,7 +1,7 @@
 // Import the shared Firebase `auth` object from your app's configuration
 import { auth } from "./index.ts";
 
-// Import Firebase Auth functions for login, user creation, sign-out, etc.
+// Import Firebase Auth functions for signin, user creation, sign-out, etc.
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -15,13 +15,13 @@ import {
 import { FirebaseError } from "firebase/app";
 
 // ===============================
-// Login with Email & Password
+// Signin with Email & Password
 // ===============================
 /**
-  Attempts to log in an existing user using email and password.
-  If login fails, throws a detailed FirebaseError with code and message.
+  Attempts to signin an existing user using email and password.
+  If signin fails, throws a detailed FirebaseError with code and message.
 */
-export async function LoginWithEP(email: string, password: string) {
+export async function SigninWithEP(email: string, password: string) {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     //console.log(userCredential.user.email);
@@ -87,7 +87,7 @@ export function SignOut() {
 // Get Current User's Display Name
 // ===============================
 /**
-  Returns the currently authenticated user's display name, if logged in.
+  Returns the currently authenticated user's display name, if signed in.
   Returns undefined if no user is signed in.
 */
 export function getUser() {
@@ -100,7 +100,7 @@ export function getUser() {
 /**
   Sets a listener that runs whenever the user's auth state changes.
   Logs the user's email if signed in, or "No user" otherwise.
-  This is useful for debugging login/logout flows.
+  This is useful for debugging signin/signout flows.
 */
 onAuthStateChanged(auth, (user) => {
   if (user != null) {

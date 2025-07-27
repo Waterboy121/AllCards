@@ -1,6 +1,5 @@
 // src/assets/components/popups/MenuForm.tsx
 
-import "../../assets/css/popups/MenuForm.css";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { SignOut } from "../../firebase/auth";
@@ -26,13 +25,13 @@ function MenuForm({ onClose }: HamburgerMenuProps) {
   const handleLogout = async () => {
     await SignOut();
     onClose();
-    navigate("/login"); // Route defined in your main.tsx
+    navigate("/login");
   };
 
   return (
-    <div className="hamburger-menu" ref={menuRef}>
-      <button className="hamburger-option">Profile</button>
-      <button className="hamburger-option" onClick={handleLogout}>
+    <div className="popup-menu" ref={menuRef}>
+      <button className="button-menu-option anta-popups">Profile</button>
+      <button className="button-menu-option anta-popups" onClick={handleLogout}>
         Log Out
       </button>
     </div>

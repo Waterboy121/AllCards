@@ -1,17 +1,16 @@
 // src/assets/components/popups/AddCollectionForm.tsx
 import React, { useState } from "react";
-import "../../assets/css/popups/AddCollectionForm.css";
 
 // Import all logos from centralized file
 import {
-  DigimonLogo,
-  DisneyLogo,
   MagicLogo,
-  MarvelLogo,
-  OnePieceLogo,
   PokemonLogo,
-  StarWarsLogo,
   YuGiOhLogo,
+  // DigimonLogo,
+  // DisneyLogo,
+  // MarvelLogo,
+  // OnePieceLogo,
+  // StarWarsLogo,
 } from "../logos";
 
 type AddCollectionFormProps = {
@@ -20,14 +19,14 @@ type AddCollectionFormProps = {
 };
 
 const franchiseOptions = [
+  { label: "Magic the Gathering", key: "magic", Logo: MagicLogo },
   { label: "Pokémon", key: "pokemon", Logo: PokemonLogo },
   { label: "Yu-Gi-Oh!", key: "yu-gi-oh", Logo: YuGiOhLogo },
-  { label: "Magic the Gathering", key: "magic", Logo: MagicLogo },
-  { label: "Digimon", key: "digimon", Logo: DigimonLogo },
-  { label: "Disney Lorcana", key: "disney-lorcana", Logo: DisneyLogo },
-  { label: "Marvel Champions", key: "marvel", Logo: MarvelLogo },
-  { label: "One Piece", key: "one-piece", Logo: OnePieceLogo },
-  { label: "Star Wars", key: "star-wars", Logo: StarWarsLogo },
+  // { label: "Digimon", key: "digimon", Logo: DigimonLogo },
+  // { label: "Disney Lorcana", key: "disney-lorcana", Logo: DisneyLogo },
+  // { label: "Marvel Champions", key: "marvel", Logo: MarvelLogo },
+  // { label: "One Piece", key: "one-piece", Logo: OnePieceLogo },
+  // { label: "Star Wars", key: "star-wars", Logo: StarWarsLogo },
 ];
 
 function AddCollectionForm({ onSubmit, onCancel }: AddCollectionFormProps) {
@@ -42,8 +41,8 @@ function AddCollectionForm({ onSubmit, onCancel }: AddCollectionFormProps) {
   };
 
   return (
-    <form className="add-franchise-form" onSubmit={handleSubmit}>
-      <h2>Create Franchise Tab</h2>
+    <form className="popup-add-collection anta-popups" onSubmit={handleSubmit}>
+      <h2>Add Collection</h2>
 
       <div className="form-row">
         <label htmlFor="custom-name">Custom Name:</label>
@@ -56,28 +55,28 @@ function AddCollectionForm({ onSubmit, onCancel }: AddCollectionFormProps) {
         />
       </div>
 
-      <div className="franchise-select-label">Select Franchise:</div>
-      <div className="franchise-grid">
+      <div>Select Franchise:</div>
+      <div className="grid-franchise">
         {franchiseOptions.map(({ key, label, Logo }) => (
           <button
             type="button"
             key={key}
-            className={`franchise-tile ${
+            className={`tile-franchise ${
               franchiseKey === key ? "selected" : ""
             }`}
             onClick={() => setFranchiseKey(key)}
           >
-            <Logo className="franchise-logo" />
+            <Logo className="logo-add-franchise" />
             <span>{label}</span>
           </button>
         ))}
       </div>
 
       <div className="form-buttons">
-        <button type="submit" className="confirm-btn">
+        <button type="submit" className="button-confirm">
           Create
         </button>
-        <button type="button" className="cancel-btn" onClick={onCancel}>
+        <button type="button" className="button-cancel" onClick={onCancel}>
           Cancel
         </button>
       </div>

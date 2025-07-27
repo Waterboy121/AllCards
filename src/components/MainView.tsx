@@ -1,6 +1,5 @@
 // src/components/MainView.tsx
 
-import "../assets/css/MainView.css";
 import { useEffect, useState } from "react";
 import type { StoredCard } from "../assets/types/card";
 import { getUser } from "../firebase/auth.ts";
@@ -55,19 +54,19 @@ function MainView({ currentTab, allCollections }: Props) {
     - Uses the shared <Card> component for each card entry.
   ============================================================================ */
   return (
-    <div className="main-view">
+    <div className="container-mainview">
       {currentTab === "Home" ? (
-        <h2>
-          ※ Welcome <span className="highlighted-user">{getUser()}</span>! ※
+        <h2 className="cinzel-mainview">
+          ※ Welcome <span className="highlight-user">{getUser()}</span>! ※
         </h2>
       ) : (
-        <h2>
+        <h2 className="cinzel-mainview">
           Archive Catalogue ⋄ Entry⦂{" "}
-          <span className="highlighted-tab">{currentTab}</span>
+          <span className="highlight-collection">{currentTab}</span>
         </h2>
       )}
 
-      <div className="card-grid">
+      <div className="grid-card">
         {cardsToDisplay.map((card) => (
           <Card key={card.id} card={card} />
         ))}

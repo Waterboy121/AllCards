@@ -1,44 +1,37 @@
-import "../assets/css/NavBar.css";
 import logo from "../assets/images/icons/logo.png";
 import MenuForm from "./popups/MenuForm";
 import { useRef, useState } from "react";
 
-import { SearchIcon } from "./logos";
+import { SearchIcon, MenuIcon } from "./logos";
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   return (
-    <nav className="navbar navbar-dark bg-dark px-4 py-3 d-flex align-items-center justify-content-between">
+    <nav className="container-navbar">
       {/* Logo section */}
-      <div className="tilt-prism-nav d-flex align-items-center justify-content-center">
-        <img
-          src={logo}
-          alt="AllCards logo"
-          width="164"
-          height="100"
-          className="logo-image me-2"
-        />
-        <span style={{ fontSize: "clamp(1.5rem, 5vw, 4rem)" }}>AllCards</span>
+      <div className="hover-sync flex-left">
+        <img src={logo} alt="AllCards logo" className="logo-allcards" />
+        <span className="tilt-prism-logo-navbar">AllCards</span>
       </div>
 
       {/* Search bar */}
-      <div className="search-container">
-        <div className="search-wrapper">
+      <div className="container-search">
+        <div className="wrapper-search">
           <button
-            className="search-icon-button"
+            className="button-search-icon"
             onClick={() => {
               const input =
                 document.querySelector<HTMLInputElement>(".search-input");
               input?.focus();
             }}
           >
-            <SearchIcon className="logo-search" />
+            <SearchIcon className="icon-search" />
           </button>
           <input
             type="text"
-            className="form-control search-input"
+            className="search-input"
             placeholder="Search through your virtual binder here..."
           />
         </div>
@@ -47,10 +40,10 @@ function NavBar() {
       {/* Hamburger menu button */}
       <div ref={menuRef} className="position-relative">
         <button
-          className="hamburger-btn flex-shrink-0 ms-4"
+          className="button-menu"
           onClick={() => setMenuOpen((prev) => !prev)}
         >
-          <span className="hamburger-icon">&#9776;</span>
+          <MenuIcon className="icon-menu" />
         </button>
         {menuOpen && <MenuForm onClose={() => setMenuOpen(false)} />}
       </div>

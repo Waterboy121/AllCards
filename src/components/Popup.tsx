@@ -1,6 +1,5 @@
 // src/assets/components/Popup.tsx
 import React, { useEffect } from "react";
-import "../assets/css/Popup.css";
 
 type PopupProps = {
   onClose: () => void;
@@ -24,7 +23,7 @@ function Popup({ onClose, children }: PopupProps) {
 
   return (
     <div className="popup-overlay" onClick={handleClickBackground}>
-      <div className="popup-content">{children}</div>
+      {children}
     </div>
   );
 }

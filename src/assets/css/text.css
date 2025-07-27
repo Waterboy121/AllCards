@@ -1,0 +1,121 @@
+/* ============================================================================
+  TEXT HIGHLIGHT STYLES
+============================================================================ */
+
+:is(.highlight-user, .highlight-collection, .highlight-header, .highlight-subheader) {
+	font-weight: 700;
+	
+
+}
+
+/* Highlight User Name MainView */
+.highlight-user {
+  color: #40e0d0;
+  text-shadow: 0 0 0.05rem #8ffcf2, 0 0 0.25rem #8ffcf2;
+}
+
+/* Highlight Collection Name MainView */
+.highlight-collection {
+  color: #cd7f32;
+  text-shadow: 0 0 0.05rem #ffe3b3, 0 0 0.25rem #ffe3b3;
+}
+
+/* Decorative Header Text */
+.highlight-header {
+	color: #f5f5f5;
+	text-shadow: 0 0 3px #0b0b0b;
+	font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+	transition: all 0.3s ease-in-out;
+}
+
+.highlight-header:hover {
+	color: #ffd700;
+	text-shadow: 0 0 6px #fff1a8;
+}
+
+/* Decorative Subheader Text */
+.highlight-subheader {
+	color: #f0f0f0;
+	text-shadow: 1px 1px 1px #0b0b0b;
+	font-style: italic;
+	font-size: clamp(1rem, 2vw, 2rem);
+	opacity: 0.95;
+	transition: all 0.3s ease-in-out;
+}
+
+.highlight-subheader:hover {
+	color: #c0c0c0;
+	opacity: 1;
+	transform: translateY(-2px);
+}
+
+/* ============================================================================
+  KEYFRAMES (ANIMATION DEFINITIONS)
+============================================================================ */
+
+@keyframes fadeSlideUp {
+	0% {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes pulseGlow {
+	0%, 100% {
+		text-shadow: 0 0 4px rgba(255, 215, 100, 0.2);
+	}
+	50% {
+		text-shadow: 0 0 10px rgba(255, 215, 100, 0.6);
+	}
+}
+
+/* Shared Animation Class */
+.animate-in {
+  animation: fadeSlideUp 0.8s ease forwards;
+}
+.animate-delay-1 {
+  animation-delay: 0.3s;
+}
+.animate-delay-2 {
+  animation-delay: 0.6s;
+}
+.animate-delay-3 {
+  animation-delay: 0.9s;
+}
+
+/* ============================================================================
+  TEXT EFFECTS
+============================================================================ */
+
+/* Pulse Glow Text Effect */
+.pulse {
+	animation: pulseGlow 8s ease-in-out infinite;
+}
+
+/* ==========================================
+  Franchise Tile Label
+========================================== */
+
+.tile-franchise span {
+  font-size: 1.1rem;
+}
+
+/* ===============================
+  Universal Form Input Styling
+  - Used in login/register inputs
+=============================== */
+
+.input-auth {
+  background-color: #F8F8FF;
+  color: #0b0b0b;
+  border: 1px solid #000;
+  font-family: "Anta", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  font-weight: 400;
+}

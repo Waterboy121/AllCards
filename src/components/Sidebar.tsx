@@ -1,16 +1,16 @@
-import "../assets/css/Sidebar.css";
-
 // Import all logos from centralized file
 import {
   HomeIcon,
-  DigimonLogo,
-  DisneyLogo,
+  PlusIcon,
+  DotsIcon,
   MagicLogo,
-  MarvelLogo,
-  OnePieceLogo,
   PokemonLogo,
-  StarWarsLogo,
   YuGiOhLogo,
+  // DigimonLogo,
+  // DisneyLogo,
+  // MarvelLogo,
+  // OnePieceLogo,
+  // StarWarsLogo,
 } from "./logos";
 
 import type { UserCollection } from "../assets/types/collection";
@@ -20,14 +20,14 @@ const franchiseLogos: Record<
   string,
   React.FC<React.SVGProps<SVGSVGElement>>
 > = {
-  digimon: DigimonLogo,
-  "disney-lorcana": DisneyLogo,
   magic: MagicLogo,
-  marvel: MarvelLogo,
-  "one-piece": OnePieceLogo,
   pokemon: PokemonLogo,
-  "star-wars": StarWarsLogo,
   "yu-gi-oh": YuGiOhLogo,
+  // digimon: DigimonLogo,
+  // "disney-lorcana": DisneyLogo,
+  // marvel: MarvelLogo,
+  // "one-piece": OnePieceLogo,
+  // "star-wars": StarWarsLogo,
 };
 
 type SidebarProps = {
@@ -46,39 +46,41 @@ function Sidebar({
   onAddCard,
 }: SidebarProps) {
   return (
-    <aside className="sidebar">
+    <aside className="container-sidebar">
       {/* Home tab */}
-      <div
-        className={`sidebar-item sidebar-home ${
+      <button
+        type="button"
+        className={`button-sidebar-tab sidebar-home ${
           currentTab === "Home" ? "active" : ""
         }`}
         onClick={() => onTabClick("Home")}
       >
         <div className="sidebar-left">
-          <div className="sidebar-icon-wrapper">
+          <div className="flex-center">
             <HomeIcon className="logo-home" />
           </div>
-          <div className="sidebar-name handjet-sidebar">Home</div>
+          <div className="cinzel-sidebar">Home</div>
         </div>
 
+        {/* Tab Action Buttons */}
         <div className="sidebar-right">
           <button
-            className="sidebar-icon-button"
+            className="button-tab-icon flex-center"
             onClick={(e) => {
               e.stopPropagation();
               onAddCollection();
             }}
           >
-            +
+            <PlusIcon className="icon-plus" />
           </button>
           <button
-            className="sidebar-icon-button"
+            className="button-tab-icon flex-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <span className="sidebar-dots">⋮</span>
+            <DotsIcon className="icon-vertical-ellipsis" />
           </button>
         </div>
-      </div>
+      </button>
 
       {/* Franchise tabs */}
       {collections.map((col) => {
@@ -86,42 +88,40 @@ function Sidebar({
         const logoClass = `logo-${col.franchiseKey.replace("-", "")}`;
 
         return (
-          <div
+          <button
             key={col.name}
-            className={`sidebar-item ${
+            type="button"
+            className={`button-sidebar-tab ${
               currentTab === col.name ? "active" : ""
             }`}
             onClick={() => onTabClick(col.name)}
           >
             <div className="sidebar-left">
-              <div className="sidebar-icon-wrapper">
-                {LogoComponent ? (
-                  <LogoComponent className={`sidebar-icon ${logoClass}`} />
-                ) : (
-                  <div className="sidebar-icon logo-missing">?</div>
-                )}
+              <div className="flex-center">
+                <LogoComponent className={`logo-sidebar ${logoClass}`} />
               </div>
-              <div className="sidebar-name handjet-sidebar">{col.name}</div>
+              <div className="cinzel-sidebar">{col.name}</div>
             </div>
 
+            {/* Tab Action Buttons */}
             <div className="sidebar-right">
               <button
-                className="sidebar-icon-button"
+                className="button-tab-icon flex-center"
                 onClick={(e) => {
                   e.stopPropagation();
                   onAddCard(col.name);
                 }}
               >
-                +
+                <PlusIcon className="icon-plus" />
               </button>
               <button
-                className="sidebar-icon-button"
+                className="button-tab-icon flex-center"
                 onClick={(e) => e.stopPropagation()}
               >
-                <span className="sidebar-dots">⋮</span>
+                <DotsIcon className="icon-vertical-ellipsis" />
               </button>
             </div>
-          </div>
+          </button>
         );
       })}
     </aside>

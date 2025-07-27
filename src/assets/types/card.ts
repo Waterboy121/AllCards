@@ -30,4 +30,10 @@ export type StoredCard = {
 /* Number of times the card has been viewed (clicked/opened).
   Used for tracking popularity or "most viewed" sorting. */
   viewCount: number;
+
+/* Optional for double-faced cards (Magic only) */
+doubleFaced?: boolean;  // is double faced or not
+layout?: string;        // the layout type from Scryfall (e.g., "transform")
+name2?: string;          // back face name if double faced
+imageUrl2?: string;     // back face image (optional for robustness)
 };

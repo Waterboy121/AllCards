@@ -1,0 +1,259 @@
+/* ==============================================
+  FLEX ROW UTILITIES
+  - Horizontal flex containers
+  - Centering, alignment, and spacing variants
+============================================== */
+
+:is(.flex-left, .flex-center, .flex-right, .flex-space-between) {
+  display: flex;
+  align-items: center; /* vertically center all row-based layouts */
+}
+
+/* left-align all items (default) */
+.flex-left {
+  justify-content: flex-start;
+}
+
+/* center items horizontally */
+.flex-center {
+  justify-content: center;
+}
+
+/* right-align items */
+.flex-right {
+  justify-content: flex-end;
+}
+
+/* distribute with space between items */
+.flex-space-between {
+  justify-content: space-between;
+}
+
+
+/* ==============================================
+  FLEX COLUMN UTILITIES
+  - Vertical stacking of items
+  - Optional vertical and horizontal centering
+============================================== */
+
+:is(.flex-column, .flex-column-center, .flex-column-center-full) {
+  display: flex;
+  flex-direction: column; /* switch to vertical layout */
+}
+
+/* center items vertically */
+.flex-column-center {
+  justify-content: center;
+}
+
+/* center items vertically & horizontally */
+.flex-column-center-full {
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+/* ==============================================
+  SEARCH BAR INPUT FIELD 
+============================================== */
+
+.search-input {
+  width: 100%;
+  color: rgb(185, 185, 185);            /* Text color */
+  border: 1px solid #555;               /* Border color */
+  border-radius: 9999px;
+  font-size: 1.5rem;
+  padding: 0.5rem 1.5rem 0.5rem 3rem;     /* top/right/bottom/left — leaves room for the icon on the left */
+}
+
+.search-input::placeholder {
+  color: #888;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0.25rem #d8953d;
+  border-color: #473114;
+}
+
+/* ==============================================
+  Tiles 
+============================================== */
+
+:is(.tile-card, .tile-franchise) {
+	border-radius: 0.75rem;
+  color: #f5f5f5;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+} 
+
+
+
+/* Card Tile */ 
+.tile-card {
+  background-color: #2a2a2a;
+	overflow: hidden;
+	width: clamp(11rem, 13.125rem, 15rem);
+	transition: transform 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+
+.tile-card:hover {
+	transform: scale(1.03);
+	box-shadow: 0 4px 12px #0b0b0b;
+}
+
+/* Franchise Tile */
+.tile-franchise {
+  width: clamp(10rem, 12vw, 12rem);
+  height: clamp(8rem, 10vw, 10rem);
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  padding: 1rem;
+  background-color: #5a5a5a;
+  transition: border 0.2s ease,
+              background-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.tile-franchise:hover {
+  background-color: #3d3d3d;
+}
+
+.tile-franchise.selected {
+  border-color: #4a2a2a;
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 12px #0b0b0b;
+}
+
+/* ==============================================
+  Card Info Container
+============================================== */
+
+.card-info {
+	background-color: transparent;
+	padding: 0.6rem 0.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+/* ========================================================================
+  GRIDS (Card Display + Franchise Selection) 
+======================================================================= */
+
+:is(.grid-card, .grid-franchise) {
+  display: grid;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+
+
+/* Card Display Grid */
+.grid-card {
+  grid-template-columns: repeat(auto-fill, minmax(clamp(11rem, 13.125rem, 15rem), 1fr));
+	width: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+/* Each clickable wrapper for a result */
+.card-search-wrapper {
+	cursor: pointer;
+	transition: transform 0.2s ease;
+}
+
+.card-search-wrapper:hover {
+	transform: scale(1.05);
+}
+
+/* Franchise Selection Grid */
+.grid-franchise {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  
+}
+
+@media (max-width: 44rem) {
+  .grid-franchise {
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  }
+}
+
+@media (max-width: 30rem) {
+  .grid-franchise {
+    grid-template-columns: repeat(1, 1fr);
+    justify-content: center;
+  }
+}
+
+
+/* ========================================================================
+  HOMEPAGE LAYOUT
+======================================================================= */
+
+.homepage-layout {
+	display: flex;
+	flex: 1;
+	overflow: hidden;
+}
+
+/* ==============================================
+  Popup Form Row (Label + Input)
+============================================== */
+
+.flex-left .form-row {
+  gap: 1rem;
+}
+
+.form-row label {
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.form-row input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.form-buttons {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 1rem;
+  gap: 1rem;
+}
+
+
+/* ==============================================
+  WRAPPERS
+============================================== */
+
+:is(.wrapper-card-image, .wrapper-search) {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+
+/* Searchbar Wrapper */
+.wrapper-search {
+  position: relative;
+}
+
+/* Card Image Wrapper */
+.wrapper-card-image {
+	height: clamp(15rem, 18.75rem, 22rem);
+	background-color: transparent;
+	overflow: hidden;
+	justify-content: center;
+}

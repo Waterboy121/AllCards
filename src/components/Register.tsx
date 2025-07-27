@@ -80,10 +80,9 @@ function SignUp() {
   return (
     <>
       <div
-        className="container my-5 w-50 h-75 p-4"
+        className="container my-5 w-50 h-75 p-4 anta-accounts"
         style={{
           backgroundColor: "#353839",
-          flexShrink: 0,
           borderRadius: "46px",
           boxShadow: "0 0 12px #c0c0c0",
         }}
@@ -104,8 +103,8 @@ function SignUp() {
                 </button>
               </Link>
               <h2
-                className="anta-regular"
-                style={{ fontSize: "36px", color: "#f5f5f5", margin: 0 }}
+                className="anta-accounts"
+                style={{ fontSize: "2.25rem", margin: 0 }}
               >
                 Forge Thy Ledger
               </h2>
@@ -115,118 +114,99 @@ function SignUp() {
               className={"mx-auto bg-white my-3"}
               style={{ height: "1.75px" }}
             ></div>
-            <div className="mb-1">
-              {/*FORM STARTS HERE*/}
-              <form onSubmit={handleSubmit(onSignUpSubmit)}>
-                <label
-                  className="anta-regular form-label my-1"
-                  style={{ fontSize: "24px", color: "#f5f5f5" }}
-                >
+
+            <form onSubmit={handleSubmit(onSignUpSubmit)}>
+              <div className="form-row">
+                <label htmlFor="display_name" className="anta-accounts">
                   User Name
                 </label>
                 <input
                   {...register("display_name")}
+                  id="display_name"
                   type="text"
-                  className="form-control"
+                  style={{ width: "100%" }}
                   placeholder="ex: TheAllMaster"
-                  style={{
-                    backgroundColor: "#F8F8FF",
-                    borderWidth: "1px",
-                    borderColor: "#000",
-                  }}
                 />
-                {errors.display_name && (
-                  <div className="invalid-feedback d-block anta-regular">
-                    {errors.display_name.message}
-                  </div>
-                )}
-                <label
-                  className="anta-regular form-label my-1"
-                  style={{ fontSize: "24px", color: "#f5f5f5" }}
-                >
+              </div>
+
+              {errors.display_name && (
+                <div className="invalid-feedback d-block">
+                  {errors.display_name.message}
+                </div>
+              )}
+
+              <div className="form-row">
+                <label htmlFor="email" className="anta-accounts">
                   Email
                 </label>
                 <input
                   {...register("email")}
+                  id="email"
                   type="text"
-                  className="form-control"
+                  style={{ width: "100%" }}
                   placeholder="ex: Lord-of-Allcards@master.com"
-                  style={{
-                    backgroundColor: "#F8F8FF",
-                    borderWidth: "1px",
-                    borderColor: "#000",
-                  }}
-                />{" "}
-                {errors.email && (
-                  <div className="invalid-feedback d-block anta-regular">
-                    {errors.email.message}
-                  </div>
-                )}
-                <label
-                  className="anta-regular form-label my-1"
-                  style={{ fontSize: "24px", color: "#f5f5f5" }}
-                >
+                />
+              </div>
+
+              {errors.email && (
+                <div className="invalid-feedback d-block">
+                  {errors.email.message}
+                </div>
+              )}
+
+              <div className="form-row">
+                <label htmlFor="password" className="anta-accounts">
                   Password
                 </label>
                 <input
                   {...register("password")}
+                  id="password"
                   type="password"
-                  className="form-control"
+                  style={{ width: "100%" }}
                   placeholder="ex: theAllMeister*3000"
-                  style={{
-                    backgroundColor: "#F8F8FF",
-                    borderWidth: "1px",
-                    borderColor: "#000",
-                  }}
-                />{" "}
-                {errors.password && (
-                  <div className="invalid-feedback d-block anta-regular">
-                    {errors.password.message}
-                  </div>
-                )}
-                <label
-                  className="anta-regular form-label my-1"
-                  style={{ fontSize: "24px", color: "#f5f5f5" }}
-                >
+                />
+              </div>
+
+              {errors.password && (
+                <div className="invalid-feedback d-block">
+                  {errors.password.message}
+                </div>
+              )}
+
+              <div className="form-row mb-5">
+                <label htmlFor="repassword" className="anta-accounts">
                   Re-enter Password
                 </label>
                 <input
                   {...register("repassword")}
+                  id="repassword"
                   type="password"
-                  className="form-control"
-                  placeholder=""
-                  style={{
-                    backgroundColor: "#F8F8FF",
-                    borderWidth: "1px",
-                    borderColor: "#000",
-                  }}
+                  style={{ width: "100%" }}
                 />
-                {errors.repassword && (
-                  <div className="invalid-feedback d-block anta-regular">
-                    {errors.repassword.message}
-                  </div>
-                )}
-                {errors.root && (
-                  <div className="invalid-feedback d-block anta-regular">
-                    {errors.root.message}
-                  </div>
-                )}
-                <div>
-                  <button
-                    disabled={isSubmitting}
-                    type="submit"
-                    className="btn btn-dark anta-regular w-100 mt-4"
-                    style={{
-                      fontSize: "20px",
-                      backgroundColor: "#222222ff",
-                      color: "#f5f5f5",
-                    }}
-                  >
-                    {isSubmitting ? "Loading..." : "Register"}
-                  </button>
+              </div>
+
+              {errors.repassword && (
+                <div className="invalid-feedback d-block">
+                  {errors.repassword.message}
                 </div>
-              </form>
-            </div>
+              )}
+
+              {errors.root && (
+                <div className="invalid-feedback d-block">
+                  {errors.root.message}
+                </div>
+              )}
+
+              <div>
+                <button
+                  disabled={isSubmitting}
+                  type="submit"
+                  className="button-confirm w-100 mb-2"
+                >
+                  {isSubmitting ? "Loading..." : "Register"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

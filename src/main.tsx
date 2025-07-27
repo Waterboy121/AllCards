@@ -2,20 +2,19 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-import "./assets/css/font.css";
-import "./assets/css/logo.css";
-import LoginPage from "./pages/LoginPage.tsx";
+import "./assets/css/load-universal-styles.css";
+import SigninPage from "./pages/SigninPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import Homepage from "./pages/HomePage.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginPage />,
+    element: <SigninPage />,
   },
   {
     path: "/login",
-    element: <LoginPage />,
+    element: <SigninPage />,
   },
   {
     path: "/signup",

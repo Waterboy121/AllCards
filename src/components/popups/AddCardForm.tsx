@@ -6,7 +6,6 @@
 
 import { useEffect, useState, type ChangeEvent } from "react";
 import { Timestamp } from "firebase/firestore";
-import "../../assets/css/popups/AddCardForm.css";
 
 import {
   searchCards,
@@ -170,16 +169,17 @@ function AddCardForm({
   }, []);
 
   return (
-    <div className="add-card-form">
-      <h2>Add a Card</h2>
+    <div className="popup-add-card anta-popups">
+      <h2>Add Card</h2>
 
       <form onSubmit={handleSubmit}>
         {/* ----- Card Name Input ----- */}
-        <div className="form-row">
+        <div className="form-row mb-1">
           <label htmlFor="card-name">Card Name:</label>
           <input
             id="card-name"
             type="text"
+            style={{ width: "82.4%" }}
             value={cardName}
             onChange={(e) => setCardName(e.target.value)}
             placeholder="Enter exact card name"
@@ -187,17 +187,17 @@ function AddCardForm({
         </div>
 
         {/* ----- Amount Input ----- */}
-        <div className="form-row">
+        <div className="form-row mb-3">
           <label htmlFor="amount">Amount:</label>
           <input
             id="amount"
             type="number"
-            className="form-control"
+            style={{ width: "85%" }}
             value={amountText}
             onChange={handleAmountChange}
           />
           {amountError && (
-            <div className="invalid-feedback d-block anta-regular">
+            <div className="invalid-feedback d-block">
               Quantity must be at least 1
             </div>
           )}
@@ -219,10 +219,11 @@ function AddCardForm({
 
         {/* ----- Yu-Gi-Oh Set Code Dropdown ----- */}
         {franchise.toLowerCase() === "yu-gi-oh" && setCodes.length > 0 && (
-          <div className="form-row">
+          <div className="form-row mb-3">
             <label htmlFor="set-select">Select a Set Code:</label>
             <select
               id="set-select"
+              style={{ width: "76.5%" }}
               value={selectedSetCode}
               onChange={(e) => setSelectedSetCode(e.target.value)}
             >
@@ -238,38 +239,48 @@ function AddCardForm({
             </select>
           </div>
         )}
+        {/* ----- Magic Hint ----- */}
+        {franchise.toLowerCase() === "magic" && (
+          <p style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)" }}>
+            For double-sided cards, include <code>//</code> in the name (e.g.
+            <code> Arlinn Kord // Arlinn, Embraced by the Moon</code>)
+          </p>
+        )}
 
-        {/* 🔻 Submit is moved down here to cover entire form 🔻 */}
-        <div className="form-row">
-          <button type="submit" className="confirm-btn">
+        {/* ----- Error Message ----- */}
+        {error && (
+          <div
+            className="error-message"
+            style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)", color: "red" }}
+          >
+            {error}
+          </div>
+        )}
+
+        <div className="form-buttons">
+          {/* ----- Submit Button ----- */}
+          <button type="submit" className="button-confirm">
             Search
+          </button>
+          {/* ----- Cancel Button ----- */}
+          <button className="button-cancel" onClick={onCancel}>
+            Cancel
           </button>
         </div>
       </form>
-
-      {/* ----- Magic Hint ----- */}
-      {franchise.toLowerCase() === "magic" && (
-        <p className="magic-hint">
-          For double-sided cards, include <code>//</code> in the name (e.g.
-          <code> Arlinn Kord // Arlinn, Embraced by the Moon</code>)
-        </p>
-      )}
-
-      {/* ----- Error Message ----- */}
-      {error && <div className="error-message">{error}</div>}
 
       {/* ----- Card Grid Results ----- */}
       {results && results.length > 0 ? (
         <>
           {console.log("Rendering card results:", results)}
-          <div className="card-results-grid">
+          <div className="grid-card">
             {results.map((card) => (
               <div
                 key={card.id}
                 className="card-search-wrapper"
                 onClick={() => onConfirm(card)}
               >
-                <Card {...card} />
+                <Card card={card} />
               </div>
             ))}
           </div>
@@ -280,13 +291,6 @@ function AddCardForm({
           <div className="error-message">No matching cards found.</div>
         </>
       ) : null}
-
-      {/* ----- Cancel Button ----- */}
-      <div className="form-buttons">
-        <button className="cancel-btn" onClick={onCancel}>
-          Cancel
-        </button>
-      </div>
     </div>
   );
 }

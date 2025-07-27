@@ -1,8 +1,5 @@
 // src/assets/pages/HomePage.tsx
 
-import "../assets/css/Homepage.css";
-import "../assets/css/NavBar.css";
-import "../assets/css/Sidebar.css";
 import pikachuGif from "../assets/images/gifs/pikachu.webp";
 
 import NavBar from "../components/NavBar";
@@ -118,7 +115,7 @@ function HomePage() {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="flex-center vh-100">
         <img
           src={pikachuGif}
           alt="Loading Pikachu"
@@ -134,47 +131,45 @@ function HomePage() {
 
   return (
     <>
-      <div className="homepage-container">
-        <NavBar />
-        <div className="homepage-layout">
-          <Sidebar
-            collections={collectionTabs}
-            currentTab={currentTab}
-            onTabClick={setCurrentTab}
-            onAddCollection={handleAddCollection}
-            onAddCard={handleAddCard}
-          />
+      <NavBar />
+      <div className="homepage-layout">
+        <Sidebar
+          collections={collectionTabs}
+          currentTab={currentTab}
+          onTabClick={setCurrentTab}
+          onAddCollection={handleAddCollection}
+          onAddCard={handleAddCard}
+        />
 
-          {/* ================ MainView (Home or Collection) ================ */}
-          <div className="main-view">
-            <MainView currentTab={currentTab} allCollections={allCollections} />
-          </div>
+        {/* ================ MainView (Home or Collection) ================ */}
+        <div className="container-mainview ">
+          <MainView currentTab={currentTab} allCollections={allCollections} />
         </div>
-
-        {showAddPopup && (
-          <Popup onClose={() => setShowAddPopup(false)}>
-            <AddCollectionForm
-              onSubmit={handleCreateCollection}
-              onCancel={() => setShowAddPopup(false)}
-            />
-          </Popup>
-        )}
-
-        {showAddCardPopup && selectedCollection && (
-          <Popup onClose={() => setShowAddCardPopup(false)}>
-            <AddCardForm
-              amount={amount}
-              changeAmount={changeAmount}
-              franchise={
-                collectionTabs.find((tab) => tab.name === selectedCollection)
-                  ?.franchiseKey ?? ""
-              }
-              onConfirm={handleCardConfirm}
-              onCancel={() => setShowAddCardPopup(false)}
-            />
-          </Popup>
-        )}
       </div>
+
+      {showAddPopup && (
+        <Popup onClose={() => setShowAddPopup(false)}>
+          <AddCollectionForm
+            onSubmit={handleCreateCollection}
+            onCancel={() => setShowAddPopup(false)}
+          />
+        </Popup>
+      )}
+
+      {showAddCardPopup && selectedCollection && (
+        <Popup onClose={() => setShowAddCardPopup(false)}>
+          <AddCardForm
+            amount={amount}
+            changeAmount={changeAmount}
+            franchise={
+              collectionTabs.find((tab) => tab.name === selectedCollection)
+                ?.franchiseKey ?? ""
+            }
+            onConfirm={handleCardConfirm}
+            onCancel={() => setShowAddCardPopup(false)}
+          />
+        </Popup>
+      )}
     </>
   );
 }
