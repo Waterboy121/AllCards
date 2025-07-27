@@ -15,6 +15,9 @@ export interface YuGiOhCard {
   name: string;
   card_images: YuGiOhCardImage[];
   card_sets?: YuGiOhCardSet[];
+  type?: string
+  race?: string
+  desc?: string
 }
 
 interface YuGiOhApiResponse {
@@ -34,6 +37,10 @@ export async function searchCardsByName(name: string): Promise<StoredCard[]> {
     name: card.name,
     imageUrl: card.card_images[0]?.image_url || "",
     set: card.card_sets?.[0]?.set_name || "-",
+    franchise: "Yu-Gi-Oh",
+    type: card.type ?? null,
+    race: card.race ?? null,
+    desc: card.desc ?? null,
   }));
 }
 

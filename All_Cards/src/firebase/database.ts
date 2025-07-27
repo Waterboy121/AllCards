@@ -46,7 +46,13 @@ export async function addCard(card: StoredCard, tcg: string) {
     evolvesTo: card.evolvesTo ?? [],
     addedAt: serverTimestamp(),
     lastViewedAt: serverTimestamp(),
-
+    type: card.type ?? null,
+    race: card.race ?? null,
+    desc: card.desc ?? null,
+    power: card.power ?? null,
+    toughness: card.toughness ?? null,
+    text: card.text ?? null,
+    manaCost: card.manaCost ?? null,
   }); //maybe make a catch here to show that there is an error that occurs when uploading to the database
   console.log(card); //get rid of later
   console.log(docRef.id);
@@ -104,7 +110,14 @@ export async function getData(franchise: Franchise[]): Promise<StoredCard[]> {
         evolvesTo: doc.data().evolvesTo ?? [],
         addedAt: "", //change theses both later
         lastViewedAt: "",
-        franchise: fran.name
+        franchise: fran.name,
+        type: doc.data().type ?? null,
+        race: doc.data().race ?? null,
+        desc: doc.data().desc ?? null,
+        power: doc.data().power ?? null,
+        toughness: doc.data().toughness ?? null,
+        text: doc.data().text ?? null,
+        manaCost: doc.data().manaCost ?? null,
       };
       console.log(doc.id, " => ", card);
       allCards.push(card);

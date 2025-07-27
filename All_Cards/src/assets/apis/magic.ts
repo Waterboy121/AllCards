@@ -30,6 +30,11 @@ interface MagicCard {
   };
   card_faces?: MagicCardFace[];
   set_name: string;
+  mana_cost?: string;
+  rarity?: string;
+  power?: string;
+  toughness?: string;
+  oracle_text?: string;
 }
 
 interface MagicApiResponse {
@@ -65,7 +70,8 @@ export async function searchCardsByName(name: string): Promise<StoredCard[]> {
     .map((card) => {
       let imageUrl: string | null = null;
       let displayName = card.name;
-
+      let manaCost = card.mana_cost ?? null;
+      let text = card.oracle_text ?? null;
       if (DOUBLE_FACED_LAYOUTS.includes(card.layout)) {
         const face = getFrontFace(card);
         imageUrl = getBestImageUrl(face?.image_uris);
@@ -81,6 +87,11 @@ export async function searchCardsByName(name: string): Promise<StoredCard[]> {
         name: displayName,
         imageUrl,
         set: card.set_name || "-",
+        manaCost: manaCost,
+        rarity: card.rarity ?? null,
+        power: card.power ?? null,
+        toughness: card.toughness ?? null,
+        text: text,
       };
     })
     .filter((card): card is StoredCard => card !== null);

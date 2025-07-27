@@ -2,7 +2,8 @@ import { useState } from "react";
 import { updateCardAmount, deleteCard } from "../../../firebase/database";
 import type { StoredCard } from "../../../assets/types/card";
 import "../../../assets/css/popups/AddCardForm.css";
-
+import { renderManaCost } from "../../../components/renderManaCost";
+import { formatOracleTextWithMana } from "../../../components/formatOracleTextWithMana";
 type Props = {
   card: StoredCard;
   onClose: (shouldRefresh?: boolean) => void;
@@ -50,7 +51,21 @@ export default function MTGCardDetails({ card, onClose }: Props) {
 
           <p><strong>Set:</strong> {card.set}</p>
           <p><strong>Rarity:</strong> {card.rarity ?? "Unknown"}</p>
-          <p><strong>Artist:</strong> {card.artist ?? "Unknown"}</p>
+          {card.manaCost && (
+          <div className="mb-2">
+          <strong>Mana Cost:</strong>{" "}
+          <span style={{ display: "inline-flex", alignItems: "center" }}>
+          {renderManaCost(card.manaCost)}
+          </span>
+          </div>
+          )}
+          <p><strong>Pow/Tof:</strong> {card.power} / {card.toughness}</p>
+          <p>
+          <strong>Description:</strong>
+          <span
+          dangerouslySetInnerHTML={{ __html: formatOracleTextWithMana(card.text) }}
+          />
+          </p>
 
           <div className="input-group mb-3">
             <label className="input-group-text anta-regular text-dark fs-5">Amount:</label>

@@ -50,6 +50,9 @@ export default function YuGiOhCardDetails({ card, onClose }: Props) {
           />
 
           <p><strong>Set:</strong> {card.set}</p>
+          <p><strong>Type:</strong> {card.type}</p>
+          <p><strong>Race:</strong> {card.race}</p>
+          <p><strong>Desc:</strong> {card.desc}</p>
 
           <div className="input-group mb-3">
             <label className="input-group-text anta-regular text-dark fs-5">Amount:</label>
