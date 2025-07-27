@@ -1,0 +1,164 @@
+/* ==========================
+  Sidebar Container
+========================== */
+.sidebar {
+  width: 33rem;
+  background-color: #111;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.5rem;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid #222;
+  font-size: 1.3rem;
+}
+
+/* ==========================
+  Sidebar Items
+========================== */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem;
+  font-size: 1.25em;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: "Cinzel", serif;
+  transition: background-color 0.2s ease;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.6;
+}
+
+.sidebar-item:hover:not(.active) {
+  background-color: #2a2a2a;
+}
+
+.sidebar-item.active {
+  background-color: #4a2a2a;
+}
+
+.sidebar-item.active:hover {
+  background-color: #391e1e;
+}
+
+/* ==========================
+  Layout Groupings
+========================== */
+.sidebar-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.sidebar-right {
+  display: none;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  min-width: 4.5rem;
+}
+
+.sidebar-item:hover .sidebar-right,
+.sidebar-item.active .sidebar-right {
+  display: flex;
+}
+
+/* ==========================
+  Icons and Logos
+========================== */
+.sidebar-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-icon {
+  height: 2.8rem;
+  width: auto;
+  flex-shrink: 0;
+  color: #f5f5f5;
+  transition: transform 0.25s ease, filter 0.25s ease, color 0.25s ease;
+}
+
+/* Logo hover via parent tab */
+.sidebar-item:hover .sidebar-icon {
+  color: #b76e79;
+  transform: scale(1.1);
+}
+
+/* Home icon (applies to sidebar only) */
+.logo-home {
+  height: 2.8rem;
+  width: auto;
+  color: #f5f5f5;
+  transition: transform 0.25s ease, filter 0.25s ease, color 0.25s ease;
+}
+
+/* Home icon hover via parent tab */
+.sidebar-item:hover .logo-home {
+  color: #b76e79;
+  transform: scale(1.1);
+}
+
+/* Missing logo fallback */
+.logo-missing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #999;
+  background-color: #222;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 0.4rem;
+}
+
+/* ==========================
+  Sidebar Icon Buttons
+========================== */
+.sidebar-icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: -1px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgb(175, 175, 175);
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
+  font-family: inherit;
+}
+
+.sidebar-dots {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+/* ==========================
+  Text and Name Fields
+========================== */
+.sidebar-name {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  word-break: break-word;
+}
+
+/* ==========================
+  Font Utility: Handjet Sidebar Text
+  Applies vertical centering for tab names
+  using the Handjet font family. This ensures
+  alignment with logos and buttons even when
+  font height varies.
+========================== */
+.handjet-sidebar {
+  vertical-align: middle;
+}
