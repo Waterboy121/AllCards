@@ -109,32 +109,32 @@ function AddCardForm({
     const results = fuse.search(cardName.trim());
     const bestMatch = results.length > 0 ? results[0].item : null;
     if (bestMatch !== null) setCardName(bestMatch.name);
-    setTimeout(() => {}, 500);
-    console.log("🔍 handleSearch triggered with:", {
-      franchise,
-      cardName,
-      amount,
-    });
 
-    try {
-      const response = await searchCards(
+    //delay a half a second before searching to give it time to fuzzy search
+    setTimeout(async () => {
+      console.log("🔍 handleSearch triggered with:", {
         franchise,
-        bestMatch?.name ?? cardName.trim()
-      );
+        cardName,
+        amount,
+      });
 
-      console.log("📦 API response from searchCards:", response);
+      try {
+        const response = await searchCards(franchise, cardName.trim());
 
-      const fullResults = response.map((card) => ({
-        ...card,
-        amount: -1, //it gets updated later so it doesn't matter, plus the searches won't have a quanity on them now
-        addedAt: Timestamp.now(), // placeholder --> replaced on form submit
-        lastViewedAt: Timestamp.fromDate(new Date("2000-01-01T00:00:00Z")), // placeholder --> replaced on form submit
-        viewCount: 0, // placeholder --> replaced on form submit
-      }));
-      setResults(fullResults);
-    } catch {
-      setError("An error occurred while searching.");
-    }
+        console.log("📦 API response from searchCards:", response);
+
+        const fullResults = response.map((card) => ({
+          ...card,
+          amount: -1, //it gets updated later so it doesn't matter, plus the searches won't have a quanity on them now
+          addedAt: Timestamp.now(), // placeholder --> replaced on form submit
+          lastViewedAt: Timestamp.fromDate(new Date("2000-01-01T00:00:00Z")), // placeholder --> replaced on form submit
+          viewCount: 0, // placeholder --> replaced on form submit
+        }));
+        setResults(fullResults);
+      } catch {
+        setError("An error occurred while searching.");
+      }
+    }, 500);
   };
 
   // Handles final form submission

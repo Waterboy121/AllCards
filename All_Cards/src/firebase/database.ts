@@ -25,7 +25,7 @@ export async function addCollectionTab(
   collectionObj: UserCollection,
   order: number
 ) {
-  const user = auth.currentUser?.displayName ?? "Guest";
+  const user = auth.currentUser?.uid ?? "Guest";
   if (user === "Guest") return;
 
   await setDoc(doc(db, "users", user, "collections", collectionObj.name), {
@@ -42,7 +42,7 @@ Retrieve Collections
   - Used to restore tabs on login.
 ================================================================= */
 export async function getCollectionTabs(): Promise<UserCollection[]> {
-  const user = auth.currentUser?.displayName ?? "Guest";
+  const user = auth.currentUser?.uid?? "Guest";
   if (user === "Guest") return [];
 
   const snapshot = await getDocs(collection(db, "users", user, "collections"));
@@ -72,7 +72,7 @@ export async function addCardToCollection(
   card: StoredCard,
   collectionName: string
 ) {
-  const user = auth.currentUser?.displayName ?? "Guest"; //change this later
+  const user = auth.currentUser?.uid ?? "Guest"; //change this later
   if (user === "Guest") return;
 
   const cardRef = collection(
@@ -115,7 +115,7 @@ export async function updateCardQuantity(
   collectionName: string,
   newAmount: number
 ) {
-  const user = auth.currentUser?.displayName ?? "Guest";
+  const user = auth.currentUser?.uid ?? "Guest";
   if (user === "Guest") return;
   if (newAmount <= 0) return;
 
@@ -149,7 +149,7 @@ Update Card lastViewedAt
   - Called when the user clicks on a card to view its details.
 ======================================================================= */
 export async function markCardAsViewed(cardId: string, collectionName: string) {
-  const user = auth.currentUser?.displayName ?? "Guest";
+  const user = auth.currentUser?.uid ?? "Guest";
   if (user === "Guest") return;
 
   const cardDoc = doc(
@@ -366,3 +366,24 @@ export async function deleteCollection(collectionName: string) {
     }
   });
 }
+
+//update display name
+export async function updateDisplayname(newDisplayName: string) {
+  const user = auth.currentUser?.displayName ?? "Guest";
+  if (user === "Guest") return;
+
+  const cardDoc = doc(
+    db,
+    "users",
+    user,
+  );
+
+  await updateDoc(cardDoc, {
+    //displayName: newDisplayName,
+    displayName: newDisplayName,
+  });
+}
+
+
+
+

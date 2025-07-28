@@ -3,7 +3,7 @@
 import "../assets/css/MainView.css";
 import { useEffect, useState } from "react";
 import type { StoredCard } from "../assets/types/card";
-import { getUser } from "../firebase/auth.ts";
+import { getUserDisplayName } from "../firebase/auth.ts";
 import Card from "./Card";
 import Popup from "./Popup.tsx";
 import PokemonCardDetails from "./popups/tcgdetails/PokemonCardDetails.tsx";
@@ -70,7 +70,7 @@ function MainView({ currentTab, allCollections, handleDeleteCard }: Props) {
       <div className="main-view">
         {currentTab === "Home" ? (
           <h2>
-            ※ Welcome <span className="highlighted-user">{getUser()}</span>! ※
+            ※ Welcome <span className="highlighted-user">{getUserDisplayName()}</span>! ※
           </h2>
         ) : (
           <h2>

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getUser, MakeUser } from "../firebase/auth.ts";
+import {  MakeUser , getUserDisplayName } from "../firebase/auth.ts";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const schema = z
@@ -64,7 +64,7 @@ function SignUp() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000));
       await MakeUser(data.email, data.password, data.display_name);
-      console.log("Sign up Successful! Welcome " + getUser() + "!");
+      console.log("Sign up Successful! Welcome " + getUserDisplayName() + "!");
       navigate("/homepage");
       throw new Error();
     } catch (error: any) {

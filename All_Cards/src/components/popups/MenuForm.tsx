@@ -4,6 +4,7 @@ import "../../assets/css/popups/MenuForm.css";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { SignOut } from "../../firebase/auth";
+import { Link } from "react-router-dom";
 
 interface HamburgerMenuProps {
   onClose: () => void;
@@ -31,7 +32,9 @@ function MenuForm({ onClose }: HamburgerMenuProps) {
 
   return (
     <div className="hamburger-menu" ref={menuRef}>
-      <button className="hamburger-option">Profile</button>
+      <Link to="/profile" className="hamburger-option" onClick={onClose}>
+        Profile
+      </Link>
       <button className="hamburger-option" onClick={handleLogout}>
         Log Out
       </button>

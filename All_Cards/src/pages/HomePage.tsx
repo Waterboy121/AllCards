@@ -9,7 +9,7 @@ import NavBar from "../components/NavBar";
 import Sidebar from "../components/Sidebar";
 import Popup from "../components/Popup";
 import AddCollectionForm from "../components/popups/AddCollectionForm.tsx";
-import AddCardForm from "../components/popups/AddCardForm";
+import AddCardForm from "../components/popups/AddCardForm.tsx";
 import MainView from "../components/MainView";
 
 import { useEffect, useMemo, useState } from "react";

@@ -9,6 +9,7 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import Homepage from "./pages/HomePage.tsx";
 import ForgetPasswordPage from "./pages/ForgetPasswordPage.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
+import ProfilePage from "./pages/ProfilePage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/homepage",
     element: <Homepage />,
+  },
+  {
+    path: "/profile",
+    element: <ProfilePage />,
   },
 ]);
 

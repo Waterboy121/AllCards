@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getUser, LoginWithEP } from "../firebase/auth.ts";
+import { LoginWithEP , getUserDisplayName } from "../firebase/auth.ts";
 
 const schema = z.object({
   email: z.string().email(),
@@ -37,7 +37,7 @@ function Login() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await LoginWithEP(data.email, data.password);
-      console.log("Logged in Successful! Welcome " + getUser() + "!");
+      console.log("Logged in Successful! Welcome " + getUserDisplayName() + "!");
       navigate("/homepage");
       throw new Error();
     } catch (error: any) {
