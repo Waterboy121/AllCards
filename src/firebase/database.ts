@@ -9,6 +9,7 @@ import {
   updateDoc,
   Timestamp,
   increment,
+  deleteDoc,
 } from "firebase/firestore";
 import type { StoredCard } from "../assets/types/card.ts";
 import type { UserCollection } from "../assets/types/collection.ts";
@@ -61,10 +62,10 @@ export async function getCollectionTabs(): Promise<UserCollection[]> {
 Add a Card
   - Adds a card to the specified collection tab.
   - Skips addition if a duplicate (by name + set) already exists.
-    - Sets addedAt to current time and lastViewedAt to a default old timestamp.
+  - Sets addedAt to current time and lastViewedAt to a default old timestamp.
 =============================================================================== */
 export async function addCardToCollection(card: StoredCard, collectionName: string) {
-  const user = auth.currentUser?.displayName ?? "Guest"; //change this later
+  const user = auth.currentUser?.displayName ?? "Guest";
   if (user === "Guest") return;
 
   const cardRef = collection(
@@ -95,6 +96,32 @@ export async function addCardToCollection(card: StoredCard, collectionName: stri
     lastViewedAt: Timestamp.fromDate(new Date(2000, 0, 1, 1)), // Jan 1, 2000, 1:00am
     viewCount: 0,
   });
+}
+
+/* ================================================================================
+Delete a Card
+  - Deletes a card from a specified collection tab.
+=============================================================================== */
+export async function deleteCard(card: StoredCard, collectionName: string) {
+  const user = auth.currentUser?.displayName ?? "Guest";
+  if (user === "Guest") return;
+
+  const cardRef = doc(
+    db,
+    "users",
+    user,
+    "collections",
+    collectionName,
+    "cards",
+    card.id
+  );
+
+  try {
+    await deleteDoc(cardRef);
+    console.log("Card deleted");
+  } catch (error) {
+    console.warn("Failed to delete card: " + error);
+  }
 }
 
 /* ========================================================================
@@ -190,6 +217,16 @@ export async function getAllCardsFromCollections(
         addedAt: data.addedAt,
         lastViewedAt: data.lastViewedAt,
         viewCount: data.viewCount ?? 0,
+        //pokemon only
+        rarity: data.rarity,
+        artist: data.artist,
+        evolvesFrom: data.evolvesFrom,
+        evolvesTo: data.evolvesTo,
+        //mtg only
+        doubleFaced: data.doubleFaced,
+        layout: data.layout,
+        backName: data.backName,
+        backImageUrl: data.backImageUrl,
       });
     });
 
@@ -223,6 +260,16 @@ export async function getCardsFromCollection(collectionName: string): Promise<St
       addedAt: data.addedAt,
       lastViewedAt: data.lastViewedAt,
       viewCount: data.viewCount ?? 0,
+      //pokemon only
+      rarity: data.rarity,
+      artist: data.artist,
+      evolvesFrom: data.evolvesFrom,
+      evolvesTo: data.evolvesTo,
+      //mtg only
+      doubleFaced: data.doubleFaced,
+      layout: data.layout,
+      backName: data.backName,
+      backImageUrl: data.backImageUrl,
     });
   });
 
@@ -266,9 +313,55 @@ export async function getCardsByFranchise(franchiseKey: string): Promise<StoredC
         addedAt: data.addedAt,
         lastViewedAt: data.lastViewedAt,
         viewCount: data.viewCount ?? 0,
+        //pokemon only
+        rarity: data.rarity,
+        artist: data.artist,
+        evolvesFrom: data.evolvesFrom,
+        evolvesTo: data.evolvesTo,
+        //mtg only
+        doubleFaced: data.doubleFaced,
+        layout: data.layout,
+        backName: data.backName,
+        backImageUrl: data.backImageUrl,
       });
     });
   }
 
   return allCards;
+}
+
+/* ================================================================================
+Delete a Collection
+  - Deletes a collection tab and all cards within it for the current user.
+  - First deletes all documents, 'cards', in the sub-collection.
+  - Then deletes the parent collection document itself.
+=============================================================================== */
+export async function deleteCollection(collectionName: string) {
+  const user = auth.currentUser?.displayName ?? "Guest";
+  if (user === "Guest") return;
+
+  const cardsQuerySnapshot = await getDocs(
+		collection(db, "users", user, "collections", collectionName, "cards")
+	);
+
+
+  // Delete all cards in the sub-collection
+	try {
+		const deleteCardPromises = cardsQuerySnapshot.docs.map((docSnap) =>
+			deleteDoc(docSnap.ref)
+		);
+		await Promise.all(deleteCardPromises);
+		console.log(`All cards from "${collectionName}" deleted`);
+	} catch (error) {
+		console.warn("Some cards failed to delete: " + error);
+	}
+
+	// Delete the collection itself
+	try {
+		const collectionDocRef = doc(db, "users", user, "collections", collectionName);
+		await deleteDoc(collectionDocRef);
+		console.log(`Collection "${collectionName}" deleted`);
+	} catch (error) {
+		console.warn("Failed to delete collection: " + error);
+	}
 }

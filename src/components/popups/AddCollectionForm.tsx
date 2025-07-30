@@ -49,6 +49,7 @@ function AddCollectionForm({ onSubmit, onCancel }: AddCollectionFormProps) {
         <input
           id="custom-name"
           type="text"
+          style={{ width: "80%" }}
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="e.g. My Binder"

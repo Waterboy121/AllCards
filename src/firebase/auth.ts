@@ -9,6 +9,7 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   updateProfile,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 // Import type definition for Firebase error handling
@@ -92,6 +93,39 @@ export function SignOut() {
 */
 export function getUser() {
   return auth.currentUser?.displayName;
+}
+
+// ===============================
+// Get Current User's Unique ID
+// ===============================
+/**
+  Returns the currently authenticated user's Unique ID, if logged in.
+  Returns undefined if no user is signed in.
+*/
+export function getUserID() {
+  return auth.currentUser?.uid;
+}
+
+// ===============================
+// Reset Password by Email
+// ===============================
+/**
+  Sends a password reset email to the specified address via Firebase Auth.
+
+  @param email - The user's email address to send the reset link to.
+  @throws An error with the Firebase error code if the request fails.
+*/
+export async function resetPassword(email: string) {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    console.log("Password reset email sent to " + email);
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null && "code" in error) {
+      throw new Error((error as { code: string }).code);
+    } else {
+      throw new Error("Unknown error occurred during password reset.");
+    }
+  }
 }
 
 // ===============================

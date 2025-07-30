@@ -1,114 +1,125 @@
 // src/assets/apis/magic.ts
 
 /*
-  This file handles name-based card lookup for the Magic: The Gathering API (Scryfall).
-  Called via index.ts → searchCards("magic", name)
+  This file handles fuzzy name-based card lookup for Magic: The Gathering using Scryfall.
+  Combines fuzzy searching with proper double-faced card support.
 */
 
 import type { StoredCard } from "../types/card";
 
-// ---------------------
-// Interface Definitions
-// ---------------------
+/* =====================================================================
+  Interface Definitions
+===================================================================== */
 
-interface ScryfallImageUris {
+interface MagicImageUris {
 	small?: string;
 	normal?: string;
 	large?: string;
 }
 
-interface ScryfallCardFace {
+interface MagicCardFace {
 	name: string;
-	image_uris?: ScryfallImageUris;
+	image_uris?: MagicImageUris;
 }
 
-interface ScryfallCard {
+interface MagicCard {
 	id: string;
 	name: string;
-	layout: string;
-	image_uris?: ScryfallImageUris;
-	card_faces?: ScryfallCardFace[];
+	image_uris?: MagicImageUris;
+	card_faces?: MagicCardFace[];
 	set_name: string;
+  doubleFaced?: boolean;
+  layout?: string;
+  backName?: string;
+  backImageUrl?: string;
 }
 
-interface ScryfallResponse {
-	data: ScryfallCard[];
+interface MagicApiResponse {
+	data: MagicCard[];
 }
 
-// ---------------------------
-// Main API function
-// ---------------------------
-/**
-  Looks up a Magic: The Gathering card by exact name.
+interface MagicFuzzyLookup {
+	prints_search_uri: string;
+}
 
-  Returns a list of usable images with the official card name and set.
+/* =====================================================================
+  Helper Functions
+===================================================================== */
 
-  Only called by index.ts (searchCards) and returns complete StoredCard[] minus
-  amount, addedAt, lastViewedAt, and viewCount — which are added later in AddCardForm.
-*/
+const DOUBLE_FACED_LAYOUTS = ["transform", "modal_dfc", "reversible_card"];
+
+function getBestImageUrl(imageUris?: MagicImageUris): string {
+	return (
+		imageUris?.large ||
+		imageUris?.normal ||
+		imageUris?.small ||
+		""
+	);
+}
+
+function getFrontAndBackFaces(card: MagicCard): [MagicCardFace | undefined, MagicCardFace | undefined] {
+	const frontName = card.name.split(" // ")[0].trim();
+	const front = card.card_faces?.find((f) => f.name === frontName) ?? card.card_faces?.[0];
+	const back = card.card_faces?.find((f) => f.name !== frontName) ?? card.card_faces?.[1];
+	return [front, back];
+}
+
+/* =====================================================================
+Main API function
+  - Searches for a Magic card by fuzzy name and returns all printings
+  - with double-faced support and high-quality images.
+===================================================================== */
 export async function searchCardsByName(
 	name: string): Promise<Omit<StoredCard, "amount" | "addedAt" | "lastViewedAt" | "viewCount">[]> {
-	const res = await fetch(`https://api.scryfall.com/cards/search?q=!${encodeURIComponent(name)}`);
-	if (!res.ok) throw new Error("Failed to fetch Magic card data");
+	
+  // Fuzzy Search
+  const fuzzyRes = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`);
+	if (!fuzzyRes.ok) throw new Error("Failed to fetch Magic card data");
 
-	const json: ScryfallResponse = await res.json();
+	const fuzzyJson: MagicFuzzyLookup = await fuzzyRes.json();
 
-	return json.data
+  // Search all printings using prints_search_uri
+	const printsRes = await fetch(fuzzyJson.prints_search_uri);
+	if (!printsRes.ok) throw new Error("Failed to fetch Magic printings");
+
+  const printsJson: MagicApiResponse = await printsRes.json();
+
+  // Filter and map cards
+	return printsJson.data
 		.filter((card) => {
-			const isDoubleFaced =
-				card.layout === "transform" ||
-				card.layout === "modal_dfc" ||
-				card.layout === "meld" ||
-				card.layout === "reversible_card";
-
-			if (isDoubleFaced) {
-				const face = card.card_faces?.[0];
-				return (
-					face?.image_uris?.large ||
-					face?.image_uris?.normal ||
-					face?.image_uris?.small
-				);
-			} else {
-				return (
-					card.image_uris?.large ||
-					card.image_uris?.normal ||
-					card.image_uris?.small
-				);
+			const isDoubleFaced = DOUBLE_FACED_LAYOUTS.includes(card.layout ?? "");
+			if (isDoubleFaced && card.card_faces) {
+				const [front, back] = getFrontAndBackFaces(card);
+				return !!(front?.image_uris || back?.image_uris);
 			}
+			return !!card.image_uris;
 		})
-		.map((card) => {
-			const isDoubleFaced =
-				card.layout === "transform" ||
-				card.layout === "modal_dfc" ||
-				card.layout === "meld" ||
-				card.layout === "reversible_card";
-
-			let imageUrl = "";
-
-			if (isDoubleFaced) {
-				const frontName = card.name.split(" // ")[0];
-        const face = card.card_faces?.find(f => f.name === frontName) ?? card.card_faces?.[0];
-
-				imageUrl =
-					face?.image_uris?.large ||
-					face?.image_uris?.normal ||
-					face?.image_uris?.small ||
-					"";
-			} else {
-				imageUrl =
-					card.image_uris?.large ||
-					card.image_uris?.normal ||
-					card.image_uris?.small ||
-					"";
-			}
-
+    .map((card) => {
+			const isDoubleFaced = DOUBLE_FACED_LAYOUTS.includes(card.layout ?? "");
 			const frontName = card.name.split(" // ")[0];
 
+			if (isDoubleFaced && card.card_faces) {
+				const [frontFace, backFace] = getFrontAndBackFaces(card);
+
+				return {
+					id: card.id,
+					name: frontFace?.name || frontName,
+					imageUrl: getBestImageUrl(frontFace?.image_uris),
+					set: card.set_name || "-",
+					doubleFaced: true,
+					layout: card.layout,
+					backName: backFace?.name ?? "",
+					backImageUrl: getBestImageUrl(backFace?.image_uris),
+				};
+			}
+
+			// Single-faced fallback
 			return {
 				id: card.id,
 				name: frontName,
-				imageUrl,
+				imageUrl: getBestImageUrl(card.image_uris),
 				set: card.set_name || "-",
+				doubleFaced: false,
 			};
 		});
 }

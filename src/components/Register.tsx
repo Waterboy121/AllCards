@@ -116,7 +116,7 @@ function SignUp() {
             ></div>
 
             <form onSubmit={handleSubmit(onSignUpSubmit)}>
-              <div className="form-row">
+              <div className="form-row mb-3">
                 <label htmlFor="display_name" className="anta-accounts">
                   User Name
                 </label>
@@ -135,7 +135,7 @@ function SignUp() {
                 </div>
               )}
 
-              <div className="form-row">
+              <div className="form-row mb-3">
                 <label htmlFor="email" className="anta-accounts">
                   Email
                 </label>
@@ -154,7 +154,7 @@ function SignUp() {
                 </div>
               )}
 
-              <div className="form-row">
+              <div className="form-row mb-3">
                 <label htmlFor="password" className="anta-accounts">
                   Password
                 </label>
@@ -173,7 +173,7 @@ function SignUp() {
                 </div>
               )}
 
-              <div className="form-row mb-5">
+              <div className="form-row mb-4">
                 <label htmlFor="repassword" className="anta-accounts">
                   Re-enter Password
                 </label>

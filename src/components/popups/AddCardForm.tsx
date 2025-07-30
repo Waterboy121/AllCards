@@ -42,7 +42,7 @@ function AddCardForm({
   const [cardName, setCardName] = useState("");
   const [results, setResults] = useState<StoredCard[] | null>(null);
   const [error, setError] = useState("");
-  const [amountError, setAmountError] = useState(false);
+
   const [amountText, setAmountText] = useState("1");
 
   // Yu-Gi-Oh specific state
@@ -63,7 +63,6 @@ function AddCardForm({
 
     if (!isNaN(parsed) && parsed > 0) {
       changeAmount(parsed);
-      setAmountError(false);
     }
   };
 
@@ -160,13 +159,10 @@ function AddCardForm({
     handleSearch();
   };
 
-  // Reset state when popup opens
+  // handles amount buttons
   useEffect(() => {
-    setAmountError(false);
-    // Only set to 1 if it was previously invalid or zero
-    if (amount <= 0) changeAmount(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setAmountText(amount.toString());
+  }, [amount]);
 
   return (
     <div className="popup-add-card anta-popups">
@@ -174,12 +170,11 @@ function AddCardForm({
 
       <form onSubmit={handleSubmit}>
         {/* ----- Card Name Input ----- */}
-        <div className="form-row mb-1">
+        <div className="form-row mb-2">
           <label htmlFor="card-name">Card Name:</label>
           <input
             id="card-name"
             type="text"
-            style={{ width: "82.4%" }}
             value={cardName}
             onChange={(e) => setCardName(e.target.value)}
             placeholder="Enter exact card name"
@@ -187,34 +182,30 @@ function AddCardForm({
         </div>
 
         {/* ----- Amount Input ----- */}
-        <div className="form-row mb-3">
+        <div className="form-row mb-2">
           <label htmlFor="amount">Amount:</label>
           <input
             id="amount"
             type="number"
-            style={{ width: "85%" }}
             value={amountText}
             onChange={handleAmountChange}
           />
-          {amountError && (
-            <div className="invalid-feedback d-block">
-              Quantity must be at least 1
-            </div>
-          )}
-          <button
-            type="button"
-            className="btn btn-outline-secondary rounded-circle"
-            onClick={() => changeAmount(Math.max(1, amount + 1))}
-          >
-            <i className="bi bi-plus" />
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline-secondary rounded-circle"
-            onClick={() => changeAmount(Math.max(1, amount - 1))}
-          >
-            <i className="bi bi-dash" />
-          </button>
+          <div className="d-flex gap-2 ms-2">
+            <button
+              type="button"
+              className="btn btn-outline-secondary rounded-circle"
+              onClick={() => changeAmount(Math.max(1, amount + 1))}
+            >
+              <i className="bi bi-plus" />
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-secondary rounded-circle"
+              onClick={() => changeAmount(Math.max(1, amount - 1))}
+            >
+              <i className="bi bi-dash" />
+            </button>
+          </div>
         </div>
 
         {/* ----- Yu-Gi-Oh Set Code Dropdown ----- */}
@@ -223,7 +214,6 @@ function AddCardForm({
             <label htmlFor="set-select">Select a Set Code:</label>
             <select
               id="set-select"
-              style={{ width: "76.5%" }}
               value={selectedSetCode}
               onChange={(e) => setSelectedSetCode(e.target.value)}
             >

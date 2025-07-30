@@ -73,7 +73,7 @@ function Signin() {
             ></div>
 
             <form onSubmit={handleSubmit(onSigninSubmit)}>
-              <div className="form-row">
+              <div className="form-row mb-3">
                 <label htmlFor="email" className="anta-accounts">
                   Email
                 </label>
@@ -116,15 +116,15 @@ function Signin() {
 
               <Link
                 to={"/forgot-password"}
-                className="anta-accounts mb-3"
-                style={{ fontSize: "1.125rem", color: "#c0c0c0" }}
+                className="anta-accounts"
+                style={{ fontSize: "1.125rem" }}
               >
                 Forgot Password?
               </Link>
               <button
                 disabled={isSubmitting}
                 type="submit"
-                className="button-confirm w-100 mb-2"
+                className="button-confirm w-100 py-1 mb-2"
               >
                 {isSubmitting ? "Loading..." : "Signin"}
               </button>
@@ -135,16 +135,14 @@ function Signin() {
             ></div>
             <div>
               <p
-                className="anta-accounts mb-3"
+                className="anta-accounts mb-2"
                 style={{ fontSize: "1.125rem" }}
               >
-                <Link to="/signup" style={{ color: "#c0c0c0" }}>
-                  Dont have an account?
-                </Link>
+                Don't have an account?
               </p>
-              <Link to={"/signup"}>
+              <Link to="/signup" style={{ textDecoration: "none" }}>
                 <button
-                  type="submit"
+                  type="button"
                   className="button-cancel w-100 mb-2"
                   style={{ fontSize: "1.25rem" }}
                 >

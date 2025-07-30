@@ -18,7 +18,7 @@
   height: 100vh;
   overflow-y: auto;
   border-right: 3px solid #636363;
-  background-color: #202020;
+  background-color: #111111;
 }
 
 /* ==========================
@@ -31,7 +31,7 @@
 	overflow-y: auto;
 	height: 100vh;
   min-width: 70vw;
-  background-color: #292929;
+  background-color: #0a0a0a;
 }
 
 /* ==========================
@@ -44,7 +44,7 @@
   padding: 1rem 2rem;
   width: 100%;
   z-index: 10;
-  background-color: #1b1b1b;
+  background-color: #212528;
 }
 
 /* ==========================
@@ -62,7 +62,7 @@
 
 .container-search:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0rem 2rem rgba(0, 0, 0, 0.45);
 }
 
 /* ==========================

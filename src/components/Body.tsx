@@ -1,4 +1,4 @@
-function MainBody() {
+function Body() {
   return (
     <>
       <div
@@ -31,4 +31,4 @@ function MainBody() {
   );
 }
 
-export default MainBody;
+export default Body;

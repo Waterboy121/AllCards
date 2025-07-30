@@ -31,9 +31,16 @@ export type StoredCard = {
   Used for tracking popularity or "most viewed" sorting. */
   viewCount: number;
 
-/* Optional for double-faced cards (Magic only) */
-doubleFaced?: boolean;  // is double faced or not
-layout?: string;        // the layout type from Scryfall (e.g., "transform")
-name2?: string;          // back face name if double faced
-imageUrl2?: string;     // back face image (optional for robustness)
+
+/* Pokemon Only */
+  rarity?: string;
+  artist?: string;
+  evolvesFrom?: string;
+  evolvesTo?: string[];
+
+/* Magic Only */
+  doubleFaced?: boolean;    // is double faced or not
+  layout?: string;          // the layout type from Scryfall (e.g., "transform")
+  backName?: string;        // back face name if double faced
+  backImageUrl?: string;    // back face image (optional for robustness)
 };
