@@ -175,3 +175,24 @@
 	border-radius: 0.75rem;
 	display: block;
 }
+
+
+/* ============================================================================
+  Collection Grab & Move Icon
+============================================================================ */
+.icon-grab {
+  width: auto;
+  height: clamp(1rem, 1.5vw, 1.5rem);
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: #f5f5f5;
+  cursor: grab;
+
+}
+
+.icon-grab:active {
+  cursor: grabbing;
+  color: #9cd1ff;
+  transform: scale(0.95);
+  filter: drop-shadow(0 0 0.25rem #0b0b0b);
+}

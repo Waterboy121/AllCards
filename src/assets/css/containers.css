@@ -19,6 +19,7 @@
   overflow-y: auto;
   border-right: 3px solid #636363;
   background-color: #111111;
+  position: relative;
 }
 
 /* ==========================
@@ -32,6 +33,7 @@
 	height: 100vh;
   min-width: 70vw;
   background-color: #0a0a0a;
+  z-index: 0;
 }
 
 /* ==========================
@@ -138,7 +140,7 @@ Popup Overlay Wrapper
 ========================== */
 
 
-:is(.popup-add-card, .popup-add-collection, .popup-menu) {
+:is(.popup-add-card, .popup-add-collection, .popup-menu, .popup-options-menu) {
   background-color: #222;
   border-radius: 1rem;
   display: flex;
@@ -174,9 +176,26 @@ Popup Overlay Wrapper
 
 .popup-menu {
 	position: absolute;
-  top: 72.5%; /* Aligns the top of popup to bottom of button */
-  right: 30%;    /* Aligns left edge with parent button */
+  top: 72.5%;
+  right: 30%;
 	box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.5);
 	z-index: 1000;
 	min-width: 10rem;
 }
+
+/* ==========================
+  Tab Options Menu
+========================== */
+
+.popup-options-menu {
+	position: absolute;
+  top: var(--top);
+  left: var(--left);
+  z-index: 1000;
+	box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.5);
+	border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+	min-width: 10rem;
+	gap: 0.5rem;
+}
+

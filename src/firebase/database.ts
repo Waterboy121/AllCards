@@ -365,3 +365,25 @@ export async function deleteCollection(collectionName: string) {
 		console.warn("Failed to delete collection: " + error);
 	}
 }
+
+/* ================================================================================
+Reorder Collections
+  - Accepts an array of UserCollection objects with updated `order` fields.
+  - Updates each collection's Firestore doc with its new order.
+================================================================================ */
+export async function reorderCollections(updatedTabs: UserCollection[]) {
+  const user = auth.currentUser?.displayName ?? "Guest";
+  if (user === "Guest") return;
+
+  const updates = updatedTabs.map((tab) => {
+    const tabRef = doc(db, "users", user, "collections", tab.name);
+    return updateDoc(tabRef, { order: tab.order });
+  });
+
+  try {
+    await Promise.all(updates);
+    console.log("✅ Tab order saved to Firestore");
+  } catch (error) {
+    console.error("❌ Failed to update tab order:", error);
+  }
+}

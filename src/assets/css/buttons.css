@@ -24,6 +24,7 @@
   width: clamp(20rem, 30vw, 33rem);
 	max-width: 100%;
   max-height: 15vh;
+  transition: transform 200ms ease;
 }
 
 .button-sidebar-tab:hover:not(.active) {
@@ -32,6 +33,7 @@
 
 .button-sidebar-tab.active {
   background-color: #4a2a2a;
+  z-index: 10;
 }
 
 .button-sidebar-tab.active:hover {

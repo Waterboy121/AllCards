@@ -18,8 +18,30 @@ function MenuForm({ onClose }: HamburgerMenuProps) {
         onClose();
       }
     };
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!menuRef.current) return;
+
+      const rect = menuRef.current.getBoundingClientRect();
+      const BUFFER = 500; // px — distance user can move away before it closes
+
+      const isWithinBuffer =
+        e.clientX >= rect.left - BUFFER &&
+        e.clientX <= rect.right + BUFFER &&
+        e.clientY >= rect.top - BUFFER &&
+        e.clientY <= rect.bottom + BUFFER;
+
+      if (!isWithinBuffer) {
+        onClose();
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
   }, [onClose]);
 
   const handleLogout = async () => {
