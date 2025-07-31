@@ -254,3 +254,33 @@ onAuthStateChanged(auth, (user) => {
     console.log(user.email);
   } else console.log("No user");
 });
+
+
+// ===============================
+// Update Password 
+// ===============================
+/**
+ * Updates the password for the currently authenticated user .
+ */
+
+export async function updatePass(currentPassword: string, newPassword: string): Promise<void> {
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error("No authenticated user to update.");
+  }
+   if (!currentPassword) {
+        throw new Error("Current password is required to update the password.");
+      }
+
+      await reauthenticateUser(currentPassword);
+      console.log("Reauthentication successful.");
+
+  try {
+    await updatePassword(user, newPassword);
+    console.log("Password updated successfully.");
+  } catch (error) {
+    throw new Error("Password update failed: " + (error as Error).message);
+  }
+};
+

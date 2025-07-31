@@ -33,7 +33,7 @@ function MenuForm({ onClose }: HamburgerMenuProps) {
   return (
     <div className="hamburger-menu" ref={menuRef}>
       <Link to="/profile" className="hamburger-option" onClick={onClose}>
-        Profile
+       Update Profile
       </Link>
       <button className="hamburger-option" onClick={handleLogout}>
         Log Out

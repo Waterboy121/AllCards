@@ -102,8 +102,9 @@ function SignUp() {
                 className="anta-regular"
                 style={{ fontSize: "36px", color: "#f5f5f5", margin: 0 }}
               >
-                Forge Thy Ledger
+                Forge Thy Archive
               </h2>
+              {/* Forge Thy Ledger */}
             </div>
 
             <div
