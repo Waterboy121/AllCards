@@ -42,9 +42,15 @@ export type StoredCard = {
   artist?: string;
   evolvesFrom?: string;
   evolvesTo?: string[];
-  //yugioh only
-
-  //mtg only
+  //Yu-gi-oh
+  type?: string
+  race?: string
+  desc?: string
+  //MTG
+  power?: string;
+  toughness?: string;
+  text?: string;
+  manaCost?: string,
   doubleFaceImg?: string;
 };
 

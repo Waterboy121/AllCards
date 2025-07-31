@@ -1,7 +1,10 @@
+
 import { useEffect, useState } from "react";
 import { deleteCard, updateCardQuantity } from "../../../firebase/database";
 import type { StoredCard } from "../../../assets/types/card";
 import "../../../assets/css/popups/AddCardForm.css";
+import { renderManaCost } from "../../../components/renderManaCost";
+import { formatOracleTextWithMana } from "../../../components/formatOracleTextWithMana";
 
 type Props = {
   card: StoredCard;
@@ -15,9 +18,7 @@ export default function MTGCardDetails({ card, onClose }: Props) {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    if (amount <= 0) {
-      setAmountError(true);
-    } else setAmountError(false);
+    setAmountError(amount <= 0);
   }, [amount]);
 
   const handleSave = async () => {
@@ -29,11 +30,7 @@ export default function MTGCardDetails({ card, onClose }: Props) {
   };
 
   const handleDelete = async () => {
-    const confirm = window.confirm(
-      `Delete "${card.name}" from your collection?`
-    );
-    if (!confirm) return;
-
+    if (!window.confirm(`Delete "${card.name}" from your collection?`)) return;
     setDeleting(true);
     await deleteCard(card);
     setDeleting(false);
@@ -57,66 +54,84 @@ export default function MTGCardDetails({ card, onClose }: Props) {
             style={{ width: "100%", maxHeight: "300px", objectFit: "contain" }}
           />
 
-          <p>
-            <strong>Set:</strong> {card.set}
-          </p>
-          <p>
-            <strong>Rarity:</strong> {card.rarity ?? "Unknown"}
-          </p>
-          <p>
-            <strong>Artist:</strong> {card.artist ?? "Unknown"}
-          </p>
+          <p><strong>Set:</strong> {card.set}</p>
+          <p><strong>Rarity:</strong> {card.rarity ?? "Unknown"}</p>
+          <p><strong>Artist:</strong> {card.artist ?? "Unknown"}</p>
 
-          <div className="form-row">
-            <label htmlFor="amount">Amount:</label>
+          {card.manaCost && (
+            <div className="mb-2">
+              <strong>Mana Cost:</strong>{" "}
+              <span style={{ display: "inline-flex", alignItems: "center" }}>
+                {renderManaCost(card.manaCost)}
+              </span>
+            </div>
+          )}
+
+          {(card.power != null && card.toughness != null) && (
+            <p>
+              <strong>Power/Toughness:</strong> {card.power} / {card.toughness}
+            </p>
+          )}
+
+          <p><strong>Description:</strong></p>
+          <div
+            className="card-description"
+            dangerouslySetInnerHTML={{
+              __html: formatOracleTextWithMana(card.text),
+            }}
+          />
+
+          <div className="input-group mb-3">
+            <label className="input-group-text anta-regular text-dark fs-5">
+              Amount:
+            </label>
             <input
-              id="amount"
               type="number"
-              className="form-control"
+              className="form-control anta-regular text-dark fs-5"
               value={amount}
-              onChange={(e) => {
-                setAmount(Number(e.target.value));
-              }}
+              onChange={(e) => setAmount(Math.max(1, Number(e.target.value)))}
             />
             <button
-              type="button"
               className="btn btn-outline-secondary rounded-circle"
-              onClick={() => setAmount(Math.max(1, amount + 1))}
+              type="button"
+              onClick={() => setAmount((prev) => Math.max(1, prev + 1))}
             >
               <i className="bi bi-plus" />
             </button>
             <button
-              type="button"
               className="btn btn-outline-secondary rounded-circle"
-              onClick={() => setAmount(Math.max(1, amount - 1))}
+              type="button"
+              onClick={() => setAmount((prev) => Math.max(1, prev - 1))}
             >
               <i className="bi bi-dash" />
             </button>
           </div>
+
           {amountError && (
-            <div className="d-flex justify-content-start pt-3 text-danger">
+            <div className="text-danger mb-3">
               Quantity must be at least 1
             </div>
           )}
-          <div className="form-buttons">
-            <button className="cancel-btn" onClick={() => onClose()}>
-              Cancel
-            </button>
-            <button
-              className="cancel-btn"
-              disabled={saving}
-              onClick={handleSave}
-            >
-              {saving ? "Updating..." : "Update"}
-            </button>
-            <button
-              className="confirm-btn"
-              disabled={deleting}
-              onClick={handleDelete}
-            >
-              {deleting ? "Deleting..." : "Delete"}
-            </button>
-          </div>
+        </div>
+
+        <div className="form-buttons">
+          <button className="cancel-btn" onClick={() => onClose()}>
+            Cancel
+          </button>
+          <button
+            className="confirm-btn"
+            disabled={saving}
+            onClick={handleSave}
+          >
+            {saving ? "Saving..." : "Save"}
+          </button>
+          <button
+            className="cancel-btn"
+            disabled={deleting}
+            onClick={handleDelete}
+          >
+            {deleting ? "Deleting..." : "Delete"}
+          </button>
         </div>
       </div>
     </div>

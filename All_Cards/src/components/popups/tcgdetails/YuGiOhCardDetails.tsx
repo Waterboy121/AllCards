@@ -16,9 +16,7 @@ export default function YuGiOhCardDetails({ card, onClose }: Props) {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    if (amount <= 0) {
-      setAmountError(true);
-    } else setAmountError(false);
+    setAmountError(amount <= 0);
   }, [amount]);
 
   const handleSave = async () => {
@@ -27,14 +25,11 @@ export default function YuGiOhCardDetails({ card, onClose }: Props) {
     await updateCardQuantity(card, card.collection, amount);
     card.amount = amount;
     setSaving(false);
+    onClose(true);
   };
 
   const handleDelete = async () => {
-    const confirm = window.confirm(
-      `Delete "${card.name}" from your collection?`
-    );
-    if (!confirm) return;
-
+    if (!window.confirm(`Delete "${card.name}" from your collection?`)) return;
     setDeleting(true);
     await deleteCard(card);
     setDeleting(false);
@@ -58,61 +53,64 @@ export default function YuGiOhCardDetails({ card, onClose }: Props) {
             style={{ width: "100%", maxHeight: "300px", objectFit: "contain" }}
           />
 
-          <p>
-            <strong>Set:</strong> {card.set}
-          </p>
+          <p><strong>Set:</strong> {card.set}</p>
+          <p><strong>Type:</strong> {card.type ?? "—"}</p>
+          <p><strong>Race:</strong> {card.race ?? "—"}</p>
+          <p><strong>Description:</strong> {card.desc ?? "—"}</p>
 
-          <div className="form-row">
-            <label htmlFor="amount">Amount:</label>
+          <div className="input-group mb-3">
+            <label className="input-group-text anta-regular text-dark fs-5">
+              Amount:
+            </label>
             <input
-              id="amount"
               type="number"
-              className="form-control"
+              className="form-control anta-regular text-dark fs-5"
               value={amount}
-              onChange={(e) => {
-                setAmount(Number(e.target.value));
-              }}
+              onChange={(e) =>
+                setAmount(Math.max(1, Number(e.target.value)))
+              }
             />
             <button
-              type="button"
               className="btn btn-outline-secondary rounded-circle"
-              onClick={() => setAmount(Math.max(1, amount + 1))}
+              type="button"
+              onClick={() => setAmount((p) => Math.max(1, p + 1))}
             >
               <i className="bi bi-plus" />
             </button>
             <button
-              type="button"
               className="btn btn-outline-secondary rounded-circle"
-              onClick={() => setAmount(Math.max(1, amount - 1))}
+              type="button"
+              onClick={() => setAmount((p) => Math.max(1, p - 1))}
             >
               <i className="bi bi-dash" />
             </button>
           </div>
+
           {amountError && (
-            <div className="d-flex justify-content-start pt-3 text-danger">
+            <div className="text-danger mb-3">
               Quantity must be at least 1
             </div>
           )}
+        </div>
 
-          <div className="form-buttons">
-            <button className="cancel-btn" onClick={() => onClose()}>
-              Cancel
-            </button>
-            <button
-              className="cancel-btn"
-              disabled={saving}
-              onClick={handleSave}
-            >
-              {saving ? "Updating..." : "Update"}
-            </button>
-            <button
-              className="confirm-btn"
-              disabled={deleting}
-              onClick={handleDelete}
-            >
-              {deleting ? "Deleting..." : "Delete"}
-            </button>
-          </div>
+        <div className="form-buttons">
+          <button className="cancel-btn" onClick={() => onClose()}>
+            Cancel
+          </button>
+          <button
+            className="confirm-btn"
+            disabled={saving}
+            onClick={handleSave}
+          >
+            {saving ? "Saving..." : "Save"}
+          </button>
+          <button
+            className="cancel-btn"
+            disabled={deleting}
+            onClick={handleDelete}
+          >
+            {deleting ? "Deleting..." : "Delete"}
+          </button>
         </div>
       </div>
     </div>
