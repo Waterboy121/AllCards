@@ -30,6 +30,7 @@ interface MagicCard {
   power?: string;
   toughness?: string;
   oracle_text?: string;
+  artist?: string;
 }
 
 interface MagicApiResponse {
@@ -100,6 +101,7 @@ export async function searchCardsByName(name: string): Promise<StoredCard[]> {
         power: card.power ?? null,
         toughness: card.toughness ?? null,
         text: text,
+        artist: card.artist ?? null,
       };
     })
     .filter((card): card is StoredCard => card !== null);

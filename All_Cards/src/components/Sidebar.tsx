@@ -84,18 +84,16 @@ function Sidebar({
       </div>
 
       {/* Franchise tabs */}
-      {collections.map((col) => {
-        const LogoComponent = franchiseLogos[col.franchiseKey];
-        const logoClass = `logo-${col.franchiseKey.replace("-", "")}`;
+      {collections?.map((col) => {
+  const LogoComponent = franchiseLogos[col.franchiseKey];
+  const logoClass = `logo-${col.franchiseKey.replace("-", "")}`;
 
-        return (
-          <div
-            key={col.name}
-            className={`sidebar-item ${
-              currentTab === col.name ? "active" : ""
-            }`}
-            onClick={() => onTabClick(col.name)}
-          >
+  return (
+    <div
+      key={col.name}
+      className={`sidebar-item ${currentTab === col.name ? "active" : ""}`}
+      onClick={() => onTabClick(col.name)}
+    >
             <div className="sidebar-left">
               <div className="sidebar-icon-wrapper">
                 {LogoComponent ? (

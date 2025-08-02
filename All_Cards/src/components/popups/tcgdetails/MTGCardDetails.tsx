@@ -27,6 +27,7 @@ export default function MTGCardDetails({ card, onClose }: Props) {
     await updateCardQuantity(card, card.collection, amount);
     card.amount = amount;
     setSaving(false);
+    onClose();
   };
 
   const handleDelete = async () => {
@@ -40,100 +41,105 @@ export default function MTGCardDetails({ card, onClose }: Props) {
   return (
     <div className="popup-backdrop">
       <div className="popup-window add-card-form">
-        <div className="modal-header">
-          <h2>{card.name}</h2>
-          <button className="btn-close" onClick={() => onClose()}>
-            &times;
-          </button>
+
+        {/* Header */}
+        <div className="modal-header d-flex justify-content-between align-items-center">
+          <h2 className="m-0">{card.name}</h2>
+          <button className="btn-close" onClick={() => onClose()}>&times;</button>
         </div>
 
+        {/* Body */}
         <div className="modal-body">
-          <img
-            src={card.imageUrl}
-            alt={card.name}
-            style={{ width: "100%", maxHeight: "300px", objectFit: "contain" }}
-          />
-
-          <p><strong>Set:</strong> {card.set}</p>
-          <p><strong>Rarity:</strong> {card.rarity ?? "Unknown"}</p>
-          <p><strong>Artist:</strong> {card.artist ?? "Unknown"}</p>
-
-          {card.manaCost && (
-            <div className="mb-2">
-              <strong>Mana Cost:</strong>{" "}
-              <span style={{ display: "inline-flex", alignItems: "center" }}>
-                {renderManaCost(card.manaCost)}
-              </span>
+          <div className="row gx-4">
+            {/* Left: Card Art */}
+            <div className="col-12 col-md-4 d-flex justify-content-center mb-3 mb-md-0">
+              <img
+                src={card.imageUrl}
+                alt={card.name}
+                className="img-fluid"
+                style={{ maxHeight: 300 }}
+              />
             </div>
-          )}
 
-          {(card.power != null && card.toughness != null) && (
-            <p>
-              <strong>Power/Toughness:</strong> {card.power} / {card.toughness}
-            </p>
-          )}
+            {/* Right: Details */}
+            <div className="col-12 col-md-8">
+              <p><strong>Set:</strong> {card.set}</p>
+              <p><strong>Rarity:</strong> {card.rarity ?? "Unknown"}</p>
+              <p><strong>Artist:</strong> {card.artist ?? "Unknown"}</p>
 
-          <p><strong>Description:</strong></p>
-          <div
-            className="card-description"
-            dangerouslySetInnerHTML={{
-              __html: formatOracleTextWithMana(card.text),
-            }}
-          />
+              {card.manaCost && (
+                <div className="mb-2">
+                  <strong>Mana Cost:</strong>{" "}
+                  <span style={{ display: "inline-flex", alignItems: "center" }}>
+                    {renderManaCost(card.manaCost)}
+                  </span>
+                </div>
+              )}
 
-          <div className="input-group mb-3">
-            <label className="input-group-text anta-regular text-dark fs-5">
-              Amount:
-            </label>
-            <input
-              type="number"
-              className="form-control anta-regular text-dark fs-5"
-              value={amount}
-              onChange={(e) => setAmount(Math.max(1, Number(e.target.value)))}
-            />
-            <button
-              className="btn btn-outline-secondary rounded-circle"
-              type="button"
-              onClick={() => setAmount((prev) => Math.max(1, prev + 1))}
-            >
-              <i className="bi bi-plus" />
-            </button>
-            <button
-              className="btn btn-outline-secondary rounded-circle"
-              type="button"
-              onClick={() => setAmount((prev) => Math.max(1, prev - 1))}
-            >
-              <i className="bi bi-dash" />
-            </button>
+              {(card.power != null && card.toughness != null) && (
+                <p><strong>Power/Toughness:</strong> {card.power} / {card.toughness}</p>
+              )}
+
+              <p><strong>Description:</strong></p>
+              <div
+                className="card-description"
+                dangerouslySetInnerHTML={{
+                  __html: formatOracleTextWithMana(card.text),
+                }}
+              />
+            </div>
           </div>
 
-          {amountError && (
-            <div className="text-danger mb-3">
-              Quantity must be at least 1
+          {/* Amount Control */}
+          <div className="row mt-4">
+            <div className="col-12 col-md-4 mx-auto">
+              <label htmlFor="amount" className="form-label"><strong>Amount:</strong></label>
+              <div className="input-group w-auto mx-auto">
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={() => setAmount(prev => Math.max(1, prev - 1))}
+                >
+                  <i className="bi bi-dash" />
+                </button>
+                <input
+                  id="amount"
+                  type="number"
+                  className="form-control text-center"
+                  style={{ width: "4rem" }}
+                  value={amount}
+                  onChange={e => setAmount(Math.max(1, Number(e.target.value)))}
+                />
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={() => setAmount(prev => Math.max(1, prev + 1))}
+                >
+                  <i className="bi bi-plus" />
+                </button>
+              </div>
+              {amountError && (
+                <div className="text-danger mt-2">
+                  Quantity must be at least 1
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </div>
+        </div> 
 
-        <div className="form-buttons">
-          <button className="cancel-btn" onClick={() => onClose()}>
-            Cancel
-          </button>
-          <button
-            className="confirm-btn"
-            disabled={saving}
-            onClick={handleSave}
-          >
+
+        {/* Footer Buttons */}
+        <div className="form-buttons d-flex justify-content-end gap-2">
+          <button className="cancel-btn" onClick={() => onClose()}>Cancel</button>
+          <button className="confirm-btn" disabled={saving} onClick={handleSave}>
             {saving ? "Saving..." : "Save"}
           </button>
-          <button
-            className="cancel-btn"
-            disabled={deleting}
-            onClick={handleDelete}
-          >
+          <button className="cancel-btn" disabled={deleting} onClick={handleDelete}>
             {deleting ? "Deleting..." : "Delete"}
           </button>
         </div>
       </div>
     </div>
+
   );
 }

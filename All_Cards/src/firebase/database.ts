@@ -102,6 +102,29 @@ export async function addCardToCollection(
     addedAt: Timestamp.now(),
     lastViewedAt: Timestamp.fromDate(new Date(2000, 0, 1, 1)), // fallback date
     viewCount: 0,
+    tcg:          card.tcg,
+    collection:   collectionName,
+
+    // POKEMON FIELDS
+    rarity:      card.rarity      ?? null,
+    artist:      card.artist      ?? null,
+    evolvesFrom: card.evolvesFrom ?? null,
+    evolvesTo:   card.evolvesTo   ?? [],
+
+    // YU-GI-OH FIELDS
+    type: card.type ?? null,
+    race: card.race ?? null,
+    desc: card.desc ?? null,
+
+    // MTG FIELDS
+    power:         card.power         ?? null,
+    toughness:     card.toughness     ?? null,
+    text:          card.text          ?? null,
+    manaCost:      card.manaCost      ?? null,
+    doubleFaceImg: card.doubleFaceImg ?? null,
+
+    // MULTI-IMAGE INFO
+    multipleSets: card.multipleSets ?? null,
   });
 }
 
@@ -203,7 +226,20 @@ export async function getAllCardsFromCollections(
         evolvesFrom: data.evolvesFrom,
         evolvesTo: data.evolvesTo,
         doubleFaceImg: data.doubleFaceImg,
-        // any other optional fields are already on StoredCard
+        
+        // YU-GI-OH
+        type: data.type ?? undefined,
+        race: data.race ?? undefined,
+        desc: data.desc ?? undefined,
+
+        // MTG
+        power:         data.power         ?? undefined,
+        toughness:     data.toughness     ?? undefined,
+        text:          data.text          ?? undefined,
+        manaCost:      data.manaCost      ?? undefined,
+
+        // MULTI-IMAGE
+        multipleSets: data.multipleSets ?? undefined,
       });
     });
 
