@@ -3,6 +3,7 @@ import { deleteCard, updateCardQuantity } from "../../../firebase/database";
 import type { StoredCard } from "../../../assets/types/card";
 import "../../../assets/css/popups/AddCardForm.css"; // reuse same styles
 
+// This shit crazy and it worked gang - RIchard Vilcicinsh
 type Props = {
   card: StoredCard;
   onClose: (shouldRefresh?: boolean) => void;

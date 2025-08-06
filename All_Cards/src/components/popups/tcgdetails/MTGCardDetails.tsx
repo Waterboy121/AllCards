@@ -3,6 +3,8 @@ import { deleteCard, updateCardQuantity } from "../../../firebase/database";
 import type { StoredCard } from "../../../assets/types/card";
 import "../../../assets/css/popups/AddCardForm.css";
 
+// this shit crazy gang - Richard Vilcinsh
+
 type Props = {
   card: StoredCard;
   onClose: (shouldRefresh?: boolean) => void;
