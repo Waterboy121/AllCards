@@ -1,0 +1,158 @@
+/* ==========================
+  Buttons — Base Styles
+========================== */
+
+:is(.button-sidebar-tab, .button-tab-icon, .button-search-icon, .button-menu, .button-menu-option, .button-confirm, .button-cancel) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ==========================
+  Sidebar Tab Button
+========================== */
+
+.button-sidebar-tab {
+  justify-content: space-between;
+  padding: clamp(0.8rem, 1.25vw, 1.3rem) clamp(0.4rem, 0.6vw, 0.8rem);
+  white-space: normal;
+  word-break: break-word;
+  transition: background-color 0.2s ease;
+  width: clamp(20rem, 30vw, 33rem);
+	max-width: 100%;
+  max-height: 15vh;
+  transition: transform 200ms ease;
+}
+
+.button-sidebar-tab:hover:not(.active) {
+  background-color: #2a2a2a;
+}
+
+.button-sidebar-tab.active {
+  background-color: #4a2a2a;
+  z-index: 10;
+}
+
+.button-sidebar-tab.active:hover {
+  background-color: #391e1e;
+}
+
+/* =================================
+  Tab Icon Buttons ('+' and '⋮')
+================================ */
+
+.button-tab-icon {
+  position: relative;
+  top: -1px;
+  padding: 0.5rem;
+  min-width: 1.7rem;
+  min-height: 1.7rem;
+  border-radius: 50%;
+}
+
+/* ==========================
+  Search Bar Button
+========================== */
+
+.button-search-icon {
+  position: absolute;
+  padding: 0.2rem;
+  height: 100%;
+}
+
+/* ==========================
+  Hamburger Button
+========================== */
+
+.button-menu {
+  padding: clamp(0.5rem, 1vw, 1rem);
+  min-width: 3rem;
+	max-width: 6rem;
+}
+
+/* ==========================
+  Hamburger Menu Options
+========================== */
+
+.button-menu-option {
+  background-color: #333;
+  display: inline-block;
+  white-space: nowrap;
+  padding: 0.75rem 1.5rem;
+  min-width: max-content;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.button-menu-option:hover {
+  background-color: #444;
+}
+
+
+/* ==========================
+  Confirm + Cancel Buttons
+========================== */
+
+:is(.button-confirm, .button-cancel) {
+  padding: 0.5rem 1rem;
+  color: #f5f5f5;
+  border-radius: 0.4rem;
+  transition: background-color 0.2s ease;
+}
+
+/* Confirm Button */
+.button-confirm {
+  background-color: #4a2a2a;
+
+}
+
+.button-confirm:hover {
+  background-color: #5a2a2a;
+}
+
+
+/* Cancel Button */
+.button-cancel {
+  background-color: #555555;
+}
+
+.button-cancel:hover {
+  background-color: #666666;
+}
+
+/* ==========================
+  Flip Card Button
+========================== */
+
+.tile-card:hover .button-flip-card {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.button-flip-card {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  z-index: 5;
+  padding: 0.25rem 1.25rem;
+  font-family: "Anta", sans-serif;
+  font-size: 0.6rem;
+  background-color: rgba(34, 34, 34, 0.7);
+  color: #eee;
+  border-radius: 0.5rem;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+
+  opacity: 0; /* hidden by default */
+  pointer-events: none; /* ensures button isn't clickable until hover */
+}
+
+.button-flip-card:hover {
+  background-color: rgba(51, 51, 51, 0.85);
+  transform: scale(1.05);
+}

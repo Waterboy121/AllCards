@@ -1,0 +1,48 @@
+/* ================================================================
+  UNIVERSAL STYLE IMPORT ORDERING
+  ---------------------------------------------------------------
+  This file controls the order in which all global style modules
+  are loaded. Order matters due to CSS cascade and specificity.
+  
+  Import Order Rationale:
+
+  1. containers.css
+    - Defines structural layout and hover trigger zones (e.g. 
+      .sidebar-item:hover).
+    - Must be imported first so that downstream files can 
+      respond to these hover states.
+
+  2. utilities.css
+    - Provides reusable layout helpers (e.g. .flex-center).
+    - Must be imported early so it can be safely overridden 
+      by component-specific rules when needed.
+
+  3. buttons.css
+    - Defines styles for all global button types (e.g. icon buttons).
+    - Buttons may trigger hover effects on icons, so this must come
+      before icons.css, and after containers.css to allow context-based
+      layout or hover rules.
+
+  4. font.css
+    - Includes Cinzel hover effects and font transitions that 
+      may respond to container hover states.
+    - Must come after containers.css to ensure proper behavior.
+
+  5. text.css
+    - Handles overflow, line clamping, text alignment, etc.
+    - Neutral in cascade order — safe to follow font rules.
+
+  6. icons.css
+    - Defines hover-responsive icon transitions and logo sizing.
+    - Must follow containers.css and buttons.css to properly react
+      to hover and layout behaviors.
+
+  DO NOT REORDER without reviewing dependency relationships.
+================================================================ */
+
+@import './containers.css';
+@import './utilities.css';
+@import './buttons.css';
+@import './font.css';
+@import './text.css';
+@import './images.css';
